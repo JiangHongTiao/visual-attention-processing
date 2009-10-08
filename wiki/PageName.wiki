@@ -1,0 +1,25 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Summary of the article "Modeling attention to salient proto-objects", Dirk Walther, Christof Koch
+
+
+= Details =
+
+== Abstract == 
+
+How can we attend to objects before they are recognized ?
+So-called proto-objects form volatile units of visual information can be accessed by selective attention and subsequently validated objects.
+Propose a biologically plausible model of forming and attending to proto-objects in natural scenes
+
+== Introduction ==
+
+== Model architecture ==
+
+
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
