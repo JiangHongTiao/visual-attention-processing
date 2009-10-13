@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary A_Model_of_Saliency_Based_Visual_Attention_for_Rapid_Scene_Analysis_Summary
 #labels Phase-Design,Phase-Requirements,Deprecated
 #sidebar TableOfContents
 
