@@ -1,0 +1,33 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+ Abstract
+ # Introduction 
+ # Model 
+  # The Extraction of Early Visual Features
+  # The Saliency Map
+  # Comparison with Spartial Frequency Content Models
+ # Result and Discussion
+
+= Details =
+
+ * Abstract
+ Multiscale image features are combined into a single topographical saliency map
+ A dynamical neural network selects attended locations in order of decreasing saliency. 
+ 
+ # Introduction 
+ Primates gain the remarkable ability to interpret complex scene in real-time system during million years of evolution. Despite the limit of human brains, it seem to be done by using the "focus of attention", circumscribed region. After the region is discovered  by a rapid, bottom-up, saliency driven, and task independent manner, a slower top-down, volition-controller, and task dependent manner such as lane detection and tracking will be used to find specific objects.
+
+ The "eature itegration theory" built on a second biologically plausible architecture proposed by Koch and Ullman, explains human visual search strategies. At beginning, different spatial locations compete for the saliency and builds their own feature maps ( saliency maps for each feature ). Then all feature maps are integrated into a single "saliency map" which represents local conspicuity over the entire image. 
+
+ This model shows us the complete bottom-up saliency visual attention method without any prerequisite knowledge. However, it is flexible enough to be combined with any top-down guidance to shift attention. The prior knowledge is usually used to weight the importance of different features; therefore, those with high-weights could persist. 
+
+ # Models 
+
+ Input, 640x480 static color images, are processed by *dyadic Guassian pyramids[
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
