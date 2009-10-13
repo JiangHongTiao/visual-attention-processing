@@ -1,0 +1,12 @@
+#summary Regions of interest extraction based on visual attention model and watershed segmentation
+
+= Overview =
+
+<wiki:toc depth="1"/>
+
+= Details =
+
+== Introduction ==
+== The proposed ROIS Extraction Method ==
+== Experimental results == 
+== Conclusion ==
