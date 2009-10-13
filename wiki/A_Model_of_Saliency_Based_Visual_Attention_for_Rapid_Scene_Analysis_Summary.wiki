@@ -1,5 +1,5 @@
 #summary A_Model_of_Saliency_Based_Visual_Attention_for_Rapid_Scene_Analysis_Summary
-#labels Phase-Design,Phase-Requirements,Deprecated
+#labels Phase-Design,Phase-Requirements
 #sidebar TableOfContents
 
 = Overview =
