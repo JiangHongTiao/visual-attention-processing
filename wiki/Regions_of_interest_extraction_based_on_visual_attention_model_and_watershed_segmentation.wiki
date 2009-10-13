@@ -1,4 +1,4 @@
-#summary Regions of interest extraction based on visual attention model and watershed segmentation
+#summary Regions of interest extraction based on visual attention model and watershed segmentation_summary
 #labels Phase-Design,Phase-Implementation
 
 = Overview =
