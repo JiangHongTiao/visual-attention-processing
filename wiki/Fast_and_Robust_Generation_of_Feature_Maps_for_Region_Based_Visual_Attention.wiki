@@ -1,0 +1,25 @@
+#summary Fast and Robust Generation of Feature Maps for Region-Based Visual Attention
+
+= Overview =
+
+<wiki:toc depth="1">
+
+
+= Details =
+
+== Abstract ==
+== Introduction ==
+== Existing methods ==
+=== Pixel-based approach ===
+=== Frequency Domain approach ===
+=== Region-based approach ===
+== Proposed methodology ==
+=== Color Contrast Saliency ===
+=== Size Saliency ===
+=== Symmetry Feature ===
+=== Orientation and Eccentricity Feature ===
+=== Saliency Maps of Symmetry, Orientation, and Eccentricity ===
+== Results ==
+== Discussion ==
+== Conclusion ==
+
