@@ -1,0 +1,26 @@
+#summary Modelling Primate Visual Attention.
+
+= Overview =
+<wiki:toc depth='1'/>
+
+= Details =
+
+== Introduction ==
+== Brain areas ==
+== Bottom-up control ==
+=== Visual search and pop-out ===
+=== Computational Models and the saliency map ===
+== Top-down modulation of early vision ==
+=== Are we blind outside of the focus of attention ===
+=== Attentional modulation of early vision ===
+== Top-down deployment of attention ===
+=== Attentional facilitation and cuing ===
+=== Influence of task ===
+== Attention scene and understanding ==
+=== Is scene understanding purely attentional? ===
+=== Cooperation between where and what ===
+=== Attention as a component of vision ===
+== Discussion ==
+
+
+
