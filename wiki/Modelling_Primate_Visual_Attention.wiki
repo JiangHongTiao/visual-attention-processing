@@ -92,6 +92,19 @@ How several computer vision models have used a collaboration between the where a
 A very fast visual subsystem which operates in parallel with attention allows us to rapidly derive the gist and coarse layout of a novel visual scene. This rapid subsystem is one of the key components by which attention may be guided top-down towards specific visual locations.
 
 === Cooperation between where and what ===
+
+Interesting examples of cooperation between a fast attentional cueing system and a slower localized feature analysis system
+
+Teasing apart the brain mechanisms by which attention, localized recognition, and rapid computation of scene gist and layout collaborate in normal vision remains one of the most exciting challenges for modern visual neuroscience.
+
 === Attention as a component of vision ===
+
+Issues: 
+ * Internal representation of scenes and objects
+ * The level of detail with which scenes are stored in memory for later recall and comparison
+
+ Think of attention within the broader framework of vision and scene understanding
+
 == Discussion ==
 
+ Thought tremedous progress has been made over the past century of the scientific study of attention, many of key components of this complex interacting system remain poorly understood and elusive, thus posing ever renewed challenges for future neuroscience research.
