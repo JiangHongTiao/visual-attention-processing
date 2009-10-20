@@ -23,7 +23,7 @@
   # Perspective of results (PR) Ex: evaluation aspects
   # Measurement methods (MM) to extract readings 
 
-== A Survey of Available Techniques 
+== A Survey of Available Techniques ==
 
  * Acceptability = number of fixation before attending targets
  * Normalized scan path salience = compare saliency map with human eyes' fixation 
