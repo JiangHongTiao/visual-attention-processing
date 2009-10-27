@@ -1,0 +1,24 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+<wiki:toc depth="2"/>
+
+= Details =
+
+== General Ideas ==
+
+ # Bottom-up search approach
+ # Artificial Intelligent / Neural Network f
+ # Top-down searching approach 
+
+== Specific Ideas for visual saliency improvment ==
+
+ * Integrating shape-saliency map by Fourier descriptor into the bottom-search algorithms
+ * Problems: 
+  * Shape-saliency map is constructed by pixel-based image processing techniques
+
+== Supervisor suggestion ==
+
+ * Extending the lane & vehicle detection by saliency-based segmentation techniques
+ * Comparing the result with and without the implementation of segmentation techniques
