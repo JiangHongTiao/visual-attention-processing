@@ -1,0 +1,14 @@
+#summary Testing plans
+
+= Introduction =
+
+<wiki:toc depth="1"/>
+
+= Details =
+
+== Tasks for this week ==
+
+ # Running Itti & Koch Saliency framework on automation database
+ # Drawing conclusions and comments on comparison between original images and saliency detection results
+
+== Results ==
