@@ -26,7 +26,8 @@ ezvision -K --in=path/[video].avi --out=raster:path/ --output-frames=0-30@EVENT
 
 I have created to store output frames of three input videos and following tables show the simulation results
 
-|| *Video Name* || *No times of vehicle attention* || *No times of lane marks attention* || Blurred_Videos || 8/30 || 6/30 ||
+|| *Video Name* || *No times of vehicle attention* || *No times of lane marks attention* ||
+|| Blurred_Videos || 8/30 || 6/30 ||
 || Clear_Videos || 8/30 || 14/30 ||
 || Shadowy_Videos || 5/30 || 11/30 ||
 
