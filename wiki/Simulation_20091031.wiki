@@ -9,20 +9,32 @@
 
 == Plan == 
 
-Running the simulations and collect how many times the machine can get the correct positions of objects ( lane marks and vehicles )
+Experiment 1 : Running the simulations and collect how many times the machine can get the correct positions of objects ( lane marks and vehicles )
+
+Experiment 2 : Running the watershed region-segmentation on vehicle & lane sample image
 
 == Input Data ==
 
-There are three input video: blurredVideo.avi, clearVideo.avi, shadowyVideo.avi 
+Experiment 1 : There are three input video: blurredVideo.avi, clearVideo.avi, shadowyVideo.avi 
+
+Experiment 2 : There are two small sample images: lane.png, vehicle.jpng
 
 == Simulation ==
+
+Experiment 1 :
 
 ezvision -K --in=path/[video].avi --out=raster:path/ --output-frames=0-30@EVENT
 
 -K shows all necessary steps before the attention point is extracted
 --output-frames=0-30@EVENT: give 31 output frames and the frame is generated when the attention point is shifted.
 
+Experiment 2 : 
+
+Run region_detection.m with each sample.
+
 == Output Data == 
+
+Experiment 1 :
 
 I have created to store output frames of three input videos and following tables show the simulation results
 
@@ -30,6 +42,8 @@ I have created to store output frames of three input videos and following tables
 || Blurred_Videos || 8/30 || 6/30 ||
 || Clear_Videos || 8/30 || 14/30 ||
 || Shadowy_Videos || 5/30 || 11/30 ||
+
+Experiment 2 :
 
 == Conclusion ==
 
