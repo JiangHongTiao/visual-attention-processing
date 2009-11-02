@@ -30,3 +30,8 @@ Static images ==============> Orientation Map ========> Maps ============> Atten
   # Towards a Proactive Biologically-inspired Advanced Driver Assistance System [http://visual-attention-processing.googlecode.com/files/Towards%20a%20Proactive%20Biologically-inspired%20Advanced%20Driver%20Assistance%20System.pdf paper]
 
 == DSP Application Review == 
+
+== Working Plan for 3,4,5 / 11 / 2009 == 
+
+ # Read and Summarize the paper "Towards a Proactive Biologically-inspired Advanced Driver Assistance System" 
+ # Carry on Experiment 3
