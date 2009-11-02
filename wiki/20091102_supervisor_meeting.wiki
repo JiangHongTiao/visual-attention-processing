@@ -28,7 +28,8 @@ Static images ==============> Orientation Map ========> Maps ============> Atten
   # Compare between simulation results with / without tuning 
  * Interesting Paper
   # Towards a Proactive Biologically-inspired Advanced Driver Assistance System [http://visual-attention-processing.googlecode.com/files/Towards%20a%20Proactive%20Biologically-inspired%20Advanced%20Driver%20Assistance%20System.pdf paper]
-
+ * Database
+  # Need to find passenger and pedestrian video database
 == DSP Application Review == 
 
 == Working Plan for 3,4,5 / 11 / 2009 == 
