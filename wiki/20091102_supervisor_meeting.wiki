@@ -1,0 +1,38 @@
+#summary Feature Tuning or Early Selection for Automotive Applications
+
+= Introduction =
+
+<wiki:toc depth='1'/>
+
+= Details =
+
+== Early Selection Experiment ==
+
+{{{
+               iLab Toolbox                    Tuning         Combining
+Static images ==============> Orientation Map ========> Maps ============> Attention Maps
+                              Flicker Map
+                              Color Map
+                              Intensity
+                              Motion 
+}}}
+
+ *Applications:
+  # Lane Tracking
+  # Sign board
+  # Vehicle lecturer
+  # Pedestrian lecturer
+ *Notes: 
+  #Don't touch Itti code
+  #Tune Itti output
+  #Compare between simulation results with / without tuning 
+       
+
+
+
+== DSP Application Review == 
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
