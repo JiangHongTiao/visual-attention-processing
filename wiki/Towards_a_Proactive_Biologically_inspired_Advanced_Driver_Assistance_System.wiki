@@ -35,10 +35,10 @@
  * Difference of Gaussian 
  * Gabor filter kernels
 
- The top-down attention can be tuned task independently by applying TD weights with the threshold = Kconj * Max(Fi)
+ The top-down attention can be tuned task independently by applying TD weights with the threshold = Kconj * Max(Fi).
  The bottom-up (BU) coefficients are set object-unspecifically to detect unexpected dangerous scenes.
  The system takes the current scene characteristics into account to determine the optimal TD weight set.
- Compute the maximum on the current saliency map S total
+ Compute the maximum on the current saliency map S total.
  Get the FOA by generic region growing based segmentation.
  Internal information fusion processes improve the performance of system modules.
  
