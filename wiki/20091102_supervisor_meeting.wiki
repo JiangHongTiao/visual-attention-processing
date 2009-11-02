@@ -17,22 +17,16 @@ Static images ==============> Orientation Map ========> Maps ============> Atten
                               Motion 
 }}}
 
- *Applications:
+ * Applications:
   # Lane Tracking
   # Sign board
   # Vehicle lecturer
   # Pedestrian lecturer
- *Notes: 
-  #Don't touch Itti code
-  #Tune Itti output
-  #Compare between simulation results with / without tuning 
-       
-
-
+ * Notes: 
+  # Don't touch Itti code
+  # Tune Itti output maps such as orientation maps, flicker maps
+  # Compare between simulation results with / without tuning 
+ * Interesting Paper
+  # Towards a Proactive Biologically-inspired Advanced Driver Assistance System [http://visual-attention-processing.googlecode.com/files/Towards%20a%20Proactive%20Biologically-inspired%20Advanced%20Driver%20Assistance%20System.pdf paper]
 
 == DSP Application Review == 
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
