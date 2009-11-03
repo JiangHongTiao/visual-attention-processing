@@ -43,5 +43,8 @@
  Internal information fusion processes improve the performance of system modules.
  
  
+== Summary and Outlook ==
+
+  An integrated, advanced driver assistance system that relies on human-like cognitive processing principles.
+ Based on top-down links modulation the attention task-dependently, the used internal 3D representation is highly flexible system. 
  
-  
