@@ -2,7 +2,7 @@
 
 = Introduction =
 
-<wiki toc:depth='1'/>
+<wiki:toc/>
 
 = Details =
 
