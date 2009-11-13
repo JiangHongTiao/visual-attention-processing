@@ -31,11 +31,11 @@
  Trade-offs of the method are:
 
  # *Trade-off 1:* 
- * *Problem: * if just enough lines are used in a strip for the DWT decomposition, _horizontal line artifacts_ will appear in this method.
- * *Solution: * Additional overlapping lines are used to avoid _horizontal line artifacts_.
+  * *Problem: * if just enough lines are used in a strip for the DWT decomposition, _horizontal line artifacts_ will appear in this method.
+  * *Solution: * Additional overlapping lines are used to avoid _horizontal line artifacts_.
  # *Trade-off 2:*
- * *Problem: * min-max normalisation is inaccurate.
- * *Solution * the minimum and the maximum values are stored and used to the next input images.  
+  * *Problem: * min-max normalisation is inaccurate.
+  * *Solution * the minimum and the maximum values are stored and used to the next input images.  
 
 === Lifting Based 5/3 Discrete Wavelet Transform ===
 
@@ -47,7 +47,7 @@
 
 === Image Pyramid Construction and Minimum Required Lines ===
 
- *The wavelet decomposition method* is used instead of the dyadic Gaussian pyramid.
+ * * The wavelet decomposition method * is used instead of the dyadic Gaussian pyramid.
  * The number of lines in the strip is dependent on the number of scales and how intense the user wants the salient object to be highlighted. The value of J varies accordingly. A higher value of J would require more lines in a strip
  * J = 3, minimum number of strips 8 + 8 ( additional strips ) = 16 lines. The total number of lines required is 32 for a three level decomposition.
  * Minimum number of lines = 2 x 2^(J+1)
