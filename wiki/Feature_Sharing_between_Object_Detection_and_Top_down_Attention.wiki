@@ -1,0 +1,12 @@
+#summary Chapter 4 of Interactions of Visual Attention and Object Recognition: Computational Modelling, Algorithms, and Psychophysics Thesis by Dirk Walter
+
+= Overview =
+<wiki:toc />
+= Introduction =
+= Model ==
+== Feature Learning ==
+== Object Detection ==
+== Top-down Attention ==
+= Experiment Setup =
+= Results =
+= Discussion =
