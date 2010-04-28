@@ -2,7 +2,11 @@ function tsm = temporalSaliencyMap(imgs,M)
 %% Build the spatiotemporal saliency method 
 % The method is described in the paper: An information theoretic model of
 % spatiotemporal visual saliency
-
+% Output 
+% tsm: temporal saliency map
+% imgs: collection of input images, the number of input images is equa to M
+% M: size of square patch method
+% 
 %% Add Hadamar Transform 2D & 3D
 % addpath('/home/lengoanhcat/PhD_Research/trunk/Simulations/Experiments/Experiment_8/WAT2D');
 % addpath('/home/lengoanhcat/PhD_Research/trunk/Simulations/Experiments/Experiment_8/WAT3D');
