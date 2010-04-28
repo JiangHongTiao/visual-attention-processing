@@ -52,10 +52,14 @@ for iP = 1:1:size(c1,3)
 end
 
 %% Choose number of components reserved
-for iP = 1:1:nP
-    pC1(iP,pC1(iP,:) < max(pC1(iP,:))/sqrt(2)) = 1;
-    pC2(iP,pC2(iP,:) < max(pC2(iP,:))/sqrt(2)) = 1;
-end
+
+pC1(:,5:1:100) = [];
+pC2(:,5:1:100) = [];
+
+% for iP = 1:1:nP
+%     pC1(iP,pC1(iP,:) > max(pC1(iP,:))/sqrt(2)) = 1;
+%     pC2(iP,pC2(iP,:) > max(pC2(iP,:))/sqrt(2)) = 1;
+% end
 
 %% Calculate the probabilities for each patch
 pV1 = prod(pC1,2);
