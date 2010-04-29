@@ -1,0 +1,29 @@
+#summary One-sentence summary of this page.
+
+= Overview =
+
+<wiki:toc/>
+
+= Details =
+
+= Conversion with Dr Guoping Qiu =
+
+[8:00:40 PM] lengoanhcat: hi sir can u hear me ?
+[8:00:47 PM] lengoanhcat: i can hear u
+[8:03:41 PM] guopingqiu: http://www.afapl.asso.fr/nv30_2.htm
+[8:17:24 PM] lengoanhcat: Parzel window ?
+[8:18:27 PM] guopingqiu: http://en.wikipedia.org/wiki/Kernel_density_estimation
+[8:21:14 PM] guopingqiu: http://en.wikipedia.org/wiki/Hadamard_transform
+[8:23:00 PM] guopingqiu: http://www-sop.inria.fr/members/Neil.Bruce/
+[8:26:22 PM] guopingqiu: http://www.sciencedirect.com/science?_ob=ArticleURL&_udi=B6V25-4VFJS2S-1&_user=5939061&_coverDate=01%2F24%2F2009&_rdoc=1&_fmt=high&_orig=search&_sort=d&_docanchor=&view=c&_searchStrId=1311061202&_rerunOrigin=google&_acct=C000009959&_version=1&_urlVersion=0&_userid=5939061&md5=1d0da0054977a51c80eb2e9f0f166404
+
+= Conversion with Dr Kenneth = 
+
+We can try to test it with PCA, KLT, ICA, DCT in lane-mark extraction. The 
+
+= Results =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
