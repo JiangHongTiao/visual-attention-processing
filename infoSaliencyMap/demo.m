@@ -5,11 +5,16 @@ function demo()
 % All images are initally reduced to a quater of its original size
 % There are 4 consecutive images used to calculate the temporal saliency
 % map.
+    %% Precprocess steps
+    clc; close all;
+
+    %% Predefined parameters 
+    transEng = 'hadamard';% What type of transform engine: hadamard,dct
+    noCoff = 30; % Number of reserved components    
+    
     %% Sample results
-    % resFld =
-    % '/home/lengoanhcat/PhD_Research/trunk/Simulations/Results/Experiment_
-    % 8/results_nc20/'; % Linux result folder
-    resFld = 'D:\PhD Research\Simulations\Results\Experiment_8\results_nc10\';    
+    resFld = ['/home/lengoanhcat/PhD_Research/trunk/Simulations/Results/Experiment_8/' transEng '/results_nc' num2str(noCoff) '/']; % Linux result folder
+    % resFld = 'D:\PhD Research\Simulations\Results\Experiment_8\' dct '\results_nc' noCoff '\';    
     mkdir(resFld);
     
     %% Sample images for testing
@@ -26,7 +31,7 @@ function demo()
     img5 = imresize(rgb2gray(imread(imgPath5)),0.25);        
     imgs = cat(3,img1,img2,img3,img4,img5);          
     
-    [tsm,ssm,ism] = infoSaliencyMap(imgs);
+    [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff);
     
     % Represent temporal saliency map
     figure(1), colormap('gray'), imagesc(tsm);

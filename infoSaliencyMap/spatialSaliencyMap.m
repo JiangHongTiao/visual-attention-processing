@@ -1,4 +1,4 @@
-function ssm = spatialSaliencyMap(imgB,M)
+function ssm = spatialSaliencyMap(imgB,M,transEng,noCoff)
 %% Build the spatiotemporal saliency method 
 % The method is described in the paper: An information theoretic model of
 % spatiotemporal visual saliency
@@ -11,24 +11,25 @@ function ssm = spatialSaliencyMap(imgB,M)
 [Ps,nrP,ncP] = cutImages(imgB,M);
 nP = nrP*ncP;
 
-%% 
+%% Transform patches by different transform engine
 
-%% Transform patches into Hadamar Space
-% B = Ps;
-% c = zeros(size(B));
-% 
-% for i = 1:1:nP
-%     c(:,:,i) = WAT2D(B(:,:,i));    
-% end
-
-%% Transforms patches into independent space by 3-DCT
 B = Ps;
 c = zeros(size(B));
 
-for i = 1:1:nP
-    c(:,:,i) = mirt_dctn(B(:,:,i));    
+switch transEng
+    case 'hadamard'
+        %% Transform patches into Hadamar Space
+        for i = 1:1:nP
+            c(:,:,i) = WAT2D(B(:,:,i));    
+        end
+    case 'dct'
+        %% Transforms patches into independent space by 3-DCT
+        for i = 1:1:nP
+            c(:,:,i) = mirt_dctn(B(:,:,i));    
+        end
+    otherwise
+        error('Invalid choide of transform engine');
 end
-
 %% Calculate the dimensional probabilities for each patch
 pC = [];
 for iP = 1:1:size(c,3)
@@ -37,7 +38,7 @@ for iP = 1:1:size(c,3)
 end
 
 %% Choose number of components reserved
-pC(:,5:1:100) = [];
+pC(:,noCoff:1:100) = [];
 
 %% Calculate the probabilities for each patch
 pB = prod(pC,2);
