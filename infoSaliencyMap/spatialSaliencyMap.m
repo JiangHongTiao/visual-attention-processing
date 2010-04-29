@@ -11,12 +11,22 @@ function ssm = spatialSaliencyMap(imgB,M)
 [Ps,nrP,ncP] = cutImages(imgB,M);
 nP = nrP*ncP;
 
+%% 
+
 %% Transform patches into Hadamar Space
+% B = Ps;
+% c = zeros(size(B));
+% 
+% for i = 1:1:nP
+%     c(:,:,i) = WAT2D(B(:,:,i));    
+% end
+
+%% Transforms patches into independent space by 3-DCT
 B = Ps;
 c = zeros(size(B));
 
 for i = 1:1:nP
-    c(:,:,i) = WAT2D(B(:,:,i));    
+    c(:,:,i) = mirt_dctn(B(:,:,i));    
 end
 
 %% Calculate the dimensional probabilities for each patch
@@ -27,9 +37,7 @@ for iP = 1:1:size(c,3)
 end
 
 %% Choose number of components reserved
-for iP = 1:1:nP
-    pC(iP,pC(iP,:) < max(pC(iP,:))/sqrt(2)) = 1;    
-end
+pC(:,5:1:100) = [];
 
 %% Calculate the probabilities for each patch
 pB = prod(pC,2);
