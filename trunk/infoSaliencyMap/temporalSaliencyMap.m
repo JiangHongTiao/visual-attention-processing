@@ -1,4 +1,4 @@
-function tsm = temporalSaliencyMap(imgs,M)
+function tsm = temporalSaliencyMap(imgs,M,transEng,noCoff)
 %% Build the spatiotemporal saliency method 
 % The method is described in the paper: An information theoretic model of
 % spatiotemporal visual saliency
@@ -34,24 +34,24 @@ end
 nP = nrP*ncP;
 
 %% Try transform with different transform techniques
-
-%% Transform patches into idependent space by 3D-Hadamard 
-% c1 = zeros(size(V1));
-% c2 = zeros(size(V2));
-% for i = 1:1:nP        
-%     c1(:,:,i,:) = WAT3D(squeeze(V1(:,:,i,:)));    
-%     c2(:,:,i,:) = WAT3D(squeeze(V2(:,:,i,:)));    
-% end
-
-%% Transforms patches into independent space by 3D-DCT
 c1 = zeros(size(V1));
 c2 = zeros(size(V2));
-for i = 1:1:nP        
-    c1(:,:,i,:) = mirt_dctn(squeeze(V1(:,:,i,:)));    
-    c2(:,:,i,:) = mirt_dctn(squeeze(V2(:,:,i,:)));    
+switch transEng
+    case 'hadamard'
+        %% Transform patches into idependent space by 3D-Hadamard  
+        for i = 1:1:nP        
+            c1(:,:,i,:) = WAT3D(squeeze(V1(:,:,i,:)));    
+            c2(:,:,i,:) = WAT3D(squeeze(V2(:,:,i,:)));    
+        end
+    case 'dct'
+        %% Transforms patches into independent space by 3D-DCT
+        for i = 1:1:nP        
+            c1(:,:,i,:) = mirt_dctn(squeeze(V1(:,:,i,:)));    
+            c2(:,:,i,:) = mirt_dctn(squeeze(V2(:,:,i,:)));    
+        end   
+    otherwise
+        error('Invalid choide of transform engine');
 end
-
-
 
 %% Calculate the dimensional probabilities for each patch
 pC1 = []; pC2 = [];
@@ -65,8 +65,8 @@ end
 
 %% Choose number of components reserved
 
-pC1(:,5:1:100) = [];
-pC2(:,5:1:100) = [];
+pC1(:,noCoff:1:100) = [];
+pC2(:,noCoff:1:100) = [];
 
 % for iP = 1:1:nP
 %     pC1(iP,pC1(iP,:) > max(pC1(iP,:))/sqrt(2)) = 1;
