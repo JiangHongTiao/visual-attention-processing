@@ -17,15 +17,12 @@
 [8:23:00 PM] guopingqiu: http://www-sop.inria.fr/members/Neil.Bruce/
 [8:26:22 PM] guopingqiu: http://www.sciencedirect.com/science?_ob=ArticleURL&_udi=B6V25-4VFJS2S-1&_user=5939061&_coverDate=01%2F24%2F2009&_rdoc=1&_fmt=high&_orig=search&_sort=d&_docanchor=&view=c&_searchStrId=1311061202&_rerunOrigin=google&_acct=C000009959&_version=1&_urlVersion=0&_userid=5939061&md5=1d0da0054977a51c80eb2e9f0f166404
 
-Please download this video
-http://www.viplab.cs.nott.ac.uk/download/1.5.mp4
-
+Please download [http://www.viplab.cs.nott.ac.uk/download/1.5.mp4 this video] 
 to see if you can produce a saliency map from it. You will note that there is a white/black square in the video, this is where the driver's eye is fixated. Unfortunately, the location data of the square is not available. See if you could do the following
 
- #(1) Automatically locate the square (i.e. find where the eyes are
-fixated) from the video data (this will be useful, more later)
- #(2) Calculate a spatiotemporal saliency map of the video.
- #(3) Calculate the relation between the eye fixation square and saliency features, e.g., whether the square is on a saliency point (the strength of the saliency point), the percentage of times the square is on a saliency point etc
+ # Automatically locate the square (i.e. find where the eyes are fixated) from the video data (this will be useful, more later)
+ # Calculate a spatiotemporal saliency map of the video.
+ # Calculate the relation between the eye fixation square and saliency features, e.g., whether the square is on a saliency point (the strength of the saliency point), the percentage of times the square is on a saliency point etc
 
 = Conversion with Dr Kenneth = 
 
