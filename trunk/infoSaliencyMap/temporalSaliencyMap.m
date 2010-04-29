@@ -53,8 +53,8 @@ end
 
 %% Choose number of components reserved
 
-pC1(:,5:1:100) = [];
-pC2(:,5:1:100) = [];
+pC1(:,20:1:100) = [];
+pC2(:,20:1:100) = [];
 
 % for iP = 1:1:nP
 %     pC1(iP,pC1(iP,:) > max(pC1(iP,:))/sqrt(2)) = 1;
