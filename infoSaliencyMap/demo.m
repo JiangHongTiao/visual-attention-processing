@@ -6,7 +6,10 @@ function demo()
 % There are 4 consecutive images used to calculate the temporal saliency
 % map.
     %% Sample results
-    resFld = '/home/lengoanhcat/PhD_Research/trunk/Simulations/Results/Experiment_8/results_nc5/';
+    % resFld =
+    % '/home/lengoanhcat/PhD_Research/trunk/Simulations/Results/Experiment_
+    % 8/results_nc20/'; % Linux result folder
+    resFld = 'D:\PhD Research\Simulations\Results\Experiment_8\results_nc10\';    
     mkdir(resFld);
     
     %% Sample images for testing
