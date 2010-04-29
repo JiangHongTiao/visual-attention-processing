@@ -22,10 +22,10 @@ http://www.viplab.cs.nott.ac.uk/download/1.5.mp4
 
 to see if you can produce a saliency map from it. You will note that there is a white/black square in the video, this is where the driver's eye is fixated. Unfortunately, the location data of the square is not available. See if you could do the following
 
-(1) Automatically locate the square (i.e. find where the eyes are
+ #(1) Automatically locate the square (i.e. find where the eyes are
 fixated) from the video data (this will be useful, more later)
-(2) Calculate a spatiotemporal saliency map of the video.
-(3) Calculate the relation between the eye fixation square and saliency features, e.g., whether the square is on a saliency point (the strength of the saliency point), the percentage of times the square is on a saliency point etc
+ #(2) Calculate a spatiotemporal saliency map of the video.
+ #(3) Calculate the relation between the eye fixation square and saliency features, e.g., whether the square is on a saliency point (the strength of the saliency point), the percentage of times the square is on a saliency point etc
 
 = Conversion with Dr Kenneth = 
 
