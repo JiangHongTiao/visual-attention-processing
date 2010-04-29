@@ -33,13 +33,25 @@ end
 
 nP = nrP*ncP;
 
-%% Transform patches into Hadamar Space
+%% Try transform with different transform techniques
+
+%% Transform patches into idependent space by 3D-Hadamard 
+% c1 = zeros(size(V1));
+% c2 = zeros(size(V2));
+% for i = 1:1:nP        
+%     c1(:,:,i,:) = WAT3D(squeeze(V1(:,:,i,:)));    
+%     c2(:,:,i,:) = WAT3D(squeeze(V2(:,:,i,:)));    
+% end
+
+%% Transforms patches into independent space by 3D-DCT
 c1 = zeros(size(V1));
 c2 = zeros(size(V2));
 for i = 1:1:nP        
-    c1(:,:,i,:) = WAT3D(squeeze(V1(:,:,i,:)));    
-    c2(:,:,i,:) = WAT3D(squeeze(V2(:,:,i,:)));    
+    c1(:,:,i,:) = mirt_dctn(squeeze(V1(:,:,i,:)));    
+    c2(:,:,i,:) = mirt_dctn(squeeze(V2(:,:,i,:)));    
 end
+
+
 
 %% Calculate the dimensional probabilities for each patch
 pC1 = []; pC2 = [];
@@ -53,8 +65,8 @@ end
 
 %% Choose number of components reserved
 
-pC1(:,20:1:100) = [];
-pC2(:,20:1:100) = [];
+pC1(:,5:1:100) = [];
+pC2(:,5:1:100) = [];
 
 % for iP = 1:1:nP
 %     pC1(iP,pC1(iP,:) > max(pC1(iP,:))/sqrt(2)) = 1;
