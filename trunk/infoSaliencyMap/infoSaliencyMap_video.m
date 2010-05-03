@@ -25,8 +25,8 @@ hbfr = video.MultimediaFileReader( ...
     
 %% 
 % Create a System object to save video to file
-
-outFld = [outFld '\' transEng '_nc' num2str(noCoff)];
+[path,name,ext] = fileparts(inVid);
+outFld = [outFld '\' name '_' transEng '_nc' num2str(noCoff)];
 
 if (exist(outFld,'dir') ~= 7) 
     mkdir(outFld);
@@ -138,12 +138,6 @@ while ~isDone(hbfr)
         [tsm,ssm,ism] = infoSaliencyMap(queue,transEng,noCoff);       
         toc;
         %% Result Presentation in Grayscale or Color
-    %     lmrgb = cat(3,lm,lm,lm) .* imrgb_org;
-    %     lmgray = lm .* imgray_org;
-    %     imb = step(halphablend,lmgray,imgray_org);
-    %     step(hvideo1, imrgb_org);        % Display Original Video
-    %     step(hvideo2, lmgray);       % Display Results Video in Grayscale
-    %     step(hvideo3, lmrgb);
         step(hvideo1,queue(:,:,M));    
         step(hvideo2,tsm);    
         step(hvideo3,ssm);    
@@ -153,9 +147,9 @@ while ~isDone(hbfr)
         step(hmfw3,ssm);
         step(hmfw4,ism);
     end
-    if (iFrame >= 90) 
-        break; 
-    end    
+%     if (iFrame >= 90) 
+%         break; 
+%     end    
 end
 
 %% Close
