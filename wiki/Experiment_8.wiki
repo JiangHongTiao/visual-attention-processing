@@ -26,9 +26,22 @@ to see if you can produce a saliency map from it. You will note that there is a 
  # Calculate a spatiotemporal saliency map of the video.
  # Calculate the relation between the eye fixation square and saliency features, e.g., whether the square is on a saliency point (the strength of the saliency point), the percentage of times the square is on a saliency point etc
 
+ * Video sample for spatialtemporal saliency is a set of data recorded by Professor Geoff Underwood in the School of Psychology here in Nottingham to study driving safety on board a car.
+
+ * Use saliency score in the vicinity of the square.
+
+ * Put low-pass filter ( smooth ) the map to get rid of noise and only reserve saliency points.
+
 = Conversion with Dr Kenneth = 
 
-We can try to test it with PCA, KLT, ICA, DCT in lane-mark extraction. The 
+We can try to test it with PCA, KLT, ICA, DCT in lane-mark extraction. 
+
+Figure out how correlated between Psychology data and Computing data. 
+
+ # How many times the square hits saliency points ? ( the percentage of times )
+ # What probability of the saliency point which is hit by the eye-fixated points ? ( the strength of saliency point versus time )
+
+Focus on the experiment 8 with video sample from Prof Guoping Qiu.
 
 = Results =
 
