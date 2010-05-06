@@ -22,7 +22,7 @@ function demo()
     imgPath2 = './figures/L_2.jpg'; % Image at t = -2;
     imgPath3 = './figures/L_3.jpg'; % Image at t = -1;
     imgPath4 = './figures/L_4.jpg'; % Image at t = 0; 
-    imgPath5 = './figures/L_5.jpg'; % Image at t = 1; current imaeg
+    imgPath5 = './figures/L_5.jpg'; % Image at t = 1; current image
     % All images are resized by 1/4
     img1 = imresize(rgb2gray(imread(imgPath1)),0.25);
     img2 = imresize(rgb2gray(imread(imgPath2)),0.25);
