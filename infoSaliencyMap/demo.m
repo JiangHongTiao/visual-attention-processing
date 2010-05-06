@@ -33,6 +33,20 @@ function demo()
     
     [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff);
     
+    % Apply low-pass filter on information saliency map
+    ism_filted = imfilter(ism,fspecial('gaussian',8,3));
+    
+    % Showing results     
+    figure(1);
+    subplot(1,2,1), imshow(ism);
+    subplot(1,2,2), imshow(ism_filted);
+    
+    figure(2);    
+    gridx1 = 1:1:size(imgs(:,:,1),1);
+    gridx2 = 1:1:size(imgs(:,:,1),2);
+    [gridx2,gridx1] = meshgrid(gridx2,gridx1);
+    surf(gridx1,gridx2,ism);      
+    
     % Represent temporal saliency map
     figure(1), colormap('gray'), imagesc(tsm);
     title('Temporal Saliency Map - 2D');
