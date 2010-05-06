@@ -48,7 +48,7 @@ switch transEng
         for i = 1:1:nP        
             c1(:,:,i,:) = mirt_dctn(squeeze(V1(:,:,i,:)));    
             c2(:,:,i,:) = mirt_dctn(squeeze(V2(:,:,i,:)));    
-        end   
+        end
     otherwise
         error('Invalid choide of transform engine');
 end
