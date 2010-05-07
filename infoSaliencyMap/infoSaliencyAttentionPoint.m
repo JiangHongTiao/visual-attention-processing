@@ -12,7 +12,7 @@ function aSaliencyScore = infoSaliencyAttentionPoint(imgs,transEng,noCoff,Loc)
     xLoc = Loc(1); yLoc = Loc(2);
     [nrows, ncols] = size(imgs(:,:,1));
     
-    if (xLoc >= 22 && xLoc <= nrows - 22 && yLoc >= 22 && yLoc <= ncols - 22)
+    if (xLoc >= 22 && xLoc <= ncols - 22 && yLoc >= 22 && yLoc <= nrows - 22)
     
         offset_x = 20*[ -1  0   1   ...
                         -1      1   ...
@@ -22,11 +22,11 @@ function aSaliencyScore = infoSaliencyAttentionPoint(imgs,transEng,noCoff,Loc)
                          0      0    ...
                          1   1  1 ];
         % Define loations of squares in the vicinity 
-        xP = Loc(1) + offset_x;
-        yP = Loc(2) + offset_y;    
+        xP = double(Loc(1)) + (offset_x);
+        yP = double(Loc(2)) + offset_y;    
 
 
-        for iP = 1:1:7
+        for iP = 1:1:8
             aPoint = imgs(yP(iP)-2:yP(iP)+1,xP(iP)-2:xP(iP)+1,:);
             [~,~,ism] = infoSaliencyMap(aPoint,transEng,noCoff);
             aSaliencyScore = aSaliencyScore + ism;
