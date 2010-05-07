@@ -17,8 +17,5 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff)
     % Calculate spatial Saliency Map;
     ssm = spatialSaliencyMap(imgs(:,:,5),4,transEng,noCoff);    
     % Fuse spatial and temporal map together to create saliency map
-    ism = tsm + ssm;  
-    % Apply low-pass filter on information saliency map
-    ism_filted = imfilter(ism,fspecial('gaussian',8,3));
- 
+    ism = tsm + ssm;   
 end
