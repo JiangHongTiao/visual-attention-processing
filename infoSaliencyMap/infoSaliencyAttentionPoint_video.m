@@ -76,9 +76,9 @@ while ~isDone(hbfr)
         tmpImg = step(hmi,queue(:,:,M),Loc.Data(:,:,iFrame));
         step(hvideo1,tmpImg);         
     end
-    if (iFrame >= 90) 
-        break; 
-    end    
+%     if (iFrame >= 90) 
+%         break; 
+%     end    
 end
 
 %% Close
