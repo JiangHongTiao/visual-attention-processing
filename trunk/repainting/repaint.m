@@ -2,7 +2,7 @@ function outImg = repaint(inImg,Loc)
     % Initialize variables     
     nrows = size(inImg,1);
     ncols = size(inImg,2);
-    X_center = Loc(1); Y_center = Loc(2);
+    Y_center = Loc(1); X_center = Loc(2);
     
     % Evaluate pixel coordinates.
     borderSize = 20;
