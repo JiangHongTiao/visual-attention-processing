@@ -5,24 +5,25 @@ function demo_eyesFixedPoint()
     
     % Coordinates of eye-fixed point
     X_center = 329;
-    Y_center = 273;
-    borderSize = 20;
+    Y_center = 273;    
     
-    % Evaluate pixel coordinates.
-    x = 1:ncols;
-    y = 1:nrows;
-    [X,Y] = meshgrid(x,y);
-      
-    % Square mask.   
-    M = (abs(X-X_center) < 10) & (abs(Y-Y_center)) < 10;
-    
-    % Border around masked region(s).
-%     S = ~M;
-    S = bwdist(M) < borderSize;
-    S(M) = 0;
-    
-    % Run exemplar-based image inpainting.
-    [J,C] = inpaint(I,M,S);
+%     % Evaluate pixel coordinates.
+%     borderSize = 20;
+%     x = 1:ncols;
+%     y = 1:nrows;
+%     [X,Y] = meshgrid(x,y);
+%       
+%     % Square mask.   
+%     M = (abs(X-X_center) < 10) & (abs(Y-Y_center)) < 10;
+%     
+%     % Border around masked region(s).
+%     S = bwdist(M) < borderSize;
+%     S(M) = 0;
+%     
+%     % Run exemplar-based image inpainting.
+%     [J,C] = inpaint(I,M,S);
+
+    J.rgb = repaint(I,[X_center Y_center]);
     
     % Display original and inpainted images.
     figure(2); clf;
