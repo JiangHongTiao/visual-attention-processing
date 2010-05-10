@@ -9,7 +9,7 @@ function aSaliencyScore = infoSaliencyAttentionPoint(imgs,transEng,noCoff,Loc)
 % imgs_6 imgs_7 imgs_8    
     aSaliencyScore = zeros(4,4);        
     
-    xLoc = Loc(1); yLoc = Loc(2);
+    xLoc = Loc(2); yLoc = Loc(1);
     [nrows, ncols] = size(imgs(:,:,1));
     
     if (xLoc > 22 && xLoc <= ncols - 22 && yLoc > 22 && yLoc <= nrows - 22)
