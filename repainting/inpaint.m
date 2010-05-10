@@ -8,7 +8,7 @@ dataAlpha   = 0.15;  % normalization for data term
 useIsophote = true;  % enable/disable isophote data term
 
 % Define display and animation parameters.
-displayFlag  = true;  % enable/display figures
+displayFlag  = false;  % enable/display figures
 createMovie  = false; % enable/disable movie creation
 pauseFrames  = false; % pause on first/last frames of movie
 showMask     = true;  % highlight masked region(s)
