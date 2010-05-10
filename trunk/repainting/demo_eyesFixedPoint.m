@@ -1,5 +1,5 @@
 function demo_eyesFixedPoint()
-    I = im2double(imread('./examples/eyeFixedPoint/eyeFixedPoint.jpg'));
+    I = im2double(imread('./figures/eyeFixedPoint/eyeFixedPoint.jpg'));
     nrows = size(I,1);
     ncols = size(I,2);
     
