@@ -43,6 +43,8 @@ Figure out how correlated between Psychology data and Computing data.
 
 Focus on the experiment 8 with video sample from Prof Guoping Qiu.
 
+Compare the PQFT / Spatiotemporal / Koch algorithm on their eye-gazed fixation database.
+
 = Results =
 
 Add your content here.  Format your content with:
