@@ -1,7 +1,7 @@
 function aSaliencyScore = infoSaliencyAttentionPoint(imgs,transEng,noCoff,Loc)
 %% This function is purposely created to calculate information saliency at
 %% a point 
-    aSaliencyScore = zeros(4,4);        
+    aSaliencyScore = zeros(4,4);       
     
     xLoc = Loc(2); yLoc = Loc(1);
     [nrows, ncols] = size(imgs(:,:,1));
