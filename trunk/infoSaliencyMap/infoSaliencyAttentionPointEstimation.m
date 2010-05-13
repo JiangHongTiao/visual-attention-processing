@@ -23,8 +23,7 @@ function aSaliencyScore = infoSaliencyAttentionPointEstimation(imgs,transEng,noC
                          1   1  1 ];
         % Define loations of squares in the vicinity 
         xP = double(Loc(1)) + (offset_x);
-        yP = double(Loc(2)) + offset_y;    
-
+        yP = double(Loc(2)) + offset_y;  
 
         for iP = 1:1:8
             aPoint = imgs(yP(iP)-2:yP(iP)+1,xP(iP)-2:xP(iP)+1,:);
