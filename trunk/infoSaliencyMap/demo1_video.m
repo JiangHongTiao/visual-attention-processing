@@ -9,6 +9,7 @@ function demo1_video(inputVideo)
     %%    
     % Create a System object to save data to file
     [~,name,~] = fileparts(inputVideo);
+%     fileName = [name '_' transEng '_nc' num2str(noCoff) '_AttentivePoint_Estimated.mat'];    
     fileName = [name '_' transEng '_nc' num2str(noCoff) '_AttentivePoint.mat'];    
     saliencyScore_ts = infoSaliencyAttentionPoint_video(inputVideo,transEng,noCoff,Loc);        
     curFld = pwd;
