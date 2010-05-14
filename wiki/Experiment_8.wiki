@@ -45,6 +45,18 @@ Focus on the experiment 8 with video sample from Prof Guoping Qiu.
 
 Compare the PQFT / Spatiotemporal / Koch algorithm on their eye-gazed fixation database.
 
+= Le Ngo Anh Cat 's idea =
+
+Buying the EMR-9 device of NAC to carry out the experiment in UNMC
+Advantage: softwares and hardware are ready for you
+Disadvantage: expensive, low-customizable.
+
+Build an eye tracking system from Open-Source Project - http://www.gazegroup.org/
+Advantage: inexpensive, usage of what we have done so far - camera, video database
+Disadvantage: time consumption, not reliable eye-gazed database.
+
+Contact psychology department in Nottingham, Malaysia to ask for their help on eye-gazed system. 
+
 = Results =
 
 Add your content here.  Format your content with:
