@@ -5,7 +5,7 @@ function demo1_video(inputVideo)
     load('./data/psychology_data.mat');
     
     %% Initial Variables    
-    transEng = 'hadamard'; noCoff = 20;
+    transEng = 'hadamard'; noCoff = 30;
     %%    
     % Create a System object to save data to file
     [~,name,~] = fileparts(inputVideo);
