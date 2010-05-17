@@ -68,11 +68,6 @@ end
 pC1(:,noCoff:1:100) = [];
 pC2(:,noCoff:1:100) = [];
 
-% for iP = 1:1:nP
-%     pC1(iP,pC1(iP,:) > max(pC1(iP,:))/sqrt(2)) = 1;
-%     pC2(iP,pC2(iP,:) > max(pC2(iP,:))/sqrt(2)) = 1;
-% end
-
 %% Calculate the probabilities for each patch
 pV1 = prod(pC1,2);
 pV2 = prod(pC2,2);
@@ -80,6 +75,27 @@ pV2 = prod(pC2,2);
 %% Calculate spatiotemporal event probability
 P = pV2 ./ pV1;
 S = -1*log(P);
+
+%% Calculate the log propability for each patch
+% 
+% eps = log(min(min(pC1(pC1 ~= 0)),min(pC2(pC2 ~=0))))-1;
+% 
+% pV1 = zeros(size(pC1,1),1);
+% pV2 = zeros(size(pC2,1),1);
+% 
+% for iP = 1:1:size(pC1,1)    
+%     pV1(iP) = sum(log(pC1(iP,:)));
+%     pV2(iP) = sum(log(pC2(iP,:)));
+% end
+% 
+%% Calculate temporal event probability
+% S = zeros(size(pV1,1),1);
+% for iP = 1:1:size(pV1,1)
+%     if ( ~isinf(pV1(iP)) && ~isinf(pV2(iP)) )
+%         S(iP) = -1*(pV2(iP) - pV1(iP));
+%     end
+% end
+
 %% Representing spatiotemporal probability on images
 tsm = zeros(size(img));
 for ir = 0:1:nrP-1
