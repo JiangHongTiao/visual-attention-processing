@@ -18,4 +18,19 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff)
     ssm = spatialSaliencyMap(imgs(:,:,5),4,transEng,noCoff);    
     % Fuse spatial and temporal map together to create saliency map
     ism = tsm + ssm;   
+    
+    % Replace -Inf and NaN value by minimum value * 2;
+    % Replace +Inf by maximum * 2;
+    maxVal = max(ism(~isinf(ism) & ~isnan(ism)));
+    minVal = min(ism(~isinf(ism) & ~isnan(ism)));    
+    
+    for iy = 1:1:size(ism,1) 
+        for ix = 1:1:size(ism,2)
+            if logical(isnan(ism(iy,ix))) || (logical(isinf(ism(iy,ix))) && ism(iy,ix) < 0)
+                ism(iy,ix) = 2*minVal;
+            elseif logical(isinf(ism(iy,ix))) && ism(iy,ix) > 0
+                ism(iy,ix) = 2*maxVal;
+            end
+        end
+    end
 end
