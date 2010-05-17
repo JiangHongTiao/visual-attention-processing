@@ -5,13 +5,13 @@ function outImg = repaint(inImg,Loc)
     Y_center = Loc(1); X_center = Loc(2);
     
     % Evaluate pixel coordinates.
-    borderSize = 20;
+    borderSize = 30;
     x = 1:ncols;
     y = 1:nrows;
     [X,Y] = meshgrid(x,y);
       
     % Square mask.   
-    mask = (abs(X-X_center) < 10) & (abs(Y-Y_center)) < 10;
+    mask = (abs(X-X_center) < 15) & (abs(Y-Y_center)) < 15;
     
     % Border around masked region(s).
     source = bwdist(mask) < borderSize;
