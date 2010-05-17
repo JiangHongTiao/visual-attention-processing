@@ -70,9 +70,9 @@ while ~isDone(hbfr)
     if ( sum(sum(queue(:,:,1))) ~= 0 ) 
         % Estimate the saliency score at eye-gazed fixation point by usage
         % of saliency score in the vicinity        
-%         aSaliencyScore = infoSaliencyAttentionPointEstimation(queue,transEng,noCoff,Loc.Data(:,:,iFrame));       
+        aSaliencyScore = infoSaliencyAttentionPointEstimation(queue,transEng,noCoff,Loc.Data(:,:,iFrame));       
         % Calcuate the sailency score at eye-gazed fixation points 
-        aSaliencyScore = infoSaliencyAttentionPoint(queue,transEng,noCoff,Loc.Data(:,:,iFrame));
+%       aSaliencyScore = infoSaliencyAttentionPoint(queue,transEng,noCoff,Loc.Data(:,:,iFrame));
         saliencyScore_ts = addsample(saliencyScore_ts,'Data',aSaliencyScore,'Time', (iFrame-1)*0.04);
                 
         %% Result Presentation in Grayscale or Color
