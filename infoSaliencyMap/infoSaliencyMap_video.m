@@ -135,7 +135,12 @@ while ~isDone(hbfr)
     if ( sum(sum(queue(:,:,1))) ~= 0 ) 
         % Detecting lane-mark by saliency method
         tic;
-        [tsm,ssm,ism] = infoSaliencyMap(queue,transEng,noCoff);       
+        [tsm,ssm,ism] = infoSaliencyMap(queue,transEng,noCoff);               
+        % Define filter used for smooth the saliency map
+        avg_filter = fspecial('average',4);
+
+        % Apply low-pass filter and normalization function on information saliency map a   
+        ism = normalization(imfilter(ism,avg_filter));          
         toc;
         %% Result Presentation in Grayscale or Color
         step(hvideo1,queue(:,:,M));    
@@ -147,9 +152,9 @@ while ~isDone(hbfr)
         step(hmfw3,ssm);
         step(hmfw4,ism);
     end
-%     if (iFrame >= 90) 
-%         break; 
-%     end    
+    if (iFrame >= 90) 
+        break; 
+    end    
 end
 
 %% Close
