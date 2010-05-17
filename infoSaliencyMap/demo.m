@@ -35,21 +35,6 @@ function demo()
     
     [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff);
     
-    % Replace -Inf and NaN value by minimum value * 2;
-    % Replace +Inf by maximum * 2;
-    maxVal = max(ism(~isinf(ism) & ~isnan(ism)));
-    minVal = min(ism(~isinf(ism) & ~isnan(ism)));    
-    
-    for iy = 1:1:size(ism,1) 
-        for ix = 1:1:size(ism,2)
-            if logical(isnan(ism(iy,ix))) || (logical(isinf(ism(iy,ix))) && ism(iy,ix) < 0)
-                ism(iy,ix) = 2*minVal;
-            elseif logical(isinf(ism(iy,ix))) && ism(iy,ix) > 0
-                ism(iy,ix) = 2*maxVal;
-            end
-        end
-    end
-    
     % Define filter used for smooth the saliency map
     avg_filter = fspecial('average',4);
     
