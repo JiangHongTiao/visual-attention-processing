@@ -43,9 +43,25 @@ pC(:,noCoff:1:100) = [];
 %% Calculate the probabilities for each patch
 pB = prod(pC,2);
 
+
 %% Calculate spatiotemporal event probability
 P = pB;
 S = -1*log(P);
+
+%% Calculate the log propability for each patch
+% pB = zeros(size(pC,1),1);
+% 
+% for iP = 1:1:size(pB,1)
+%     pB(iP) = sum(log(pC(iP,:)));
+% end
+%% Calculate temporal event probability
+% S = zeros(size(pB,1),1);
+% for iP = 1:1:size(pB)
+%     if ~isinf(pB(iP)) 
+%         S(iP) = -1*pB(iP);
+%     end
+% end
+
 %% Representing spatiotemporal probability on images
 ssm = zeros(size(imgB));
 for ir = 0:1:nrP-1
