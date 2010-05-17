@@ -5,6 +5,9 @@ function demo()
 % All images are initally reduced to a quater of its original size
 % There are 4 consecutive images used to calculate the temporal saliency
 % map.
+    %% Add the common MATLAB fucntions into the folder
+    addpath('../comMLFuncs/');
+    
     %% Precprocess steps
     clc; close all;
 
@@ -13,8 +16,7 @@ function demo()
     noCoff = 30; % Number of reserved components    
     
     %% Sample results
-    resFld = ['/home/lengoanhcat/PhD_Research/trunk/Simulations/Results/Experiment_8/' transEng '/results_nc' num2str(noCoff) '/']; % Linux result folder
-    % resFld = 'D:\PhD Research\Simulations\Results\Experiment_8\' dct '\results_nc' noCoff '\';    
+    resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/']; % Linux result folder    
     mkdir(resFld);
     
     %% Sample images for testing
@@ -33,19 +35,26 @@ function demo()
     
     [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff);
     
-    % Apply low-pass filter on information saliency map
-    ism_filted = imfilter(ism,fspecial('gaussian',8,3));
+    % Replace -Inf and NaN value by minimum value * 2;
+    % Replace +Inf by maximum * 2;
+    maxVal = max(ism(~isinf(ism) & ~isnan(ism)));
+    minVal = min(ism(~isinf(ism) & ~isnan(ism)));    
     
-    % Showing results     
-    figure(1);
-    subplot(1,2,1), imshow(ism);
-    subplot(1,2,2), imshow(ism_filted);
+    for iy = 1:1:size(ism,1) 
+        for ix = 1:1:size(ism,2)
+            if logical(isnan(ism(iy,ix))) || (logical(isinf(ism(iy,ix))) && ism(iy,ix) < 0)
+                ism(iy,ix) = 2*minVal;
+            elseif logical(isinf(ism(iy,ix))) && ism(iy,ix) > 0
+                ism(iy,ix) = 2*maxVal;
+            end
+        end
+    end
     
-    figure(2);    
-    gridx1 = 1:1:size(imgs(:,:,1),1);
-    gridx2 = 1:1:size(imgs(:,:,1),2);
-    [gridx2,gridx1] = meshgrid(gridx2,gridx1);
-    surf(gridx1,gridx2,ism);      
+    % Define filter used for smooth the saliency map
+    avg_filter = fspecial('average',4);
+    
+    % Apply low-pass filter and normalization function on information saliency map a   
+    ism_avgfilted = normalization(imfilter(ism,avg_filter));         
     
     % Represent temporal saliency map
     figure(1), colormap('gray'), imagesc(tsm);
@@ -57,16 +66,22 @@ function demo()
     title('Spatial Saliency Map - 2D');
     saveas(2,[resFld 'ssm-2D.jpg']);    
     
-    % Represent the saliency map
+    % Represent the information saliency map
     figure(3), colormap('gray'), imagesc(ism);
     title('Information Saliency Map - 2D');
     saveas(3,[resFld 'ims-2d.jpg']);    
     
+    % Showing results     
     figure(4);    
+    imshow(ism_avgfilted);
+    title('Information Saliency Map Filted by Average Filter 32x32 - 2D');
+    saveas(4,[resFld 'ims-avgfilted-2d.jpg']);
+    
+    figure(5);    
     gridx1 = 1:1:size(img1,1);
     gridx2 = 1:1:size(img1,2);
     [gridx2,gridx1] = meshgrid(gridx2,gridx1);
     surf(gridx1,gridx2,ism);   
     title('Information Saliency Map - 3D');
-    saveas(4,[resFld 'ims-3d.jpg']);
+    saveas(5,[resFld 'ims-3d.jpg']);
 end
