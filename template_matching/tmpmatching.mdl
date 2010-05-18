@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.27"
+    ComputedModelVersion    "1.28"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -23,11 +23,11 @@ Model {
   Creator		  "lengoanhcat"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "lengoanhcat"
+  LastModifiedBy	  "Administrator"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon May 03 11:54:01 2010"
-  RTWModifiedTimeStamp	  194788441
-  ModelVersionFormat	  "1.%<AutoIncrement:27>"
+  LastModifiedDate	  "Tue May 18 17:48:12 2010"
+  RTWModifiedTimeStamp	  196105665
+  ModelVersionFormat	  "1.%<AutoIncrement:28>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -548,6 +548,13 @@ Model {
 	  Version		  "1.10.0"
 	  Description		  "HDL Coder custom configuration component"
 	  Name			  "HDL Coder"
+	  Array {
+	    Type		    "Cell"
+	    Dimension		    1
+	    Cell		    ""
+	    PropName		    "HDLConfigFile"
+	  }
+	  HDLCActiveTab		  "0"
 	}
 	PropName		"Components"
       }
@@ -604,7 +611,7 @@ Model {
   }
   System {
     Name		    "tmpmatching"
-    Location		    [167, 82, 1035, 995]
+    Location		    [177, 376, 1057, 910]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -682,7 +689,7 @@ Model {
       DialogControllerArgs    "DataTag1"
       SourceBlock	      "dspsrcs4/From Multimedia File"
       SourceType	      "From Multimedia File"
-      inputFilename	      "D:\\PhD Research\\Simulations\\Experiment_8\\template_matching\\1.5.mp4"
+      inputFilename	      "1.5.mp4"
       loop		      on
       numPlays		      "1"
       outputStreams	      "Video only"
@@ -775,13 +782,13 @@ Model {
       Name		      "To Multimedia File"
       SID		      15
       Ports		      [1]
-      Position		      [725, 166, 855, 234]
+      Position		      [725, 165, 885, 235]
       LibraryVersion	      "1.458"
       DialogController	      "dspDDGCreate"
       DialogControllerArgs    "DataTag4"
       SourceBlock	      "dspsnks4/To Multimedia File"
       SourceType	      "To Multimedia File"
-      outputFilename	      "D:\\PhD Research\\Simulations\\Experiment_8\\template_matching\\video_tracked.avi"
+      outputFilename	      "./video_tracked.avi"
       streamSelection	      "Video only"
       videoCompressor	      "ffdshow video encoder"
       audioCompressor	      "None (uncompressed)"
