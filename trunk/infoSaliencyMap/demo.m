@@ -31,6 +31,13 @@ function demo()
     img3 = imresize(rgb2gray(imread(imgPath3)),0.25);
     img4 = imresize(rgb2gray(imread(imgPath4)),0.25);    
     img5 = imresize(rgb2gray(imread(imgPath5)),0.25);        
+    
+%     img1 = rgb2gray(imread(imgPath1));
+%     img2 = rgb2gray(imread(imgPath2));
+%     img3 = rgb2gray(imread(imgPath3));
+%     img4 = rgb2gray(imread(imgPath4));    
+%     img5 = rgb2gray(imread(imgPath5));        
+    
     imgs = cat(3,img1,img2,img3,img4,img5);          
     
     [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff);
