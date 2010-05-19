@@ -5,7 +5,7 @@ function demo_video()
 %     infoSaliencyMap_video(inputVideo,outFld,'dct',20);
     %% Input Video 2
     inputVideo =  './data/1.5.mp4';
-    outputFolder = './results';
+    outputFolder = '.\results';
     infoSaliencyMap_video(inputVideo,outputFolder,'hadamard',30);
     %% Input Video 3
 %     inputVideo =  'D:\PhD Research\UNMC_Autovision_DB\Lane\videoL_030.mpg';
