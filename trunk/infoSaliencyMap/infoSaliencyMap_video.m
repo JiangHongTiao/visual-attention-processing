@@ -12,7 +12,7 @@ function infoSaliencyMap_video(inVid,outFld,transEng,noCoff)
 %% Initialization
 % Use these next sections of code to initialize the required variables and
 % System objects.
-
+addpath('../comMLFuncs/');
 % inputVideo = 'D:\PhD Research\UNMC_Autovision_DB\Lane\videoL_001.mpg';
 %% 
 % Create a System object to read video from a video.
@@ -136,11 +136,13 @@ while ~isDone(hbfr)
         % Detecting lane-mark by saliency method
         tic;
         [tsm,ssm,ism] = infoSaliencyMap(queue,transEng,noCoff);               
+        probeData([outFld '\ism_map_raw.mat'],ism);
         % Define filter used for smooth the saliency map
         avg_filter = fspecial('average',4);
 
         % Apply low-pass filter and normalization function on information saliency map a   
         ism = normalization(imfilter(ism,avg_filter));          
+        probeData([outFld '\ism_map_smoothed.mat'],ism);
         toc;
         %% Result Presentation in Grayscale or Color
         step(hvideo1,queue(:,:,M));    
@@ -152,9 +154,9 @@ while ~isDone(hbfr)
         step(hmfw3,ssm);
         step(hmfw4,ism);
     end
-    if (iFrame >= 90) 
-        break; 
-    end    
+%     if (iFrame >= 90) 
+%         break; 
+%     end    
 end
 
 %% Close
