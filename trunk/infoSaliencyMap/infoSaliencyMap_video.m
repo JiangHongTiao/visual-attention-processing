@@ -26,7 +26,7 @@ hbfr = video.MultimediaFileReader( ...
 %% 
 % Create a System object to save video to file
 [path,name,ext] = fileparts(inVid);
-outFld = [outFld '\' name '_' transEng '_nc' num2str(noCoff)];
+outFld = [outFld '\' name '_' transEng '_nc' num2str(noCoff) date];
 
 if (exist(outFld,'dir') ~= 7) 
     mkdir(outFld);
