@@ -45,6 +45,8 @@ Focus on the experiment 8 with video sample from Prof Guoping Qiu.
 
 Compare the PQFT / Spatiotemporal / Koch algorithm on their eye-gazed fixation database.
 
+Smooth and inpaint first 16 frames of the video for samples by spatial and temporal smoothing.
+
 = Le Ngo Anh Cat 's idea =
 
 Buying the EMR-9 device of NAC to carry out the experiment in UNMC
