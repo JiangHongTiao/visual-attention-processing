@@ -1,0 +1,35 @@
+#summary All works done and experiment collected in Hardware Implementation
+
+= Overview = 
+<wiki:toc max_depth="1" />
+
+= Introduction =
+
+This document is written to collect and organize data / information in DSP Hardware Implementation. It mainly focuses on the integration between MATLAB and CCS. The simulink model is designed in MATLAB and converted directly into C code used by CCS by Code Generation Tool, and several other CCS and MATLAB native softwares.
+
+Testing Platform:
+
+MATLAB 2010a - Full Installation
+Code Composer v 3.3 - Version: 3.3.82.13 - SR12 Release
+ * BIOS: 5.41.03.17
+ * Code Generation Tools: v7.0.1
+Target Emulators:
+ * Texas Instrument PCI XDS560 Emulator
+ * BlackHawk USB 560m Emulator
+Camera: 
+ * Panasonic: SDR-S7
+Monitor: 
+ * Philips: 150 S4
+
+= Setup Steps =
+
+Installation MATLAB 2010A needs following vital products
+ * Simulink
+ * Video and Image Processing Blockset
+ * xPC Target
+ * Image Processing Toolbox
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
