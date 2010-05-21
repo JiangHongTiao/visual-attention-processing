@@ -29,7 +29,33 @@ Installation MATLAB 2010A needs following vital products
  * xPC Target
  * Image Processing Toolbox
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Installation of Code Composer v3.3 ( CCS v3.3) - usage of CD-ROM provided in the package of DM642 EVM Module.
+
+After installation is done, CCS v3.3 needs to be updated to the latest patch / fixes provided by the chip manufacturer Texas Instrument - ( It can only be done with a registered account at Texas Instrument )
+
+Note: after buying / receiving any products from TI, the activation step needs to be done in order to upgrade the software )
+
+
+= Designing Simulink models =
+
+Models which can be directly configured and run on DM642 EVM needs below parameters.
+
+ * *DM642EVM V3 Block* properties
+  # Board -> Board Support -> Libraries -> Little
+   * $(Install_dir)\c6000\csl\lib\cslDM642.lib
+   * $(Install_dir)\c6000\cgtools\lib\rts6400.lib
+   * $(MATLAB_ROOT)\toolbox\idelink\extensions\ticcs\rtlib\dsp_rt_c6410.lib
+   * $(Install_dir)\boards\evmdm642\lib\evmdm642bsl.lib
+   * $(Install_dir)\boards\evmdm642\drivers\lib\vport.l64
+   * $(Install_dir)\boards\evmdm642\drivers\lib\audio.l64
+  # DSP/BIOS -> TSK task manager properties -> Default stack size
+   *  Default stack size (bytes): 4096;  
+
+ * Configuration Parameters -> Real-time Workshop:
+  # Compiler options string: this configuration parameters can be automatically extracted from default CCS IDE settings, but --mem_model:data=far nees to be added to prevent memory errors.
+
+ * 
+
+
+
+ 
