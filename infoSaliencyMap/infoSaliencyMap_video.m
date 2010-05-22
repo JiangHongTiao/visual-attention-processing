@@ -136,13 +136,13 @@ while ~isDone(hbfr)
         % Detecting lane-mark by saliency method
         tic;
         [tsm,ssm,ism] = infoSaliencyMap(queue,transEng,noCoff);               
-        probeData([outFld '\ism_map_raw.mat'],ism);
+        probeVar('ism_map_raw','add',ism);
         % Define filter used for smooth the saliency map
         avg_filter = fspecial('average',4);
 
         % Apply low-pass filter and normalization function on information saliency map a   
         ism = normalization(imfilter(ism,avg_filter));          
-        probeData([outFld '\ism_map_smoothed.mat'],ism);
+        probeVar('ism_map_smoothed','add',ism);
         toc;
         %% Result Presentation in Grayscale or Color
         step(hvideo1,queue(:,:,M));    
@@ -154,10 +154,14 @@ while ~isDone(hbfr)
         step(hmfw3,ssm);
         step(hmfw4,ism);
     end
-%     if (iFrame >= 90) 
-%         break; 
-%     end    
+    if (iFrame >= 10) 
+        break; 
+    end        
 end
+
+% Save collected data
+probeVar('ism_map_raw','save');
+probeVar('ism_map_smoothed','save');
 
 %% Close
 % Here you call the close method on the System objects to close any open
