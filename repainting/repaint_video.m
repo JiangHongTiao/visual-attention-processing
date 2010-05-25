@@ -53,15 +53,17 @@ hvideo1.WindowPosition([4 3]) = frame_size;
 %% Process stream of videos
 while ~isDone(hbfr)    
     % Control the current number of frames
+    tic;
     iFrame = iFrame + 1;    
     img_rgb = im2double(step(hbfr));
     img_repainted = repaint(img_rgb,double(Loc.Data(:,:,iFrame)));    
     step(hvideo1,img_repainted);
     step(hmfw1,img_repainted);
-    % Limit the number of processed frames
-    if (iFrame >= 90) 
-        break; 
-    end    
+    toc;
+%     % Limit the number of processed frames
+%     if (iFrame >= 90) 
+%         break; 
+%     end    
 end
 
 %% Close
