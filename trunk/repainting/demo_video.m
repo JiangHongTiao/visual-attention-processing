@@ -1,7 +1,7 @@
 function demo_video();
     %% Input Video 1
-    inputVideo =  'D:\PhD Research\Simulations\Experiments\Experiment_8\Database\1.5.mp4';
-    outputFolder = './data';
+    inputVideo =  './results/1.5.mp4';
+    outputFolder = './results';
     load('./data/psychology_data.mat');    
     
     %%    
