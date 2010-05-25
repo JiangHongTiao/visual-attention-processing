@@ -2,7 +2,7 @@ function outImgs = temporalSmoothing(inImgs)
 %TEMPORALSMOOTHING smooth a serries of images according to time axis
 
     % Input Information Collection 
-    nFrame = length(inImgs.Data);       
+    nFrame = length(inImgs.Data);           
     
     % Parse Input
     for ifr = 1:1:nFrame
@@ -11,6 +11,11 @@ function outImgs = temporalSmoothing(inImgs)
             inImgs.Data{ifr} = rgb2gray(inImgs.Data{ifr});
         end
     end
+    
+    % Temporarily resize image to get faster response
+%     for ifr = 1:1:nFrame
+%         inImgs.Data{ifr} = imresize(inImgs.Data{ifr},0.25);
+%     end
     
     [nrow,ncol] = size(inImgs.Data{1});
     
