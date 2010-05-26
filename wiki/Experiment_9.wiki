@@ -1,0 +1,23 @@
+#summary compare the efficiency of the PQFT and spatial temporal saliency method againts Koch & Itti saliency algorithm on Fixations in Faces Database
+
+= Overview = 
+
+<wiki:toc depth="1" />
+
+= Introduction =
+
+== Koch Saliency Algorithm ==
+
+= Setup testing environment = 
+
+Redo the experiment described in [Fixations in Faces research website http://www.klab.caltech.edu/~moran/fifadb/].
+
+Add your content here.
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
