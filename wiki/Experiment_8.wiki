@@ -59,6 +59,20 @@ Disadvantage: time consumption, not reliable eye-gazed database.
 
 Contact psychology department in Nottingham, Malaysia to ask for their help on eye-gazed system. 
 
+= Experiments = 
+
+Sample video preparation
+
+ * The video has been modified to remove eye-tracking marks, and almost all marks have been removed from the original video
+ # Pros: no marks effect the simulation results
+ # Cons:
+  * Marks can not be completely removed, therefore the scenes seems to be unnatural.
+  * The quality of videos are degraded too much
+ # Solutions: 
+  * New driving videos need taking in order to overcome the difficulties.
+  * Find the way to f
+ # Results: video 1.5_repainted_20100525T115516_full_modification_4.avi
+
 = Results =
 
 Add your content here.  Format your content with:
