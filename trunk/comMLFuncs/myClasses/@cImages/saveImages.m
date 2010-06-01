@@ -43,7 +43,7 @@ noZeros = ceil(log(noImgs));
 curPath = pwd;
 cd(this.mPath);
 for i = 1:1:noImgs
-    imwrite(this.mData{i},sprintf(['image_%0' num2str(noZeros) 'd'],i),ext);
+    imwrite(uint8(this.mData{i}),sprintf(['image_%0' num2str(noZeros) 'd'],i),ext);
 %     imwrite(this.mData{i},['image_' num2str(i)],ext);
 end
 suc = true;
