@@ -63,15 +63,26 @@ Contact psychology department in Nottingham, Malaysia to ask for their help on e
 
 Sample video preparation
 
- * The video has been modified to remove eye-tracking marks, and almost all marks have been removed from the original video
- # Pros: no marks effect the simulation results
- # Cons:
-  * Marks can not be completely removed, therefore the scenes seems to be unnatural.
-  * The quality of videos are degraded too much
- # Solutions: 
-  * New driving videos need taking in order to overcome the difficulties.
-  * Find the way to f
- # Results: video 1.5_repainted_20100525T115516_full_modification_4.avi
+ # The video has been modified to remove eye-tracking marks, and almost all marks have been removed from the original video
+  * Pros: no marks effect the simulation results
+  * Cons:
+   # Marks can not be completely removed, therefore the scenes seems to be unnatural.
+   # The quality of videos are degraded too much
+  * Solutions: 
+   # New driving videos need taking in order to overcome the difficulties.
+   # Find the way to remove marks but do not downgrade the video quality.
+  * Results: video 1.5_repainted_20100525T115516_full_modification_4.avi
+
+ # The infoSpatioTemporal Saliency Map is created and saved under video format. 
+  * Pros: 
+   # The saliency maps are saved as videos which can be used as inputs of later experiments
+   # The storage space is saved tremendously.
+  * Cons: 
+   # The original values of saliency maps are floating points; however, they have to be converted into integer so as to be stored as video.
+  * Results: 
+   # Folder: 1.5_engine-hadamard_nc-30_date-20100525T145555 - for marked video
+   # Folder: 
+  
 
 = Results =
 
