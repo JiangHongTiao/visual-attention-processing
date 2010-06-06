@@ -1,4 +1,4 @@
-function infoSaliencyMap_video(inVid,outFld,transEng,noCoff)
+function infoSaliencyMap_video(inVid,outFld,noImgs,transEng,noCoff)
 %% Developing Lane-mark Extraction by using 
 % This video_systemObject is created to test the idea of using "Information
 % Saliency Map" on video
@@ -94,7 +94,7 @@ halphablend = video.AlphaBlender('Operation','Blend','Opacity',0.25);
 % noCoff = 20; % Number of reserved components  
 
 % Initialize some variables used in plotting motion vectors.
-M = 5;
+M = noImgs + 1;
 hbfi = info(hbfr);
 iFrame = 0;
 frame_scale_ratio = 0.25;
@@ -150,7 +150,7 @@ while ~isDone(hbfr)
     if ( sum(sum(queue(:,:,1))) ~= 0 ) 
         % Detecting lane-mark by saliency method
         tic;
-        [tsm,ssm,ism] = infoSaliencyMap(queue,transEng,noCoff);               
+        [tsm,ssm,ism] = infoSaliencyMap(queue,noImgs,transEng,noCoff);               
 %         probeVar('ism_map_raw','add',ism);
         step(hbfw1,int16(round(ism)));
         % Define filter used for smooth the saliency map
@@ -171,7 +171,7 @@ while ~isDone(hbfr)
         step(hmfw3,ssm);
         step(hmfw4,ism);
     end
-    if (iFrame >= 1500) 
+    if (iFrame >= 10) 
         break; 
     end        
 end
