@@ -54,13 +54,14 @@ switch transEng
 end
 
 %% Calculate the dimensional probabilities for each patch
+epsilon = 10^-10;
 pC1 = []; pC2 = [];
 for iP = 1:1:size(c1,3)
     c1_patch = reshape(c1(:,:,iP,:),[1 numel(c1(:,:,iP,:))]);
-    pC1 = [pC1;ksdensity(c1_patch)];
+    pC1 = [pC1;ksdensity(c1_patch)+epsilon];
 
     c2_patch = reshape(c2(:,:,iP,:),[1 numel(c2(:,:,iP,:))]);
-    pC2 = [pC2;ksdensity(c2_patch)];
+    pC2 = [pC2;ksdensity(c2_patch)+epsilon];
 end
 
 %% Choose number of components reserved
