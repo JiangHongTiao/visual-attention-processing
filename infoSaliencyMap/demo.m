@@ -16,7 +16,7 @@ function demo()
     noCoff = 30; % Number of reserved components    
     
     %% Sample results
-    resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/']; % Linux result folder    
+    resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder    
     mkdir(resFld);
     
     %% Sample images for testing
@@ -51,23 +51,23 @@ function demo()
     % Represent temporal saliency map
     figure(1), colormap('gray'), imagesc(tsm);
     title('Temporal Saliency Map - 2D');
-    saveas(1,[resFld 'tms-2D.jpg']);
+    saveas(1,[resFld 'tms-2D.fig']);
 
     % Represent spatial saliency map
     figure(2), colormap('gray'), imagesc(ssm);
     title('Spatial Saliency Map - 2D');
-    saveas(2,[resFld 'ssm-2D.jpg']);    
+    saveas(2,[resFld 'ssm-2D.fig']);    
     
     % Represent the information saliency map
     figure(3), colormap('gray'), imagesc(ism);
     title('Information Saliency Map - 2D');
-    saveas(3,[resFld 'ims-2d.jpg']);    
+    saveas(3,[resFld 'ims-2d.fig']);    
     
     % Showing results     
     figure(4);    
     imshow(ism_avgfilted);
     title('Information Saliency Map Filted by Average Filter 32x32 - 2D');
-    saveas(4,[resFld 'ims-avgfilted-2d.jpg']);
+    saveas(4,[resFld 'ims-avgfilted-2d.fig']);
     
     figure(5);    
     gridx1 = 1:1:size(img1,1);
@@ -75,5 +75,5 @@ function demo()
     [gridx2,gridx1] = meshgrid(gridx2,gridx1);
     surf(gridx1,gridx2,ism);   
     title('Information Saliency Map - 3D');
-    saveas(5,[resFld 'ims-3d.jpg']);
+    saveas(5,[resFld 'ims-3d.fig']);
 end
