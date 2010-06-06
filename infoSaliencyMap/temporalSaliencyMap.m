@@ -21,12 +21,12 @@ for iImg = 1:1:size(imgs,3)
     [Ps,nrP,ncP] = cutImages(img,M);        
 
     %% Create spatiotemporal events V1
-    if (iImg >= 1 && iImg <= 4)
+    if (iImg >= 1 && iImg <= M)
         V1 = cat(4,V1,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,...
     end
 
     %% Create spatiotemporal events V2
-    if (iImg >= 2 && iImg <= 5)
+    if (iImg >= 2 && iImg <= M+1)
         V2 = cat(4,V2,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,...
     end    
 end
@@ -54,7 +54,7 @@ switch transEng
 end
 
 %% Calculate the dimensional probabilities for each patch
-epsilon = 10^-10;
+epsilon = 0;
 pC1 = []; pC2 = [];
 for iP = 1:1:size(c1,3)
     c1_patch = reshape(c1(:,:,iP,:),[1 numel(c1(:,:,iP,:))]);
