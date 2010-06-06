@@ -31,10 +31,11 @@ switch transEng
         error('Invalid choide of transform engine');
 end
 %% Calculate the dimensional probabilities for each patch
+epsilon = 10^-10;
 pC = [];
 for iP = 1:1:size(c,3)
     c_patch = reshape(c(:,:,iP),[1 numel(c(:,:,iP))]);
-    pC = [pC;ksdensity(c_patch)];
+    pC = [pC;ksdensity(c_patch)+epsilon];
 end
 
 %% Choose number of components reserved
