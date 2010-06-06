@@ -31,7 +31,7 @@ switch transEng
         error('Invalid choide of transform engine');
 end
 %% Calculate the dimensional probabilities for each patch
-epsilon = 10^-10;
+epsilon = 0;
 pC = [];
 for iP = 1:1:size(c,3)
     c_patch = reshape(c(:,:,iP),[1 numel(c(:,:,iP))]);
