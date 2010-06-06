@@ -64,7 +64,7 @@ hbfw1 = video.BinaryFileWriter( ...
     'VideoComponentCount',1, ...
     'VideoComponentBitsSource','Property', ...
     'SignedData',true,...
-    'VideoComponentBits', [16]);
+    'VideoComponentBits', [32]);
 hbfw2 = video.BinaryFileWriter( ...
     'Filename',[outFld '\video_ism_norm.bin'], ...
     'VideoFormat','Custom', ...
@@ -152,7 +152,7 @@ while ~isDone(hbfr)
         tic;
         [tsm,ssm,ism] = infoSaliencyMap(queue,transEng,noCoff);               
 %         probeVar('ism_map_raw','add',ism);
-        step(hbfw1,int16(round(ism)));
+        step(hbfw1,int32(round(ism)));
         % Define filter used for smooth the saliency map
         avg_filter = fspecial('average',4);
 
@@ -171,7 +171,7 @@ while ~isDone(hbfr)
         step(hmfw3,ssm);
         step(hmfw4,ism);
     end
-    if (iFrame >= 10) 
+    if (iFrame >= 1500) 
         break; 
     end        
 end
