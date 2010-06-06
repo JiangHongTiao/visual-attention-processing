@@ -1,4 +1,4 @@
-function [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff)
+function [tsm,ssm,ism] = infoSaliencyMap(imgs,noImgs,transEng,noCoff)
 % The MATLAB program is developed to test simulate the ided represented in
 % the paper "An Information Theoretic Model of Spatiotemporal Visual
 % Saliency".
@@ -13,9 +13,9 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,transEng,noCoff)
 %   ism is information saliency map
     
     % Calculate temporal Saliency Map    
-    tsm = temporalSaliencyMap(imgs,4,transEng,noCoff);
+    tsm = temporalSaliencyMap(imgs,noImgs,transEng,noCoff);
     % Calculate spatial Saliency Map;
-    ssm = spatialSaliencyMap(imgs(:,:,5),4,transEng,noCoff);    
+    ssm = spatialSaliencyMap(imgs(:,:,noImgs+1),noImgs,transEng,noCoff);    
     % Fuse spatial and temporal map together to create saliency map
     ism = tsm + ssm;   
     
