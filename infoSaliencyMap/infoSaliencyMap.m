@@ -14,24 +14,26 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,noImgs,transEng,noCoff)
     
     % Calculate temporal Saliency Map    
     tsm = temporalSaliencyMap(imgs,noImgs,transEng,noCoff);
+%     tsm = normalization(tsm);
     % Calculate spatial Saliency Map;
     ssm = spatialSaliencyMap(imgs(:,:,noImgs+1),noImgs,transEng,noCoff);    
+%     ssm = normalization(ssm);
     % Fuse spatial and temporal map together to create saliency map
     ism = tsm + ssm;   
     
     % Replace -Inf and NaN value by minimum value * 2;
     % Replace +Inf by maximum * 2;
-    maxVal = max(ism(~isinf(ism) & ~isnan(ism)));
-    if (isempty(maxVal)) maxVal = 1; end
-    minVal = min(ism(~isinf(ism) & ~isnan(ism)));    
-    if (isempty(minVal)) minVal = 0; end
-    for iy = 1:1:size(ism,1) 
-        for ix = 1:1:size(ism,2)
-            if logical(isnan(ism(iy,ix))) || (logical(isinf(ism(iy,ix))) && ism(iy,ix) < 0)
-                ism(iy,ix) = 2*minVal;
-            elseif logical(isinf(ism(iy,ix))) && ism(iy,ix) > 0
-                ism(iy,ix) = 2*maxVal;
-            end
-        end
-    end
+%     maxVal = max(ism(~isinf(ism) & ~isnan(ism)));
+%     if (isempty(maxVal)) maxVal = 1; end
+%     minVal = min(ism(~isinf(ism) & ~isnan(ism)));    
+%     if (isempty(minVal)) minVal = 0; end
+%     for iy = 1:1:size(ism,1) 
+%         for ix = 1:1:size(ism,2)
+%             if logical(isnan(ism(iy,ix))) || (logical(isinf(ism(iy,ix))) && ism(iy,ix) < 0)
+%                 ism(iy,ix) = 2*minVal;
+%             elseif logical(isinf(ism(iy,ix))) && ism(iy,ix) > 0
+%                 ism(iy,ix) = 2*maxVal;
+%             end
+%         end
+%     end
 end
