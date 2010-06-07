@@ -62,7 +62,9 @@ function demo()
         imgs = cat(3,img1,img2,img3);
     end
     
+    tic;
     [tsm,ssm,ism] = infoSaliencyMap(imgs,noImgs,transEng,noCoff);
+    toc;
     
     % Define filter used for smooth the saliency map
     avg_filter = fspecial('average',4);
