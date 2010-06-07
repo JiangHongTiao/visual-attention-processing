@@ -32,14 +32,15 @@ switch transEng
 end
 %% Calculate the dimensional probabilities for each patch
 epsilon = 0;
+npoints = 100;
 pC = [];
 for iP = 1:1:size(c,3)
     c_patch = reshape(c(:,:,iP),[1 numel(c(:,:,iP))]);
-    pC = [pC;ksdensity(c_patch)+epsilon];
+    pC = [pC;ksdensity(c_patch,'npoints',npoints,'function','cdf')+epsilon];
 end
 
 %% Choose number of components reserved
-pC(:,noCoff:1:100) = [];
+pC(:,noCoff:1:npoints) = [];
 
 %% Calculate the probabilities for each patch
 pB = prod(pC,2);
