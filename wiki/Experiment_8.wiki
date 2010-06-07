@@ -83,6 +83,10 @@ Sample video preparation
    # Folder: 1.5_engine-hadamard_nc-30_date-20100525T145555 - for marked video
    # Folder: 
   
+ # Test the spatialTemporal saliency with different size of window M = 2,4,8. 
+  # M = 8, the temporal saliency map is totally a black out. It is due to the fact that there is too much difference between framess
+  # M = 4 it is th e right size for windows
+  # M = 2 the image are divided into too many pieces then it takes a lot of time for processing
 
 = Results =
 
