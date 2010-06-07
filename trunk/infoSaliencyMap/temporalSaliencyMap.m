@@ -55,19 +55,20 @@ end
 
 %% Calculate the dimensional probabilities for each patch
 epsilon = 0;
+npoints = 100;
 pC1 = []; pC2 = [];
 for iP = 1:1:size(c1,3)
     c1_patch = reshape(c1(:,:,iP,:),[1 numel(c1(:,:,iP,:))]);
-    pC1 = [pC1;ksdensity(c1_patch)+epsilon];
+    pC1 = [pC1;ksdensity(c1_patch,'npoints',npoints,'function','cdf')+epsilon];
 
     c2_patch = reshape(c2(:,:,iP,:),[1 numel(c2(:,:,iP,:))]);
-    pC2 = [pC2;ksdensity(c2_patch)+epsilon];
+    pC2 = [pC2;ksdensity(c2_patch,'npoints',npoints,'function','cdf')+epsilon];
 end
 
 %% Choose number of components reserved
 
-pC1(:,noCoff:1:100) = [];
-pC2(:,noCoff:1:100) = [];
+pC1(:,noCoff:1:npoints) = [];
+pC2(:,noCoff:1:npoints) = [];
 
 %% Calculate the probabilities for each patch
 pV1 = prod(pC1,2);
