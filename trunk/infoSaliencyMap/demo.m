@@ -31,15 +31,25 @@ function demo()
 %     imgs = cat(3,img1,img2,img3,img4,img5);          
 
     %% Sample images for testing with M = 8
-    imgPath1 = './figures/set8/L_1.jpg'; % Image at t = -7;
-    imgPath2 = './figures/set8/L_2.jpg'; % Image at t = -6;
-    imgPath3 = './figures/set8/L_3.jpg'; % Image at t = -5;
-    imgPath4 = './figures/set8/L_4.jpg'; % Image at t = -4; 
-    imgPath5 = './figures/set8/L_5.jpg'; % Image at t = -3; 
-    imgPath6 = './figures/set8/L_6.jpg'; % Image at t = -2;
-    imgPath7 = './figures/set8/L_7.jpg'; % Image at t = -1;
-    imgPath8 = './figures/set8/L_8.jpg'; % Image at t = 0;
-    imgPath9 = './figures/set8/L_9.jpg'; % Image at t = 1; current image
+%     imgPath1 = './figures/set8/L_1.jpg'; 
+%     imgPath2 = './figures/set8/L_2.jpg'; 
+%     imgPath3 = './figures/set8/L_3.jpg'; 
+%     imgPath4 = './figures/set8/L_4.jpg'; 
+%     imgPath5 = './figures/set8/L_5.jpg'; 
+%     imgPath6 = './figures/set8/L_6.jpg'; 
+%     imgPath7 = './figures/set8/L_7.jpg'; 
+%     imgPath8 = './figures/set8/L_8.jpg'; 
+%     imgPath9 = './figures/set8/L_9.jpg'; 
+    
+    imgPath1 = './figures/set8_1/frame-0001.jpg'; 
+    imgPath2 = './figures/set8_1/frame-0002.jpg'; 
+    imgPath3 = './figures/set8_1/frame-0003.jpg'; 
+    imgPath4 = './figures/set8_1/frame-0004.jpg'; 
+    imgPath5 = './figures/set8_1/frame-0005.jpg'; 
+    imgPath6 = './figures/set8_1/frame-0006.jpg'; 
+    imgPath7 = './figures/set8_1/frame-0007.jpg'; 
+    imgPath8 = './figures/set8_1/frame-0008.jpg'; 
+    imgPath9 = './figures/set8_1/frame-0009.jpg'; 
     
     % All images are resized by 1/2
     img1 = imresize(rgb2gray(imread(imgPath1)),0.25);
@@ -96,7 +106,7 @@ function demo()
     surf(gridx1,gridx2,ism);   
     title('Information Saliency Map - 3D');    
     
-    saveFiguresFlag = 0;
+    saveFiguresFlag = 1;
     if (saveFiguresFlag == 1)
         %% Results folder
         resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder    
