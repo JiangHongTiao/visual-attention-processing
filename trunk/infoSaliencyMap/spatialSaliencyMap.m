@@ -36,7 +36,7 @@ npoints = 100;
 pC = [];
 for iP = 1:1:size(c,3)
     c_patch = reshape(c(:,:,iP),[1 numel(c(:,:,iP))]);
-    pC = [pC;ksdensity(c_patch,'npoints',npoints,'function','cdf')+epsilon];
+    pC = [pC;ksdensity(c_patch,'npoints',npoints,'function','pdf')+epsilon];
 end
 
 %% Choose number of components reserved
