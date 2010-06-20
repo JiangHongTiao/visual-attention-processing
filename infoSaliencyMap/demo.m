@@ -87,7 +87,7 @@ function demo()
     % Showing results     
     figure(4);    
     imshow(ism_avgfilted);
-    title('Information Saliency Map Filted by Average Filter 32x32 - 2D');    
+    title('Information Saliency Map Filted by Average Filter 4x4 - 2D');    
     
     figure(5);    
     gridx1 = 1:1:size(img1,1);
