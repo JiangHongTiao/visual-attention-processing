@@ -5,13 +5,13 @@ function evaluateSM()
 % 1st minute of video - evaluation1()
 
 %% Initial definition 
-% binFileName1 = './results/1.5_repainted_20100525T115516_full_modification_5_engine-hadamard_nc-30_date-20100604T184850/video_ism_norm.bin';
-binFileName1 = './results/1.5_repainted_20100525T115516_full_modification_5_engine-hadamard_nc-30_date-20100606T104007-epsilon_10/video_ism_norm.bin';
+binFileName1_ism = './results/1.5_repainted_20100525T115516_full_modification_5_engine-hadamard_nc-30_date-20100619T161919/video_ism_norm.bin';
+binFileName1_ssm = './results/1.5_repainted_20100525T115516_full_modification_5_engine-hadamard_nc-30_date-20100619T161919/video_ssm_norm.bin';
 % binFileName2 = './results/1.5_repainted_20100525T115516_full_modification_5_engine-hadamard_nc-30_date-20100604T184850/video_ism_raw.bin';
-% binFileName2 = './results/1.5_repainted_20100525T115516_full_modification_5_engine-hadamard_nc-30_date-20100606T104007-epsilon_10/video_ism_raw.bin';
 noFrames = 1500; %% Number of frames used for evaluation
 noFramesEachPlot = 100;
-evaluation1(binFileName1,noFrames);
+evaluation1(binFileName1_ism,noFrames);
+evaluation1(binFileName1_ssm,noFrames);
 % evaluation2(binFileName2,noFrames,noFramesEachPlot);
 end
 
@@ -78,7 +78,7 @@ function evaluation1(binFileName,noFrames)
     xlabel('Saliency Score');
     ylabel('Number of points');
     
-     savePlotFlag = 1;
+     savePlotFlag = 0;
      if (savePlotFlag == 1)
          outputFolder = ['./results/evaluation1_graphs_&_data_date-' datestr(now,'yyyymmddTHHMMSS')];
          mkdir(outputFolder);
@@ -88,7 +88,8 @@ function evaluation1(binFileName,noFrames)
          saveas(2,'histogram_saliency_score.fig');
          save('evalData1.mat','evalData1');
          cd(currentFolder);
-         close all;
+     else
+         evalData1
      end
 end
 
@@ -140,7 +141,7 @@ function evaluation2(binFileName,noFrames,noFramesEachPlot)
      
      savePlotFlag = 1;
      if (savePlotFlag == 1)
-         outputFolder = ['./results/evaluation_graphs_date-' datestr(now,'yyyymmddTHHMMSS')];
+         outputFolder = ['./results/evaluation2_graphs_date-' datestr(now,'yyyymmddTHHMMSS')];
          mkdir(outputFolder);
          currentFolder = pwd;
          cd(outputFolder);
@@ -148,6 +149,6 @@ function evaluation2(binFileName,noFrames,noFramesEachPlot)
              saveas(iPlot,[num2str(iPlot) '.fig']);             
          end
          cd(currentFolder);
-         close all;
+         close all;       
      end
 end
