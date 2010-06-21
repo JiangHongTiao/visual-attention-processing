@@ -21,8 +21,15 @@ hbfr = video.MultimediaFileReader( ...
         ,'PlayCount',1 ...
         ,'VideoOutputPort',1 ...
         ,'ImageColorSpace','RGB' ...
-        );    
-
+        );
+    
+hbfr1 = video.MultimediaFileReader( ...
+        'Filename','./data/1.5.mp4' ... 
+        ,'PlayCount',1 ...
+        ,'VideoOutputPort',1 ...
+        ,'ImageColorSpace','Intensity' ...
+        );
+    
 if (exist(outFld,'dir') ~= 7) 
     mkdir(outFld);
 else
@@ -57,6 +64,23 @@ hmfw4 = video.MultimediaFileWriter( ...
     ,'VideoInputPort',true ...
     ,'FrameRate',25 ...
     ,'VideoCompressor','MJPEG Compressor');
+
+hmfw5 = video.MultimediaFileWriter( ...
+    'Filename',[outFld '\video_ism_blended.avi'] ...
+    ,'FileFormat','AVI' ...
+    ,'AudioInputPort',false ...
+    ,'VideoInputPort',true ...
+    ,'FrameRate',25 ...
+    ,'VideoCompressor','MJPEG Compressor');
+
+hmfw6 = video.MultimediaFileWriter( ...
+    'Filename',[outFld '\video_max_ism_blended.avi'] ...
+    ,'FileFormat','AVI' ...
+    ,'AudioInputPort',false ...
+    ,'VideoInputPort',true ...
+    ,'FrameRate',25 ...
+    ,'VideoCompressor','MJPEG Compressor');
+
 hbfw1 = video.BinaryFileWriter( ...
     'Filename',[outFld '\video_ism_raw.bin'], ...
     'VideoFormat','Custom', ...
@@ -130,8 +154,8 @@ queue = zeros([frame_size M]);
 % Create System objects to display the original video, motion vector video,
 % the thresholded video and the results.
 hvideo1 = video.VideoPlayer('WindowCaption', 'Original Video');
-hvideo1.WindowPosition(1) = round(0.5*hvideo1.WindowPosition(1)) ;
-hvideo1.WindowPosition(2) = round(0.5*(hvideo1.WindowPosition(2))) ;
+hvideo1.WindowPosition(1) = round(1.5*hvideo1.WindowPosition(1)) ;
+hvideo1.WindowPosition(2) = round(1.5*hvideo1.WindowPosition(2)) ;
 hvideo1.WindowPosition([4 3]) = frame_size;
 
 hvideo2 = video.VideoPlayer('WindowCaption', 'Temporal Saliency Map');
@@ -145,10 +169,19 @@ hvideo3.WindowPosition(2) = round(1.5*(hvideo3.WindowPosition(2))) ;
 hvideo3.WindowPosition([4 3]) = frame_size;
 
 hvideo4 = video.VideoPlayer('WindowCaption', 'Information Saliency Map');
-hvideo4.WindowPosition(1) = hvideo1.WindowPosition(1);
-hvideo4.WindowPosition(2) = round(0.3*(hvideo4.WindowPosition(2))) ;
+hvideo4.WindowPosition(1) = round(1.5*hvideo4.WindowPosition(1));
+hvideo4.WindowPosition(2) = round(0.5*hvideo4.WindowPosition(2));
 hvideo4.WindowPosition([4 3]) = frame_size;
 
+hvideo5 = video.VideoPlayer('WindowCaption', 'Blended Information Saliency Map');
+hvideo5.WindowPosition(1) = hvideo4.WindowPosition(1) + 350;
+hvideo5.WindowPosition(2) = round(0.5*hvideo5.WindowPosition(2));
+hvideo5.WindowPosition([4 3]) = frame_size;
+
+hvideo6 = video.VideoPlayer('WindowCaption', 'Blended Maximum Information Saliency Map');
+hvideo6.WindowPosition(1) = hvideo5.WindowPosition(1) + 350;
+hvideo6.WindowPosition(2) = round(0.5*hvideo6.WindowPosition(2));
+hvideo6.WindowPosition([4 3]) = frame_size;
 
 %% Stream processing loop
 % Create the processing loop to track objects in the input video. This
@@ -161,6 +194,7 @@ hvideo4.WindowPosition([4 3]) = frame_size;
 while ~isDone(hbfr)    
     queue = circshift(queue,[0 0 -1]); % Rotate the queue to get new input value
     queue(:,:,M) = imresize(step(hcsc1,step(hbfr)),frame_scale_ratio,'bilinear');        % Convert color image to intensity and scale it 1/4
+    orgFrm = imresize(step(hbfr1),frame_scale_ratio,'bilinear');
     iFrame = iFrame + 1;    
     if ( sum(sum(queue(:,:,1))) ~= 0 ) 
         % Detecting lane-mark by saliency method
@@ -181,16 +215,28 @@ while ~isDone(hbfr)
         ssm = normalization(imfilter(ssm,avg_filter));          
         step(hbfw4,uint8(round(ssm*255)));        
 %         probeVar('ism_map_smoothed','add',ism);
+
+        % Create B/W information saliency map
+        ism_mask1 = ism;                
+        ism_blended1 = step(halphablend,ism_mask1,double(orgFrm));       
+        
+        ism_mask2 = double(ism == max(max(ism)));
+        ism_blended2 = step(halphablend,ism_mask2,double(orgFrm));       
+        
         toc;
         %% Result Presentation in Grayscale or Color
         step(hvideo1,queue(:,:,M));    
         step(hvideo2,tsm);    
         step(hvideo3,ssm);    
         step(hvideo4,ism);    
+        step(hvideo5,ism_blended1);   
+        step(hvideo6,ism_blended2);
         step(hmfw1,queue(:,:,M));
         step(hmfw2,tsm);
         step(hmfw3,ssm);
         step(hmfw4,ism);
+        step(hmfw5,ism_blended1);
+        step(hvideo6,ism_blended2);
     end
     if (iFrame >= 1500) 
         break; 
@@ -205,10 +251,13 @@ probeVar('ism_map_smoothed','save');
 % Here you call the close method on the System objects to close any open
 % files and devices.
 close(hbfr);
+close(hbfr1);
 close(hmfw1);
 close(hmfw2);
 close(hmfw3);
 close(hmfw4);
+close(hmfw5);
+close(hmfw6);
 close(hbfw1);
 close(hbfw2);
 close(hbfw3);
