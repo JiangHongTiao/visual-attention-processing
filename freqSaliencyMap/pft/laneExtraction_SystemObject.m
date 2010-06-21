@@ -1,19 +1,14 @@
+function laneExtraction_SystemObject(inVid,outFld,savFlg)
 %% Developing Phase Shifting Transform in System Object
 % This simulation is done to show the effectiveness of PFT on lane-mark
 % detection and extraction in a video sequence
 
 %   Copyright 2010, The University of Nottingham
 
-%% Initialization
-% Use these next sections of code to initialize the required variables and
-% System objects.
-clc;
-clear;
-
 %% 
 % Create a System object to read video from a video.
-hbfr = video.MultimediaFileReader( ...
-        'Filename','./video_test_RTW_1.mpg' ... 
+hmfr = video.MultimediaFileReader( ...
+        'Filename',inVid ... 
         ,'PlayCount',1 ...
         ,'VideoOutputPort',1 ...
         ,'ImageColorSpace','RGB' ...
@@ -22,12 +17,21 @@ hbfr = video.MultimediaFileReader( ...
     
 %% 
 % Create a System object to save video to file
+if (savFlg == 1) % saveFlag is used for deciding creating the hmfw object or not
 hmfw = video.MultimediaFileWriter( ...
-        'Filename','video_test_RTW_1_SystemObject.avi' ...
+        'Filename',[outFld '/pft_result.avi']...
         ,'FileFormat','AVI' ...
         ,'AudioInputPort',false ...
         ,'VideoInputPort',true ...
         ,'VideoCompressor','MJPEG Compressor');
+hbfw = video.BinaryFileWriter( ...
+    'Filename',[outFld '\pft_result_normalized.bin'], ...
+    'VideoFormat','Custom', ...
+    'BitstreamFormat','Planar', ...
+    'VideoComponentCount',1, ...
+    'VideoComponentBitsSource','Property', ...
+    'VideoComponentBits', [8]);     
+end
 %%
 % Create color space converter System objects to convert the image from
 % YCbCr to RGB format and from RGB to intensity format.
@@ -88,6 +92,9 @@ hvideo1.WindowPosition([4 3]) = [600 800];
 % hvideo4.WindowPosition(2) = round(0.3*(hvideo4.WindowPosition(2))) ;
 % hvideo4.WindowPosition([4 3]) = [200 200];
 
+% Initalize variables
+iFrame = 0;
+
 % Initialize some variables used in plotting motion vectors.
 w = 64;
 
@@ -97,8 +104,9 @@ w = 64;
 %
 % The loop is stopped when you reach the end of the input file, which is
 % detected by the BinaryFileReader System object.
-while ~isDone(hbfr)    
-    imrgb_org = step(hbfr);      % Read input video frame                
+while ~isDone(hmfr)    
+    iFrame = iFrame + 1;
+    imrgb_org = step(hmfr);      % Read input video frame                
     imgray_org = step(hcsc1, imrgb_org);        % Convert color image to intensity        
     imrgb = imresize(imrgb_org, [w w], 'bilinear');    % Resize the color image to [64 64]
     imgray = imresize(imgray_org, [w w], 'bilinear');
@@ -112,7 +120,7 @@ while ~isDone(hbfr)
     rmgray = imgray.*rm;
     
     % Detecting Lane-mark by saliency method
-    sm = pft_systemObject(rmgray);    
+    [sm,sMap] = pft_systemObject(rmgray);    
     
     % Filter unexpected saliency result by road mask
     sm = sm .* rm;
@@ -128,6 +136,7 @@ while ~isDone(hbfr)
     
     % Resize to the original scale
     lm = imresize(lm,size(imgray_org),'bilinear');
+    sMap = imresize(sMap,size(imgray_org),'bilinear');
     %% Result Presentation in Grayscale or Color
     lmrgb = cat(3,lm,lm,lm) .* imrgb_org;
     lmgray = lm .* imgray_org;
@@ -136,14 +145,22 @@ while ~isDone(hbfr)
 %     step(hvideo2, lmgray);       % Display Results Video in Grayscale
 %     step(hvideo3, lmrgb);
     step(hvideo1,imb);    
-    step(hmfw,lmgray);
+%     saveFlag is used for controlling saving result video
+    if (savFlg == 1)
+        step(hmfw,lmgray);
+        step(hbfw,uint8(round(sMap*255)));
+    end
+    if (iFrame >= 1500)
+        break;
+    end
 end
 
 %% Close
 % Here you call the close method on the System objects to close any open
 % files and devices.
-close(hbfr);
+close(hmfr);
 close(hmfw);
+close(hbfw);
 %% Summary
 % The output video shows the cars which were tracked by drawing boxes
 % around them. The video also displays the number of cars being tracked.
