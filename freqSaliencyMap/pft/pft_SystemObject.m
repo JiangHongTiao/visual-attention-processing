@@ -1,4 +1,4 @@
-function [saliencyMask,saliencyMap] = pft_SystemObject(inImg)
+function [saliencyMask,saliencyMapRaw,saliencyMapNormalized] = pft_SystemObject(inImg)
 %% Read info of img 
 % Tune the application for lane mark detection.
 % Default value is 'general'
@@ -11,7 +11,7 @@ myPhase = angle(myFFT);     % Get the phase
 saliencyMap = abs(ifft2(exp(i*myPhase))).^2; % Construct Saliency Map based on spectral intensity
 
 %% After Effect
-saliencyMap = imfilter(saliencyMap, fspecial('gaussian', 8, 3));
-saliencyMap = mat2gray(saliencyMap);
-saliencyMask = im2bw(saliencyMap,graythresh(saliencyMap));
+saliencyMapRaw = imfilter(saliencyMap, fspecial('gaussian', 8, 3));
+saliencyMapNormalized = mat2gray(saliencyMapRaw);
+saliencyMask = im2bw(saliencyMapNormalized,graythresh(saliencyMapNormalized));
 end
