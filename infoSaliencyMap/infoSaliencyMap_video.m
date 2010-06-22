@@ -236,7 +236,7 @@ while ~isDone(hbfr)
         step(hmfw3,ssm);
         step(hmfw4,ism);
         step(hmfw5,ism_blended1);
-        step(hvideo6,ism_blended2);
+        step(hmfw6,ism_blended2);
     end
     if (iFrame >= 1500) 
         break; 
