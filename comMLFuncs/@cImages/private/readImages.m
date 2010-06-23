@@ -34,7 +34,7 @@ function this = readImages(this,path)
 % A class_wizard v 3.0 assembled file, generated: 08-Jan-2010 13:48:50
 %
 
-file_extension = {'jpg' 'JPG' 'png' 'PNG' 'jpeg'};
+file_extension = {'jpg' 'png' 'jpeg'};
 
 % Begin_______________________________________________________Main
 
