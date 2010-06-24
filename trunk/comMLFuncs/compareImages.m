@@ -1,10 +1,10 @@
 function compareImages(inDir1,inDir2,outDir)
-    resDir = '/home/lengoanhcat/PhD_Research/trunk/Simulations/Results/Experiment_5/';
-    savDir = [resDir outDir '/'];
+    addpath('../comMLFuncs/');      
+    savDir = [outDir '/'];
     
     % Ensure two folderes have the same number of images
-    dir1 = {[resDir inDir1 '/']};
-    dir2 = {[resDir inDir2 '/']};
+    dir1 = {[inDir1 '/']};
+    dir2 = {[inDir2 '/']};
     
     dir1 = cImages(dir1);
     dir2 = cImages(dir2);                
@@ -21,11 +21,11 @@ function compareImages(inDir1,inDir2,outDir)
     end      
     
     for i = 1:1:noImages
-        figure(1), subplot(2,1,1);
+        figure(1), subplot(1,2,1);
         imshow(dir1.Data{i});
-        subplot(2,1,2);
+        subplot(1,2,2);
         imshow(dir2.Data{i});        
-        saveas(1,[savDir num2str(i) '.jpg']);
+        saveas(1,[savDir num2str(i) '.fig']);
 %         saveas(1,[savDir num2str(i) '.eps']);
         close(1);
     end        
