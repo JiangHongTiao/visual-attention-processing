@@ -14,6 +14,12 @@ hmfr = video.MultimediaFileReader( ...
         ,'ImageColorSpace','RGB' ...
         );
 
+hmfr1 = video.MultimediaFileReader( ...
+    'Filename','./data/1.5.mp4' ... 
+    ,'PlayCount',1 ...
+    ,'VideoOutputPort',1 ...
+    ,'ImageColorSpace','Intensity' ...
+    );
     
 %% 
 % Create a System object to save video to file
@@ -24,7 +30,17 @@ hmfw = video.MultimediaFileWriter( ...
         ,'AudioInputPort',false ...
         ,'VideoInputPort',true ...
         ,'VideoCompressor','MJPEG Compressor');
-hbfw = video.BinaryFileWriter( ...
+
+hbfw1 = video.BinaryFileWriter( ...
+    'Filename',[outFld '\pft_result_raw.bin'], ...
+    'VideoFormat','Custom', ...
+    'BitstreamFormat','Planar', ...
+    'VideoComponentCount',1, ...
+    'VideoComponentBitsSource','Property', ...
+    'SignedData',true,...
+    'VideoComponentBits', [16]);         
+    
+hbfw2 = video.BinaryFileWriter( ...
     'Filename',[outFld '\pft_result_normalized.bin'], ...
     'VideoFormat','Custom', ...
     'BitstreamFormat','Planar', ...
@@ -107,6 +123,7 @@ w = 64;
 while ~isDone(hmfr)    
     iFrame = iFrame + 1;
     imrgb_org = step(hmfr);      % Read input video frame                
+    orgFrm = step(hmfr1);   % Read the original video frame with eye-fixated point
     imgray_org = step(hcsc1, imrgb_org);        % Convert color image to intensity        
     imrgb = imresize(imrgb_org, [w w], 'bilinear');    % Resize the color image to [64 64]
     imgray = imresize(imgray_org, [w w], 'bilinear');
@@ -120,7 +137,7 @@ while ~isDone(hmfr)
     rmgray = imgray.*rm;
     
     % Detecting Lane-mark by saliency method
-    [sm,sMap] = pft_systemObject(rmgray);    
+    [sm,sMapRaw,sMapNorm] = pft_systemObject(rmgray);        
     
     % Filter unexpected saliency result by road mask
     sm = sm .* rm;
@@ -136,19 +153,21 @@ while ~isDone(hmfr)
     
     % Resize to the original scale
     lm = imresize(lm,size(imgray_org),'bilinear');
-    sMap = imresize(sMap,size(imgray_org),'bilinear');
+    sMapNorm = imresize(sMapNorm,size(imgray_org),'bilinear');
+    sMapRaw = imresize(sMapRaw,size(imgray_org),'bilinear');
     %% Result Presentation in Grayscale or Color
     lmrgb = cat(3,lm,lm,lm) .* imrgb_org;
     lmgray = lm .* imgray_org;
-    imb = step(halphablend,lmgray,imgray_org);
+    imb = step(halphablend,lmgray,orgFrm);
 %     step(hvideo1, imrgb_org);        % Display Original Video
 %     step(hvideo2, lmgray);       % Display Results Video in Grayscale
 %     step(hvideo3, lmrgb);
     step(hvideo1,imb);    
 %     saveFlag is used for controlling saving result video
     if (savFlg == 1)
-        step(hmfw,lmgray);
-        step(hbfw,uint8(round(sMap*255)));
+        step(hmfw,imb);
+        step(hbfw1,int16(round(sMapRaw*255)));
+        step(hbfw2,uint8(round(sMapNorm*255)));
     end
     if (iFrame >= 1500)
         break;
@@ -160,7 +179,8 @@ end
 % files and devices.
 close(hmfr);
 close(hmfw);
-close(hbfw);
+close(hbfw1);
+close(hbfw2);
 %% Summary
 % The output video shows the cars which were tracked by drawing boxes
 % around them. The video also displays the number of cars being tracked.
