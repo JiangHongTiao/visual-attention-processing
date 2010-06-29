@@ -2,6 +2,9 @@ function evaluationSM1()
 %%Function is written to evaluate the frequency saliency on fixations in
 %%faces database. 
 
+% include paths
+addpath('../infoSaliencyMap/');
+
 % load the data
 addpath('./faces-tif');
 addpath('../comMLFuncs/');
@@ -11,7 +14,7 @@ load imgList.mat;
 load annotations.mat;
 
 % plot the image (image 16 - chosen arbitrarily)
-imgNum = 20;
+imgNum = 25;
 img = imread(imgList{imgNum});
 
 
@@ -28,8 +31,24 @@ params.useIttiKochInsteadOfGBVS = 1;
 sm_itti = SMVJ_Main(img,params);
 sm_itti = round(sm_itti.master_map_resized*255);
 
-sm_ssm = spatialSaliencyMap(rgb2gray(img),8,'hadamard',30);
-sm_ssm =  round(normalization(sm_ssm)*255);
+sm_ssm = spatialSaliencyMap(rgb2gray(imresize(img,[576 704])),16,'hadamard',30);
+ssm = sm_ssm;
+    % Replace -Inf and NaN value by minimum value * 2;
+    % Replace +Inf by maximum * 2;
+    maxVal = max(ssm(~isinf(ssm) & ~isnan(ssm)));
+    if (isempty(maxVal)) maxVal = 1; end
+    minVal = min(ssm(~isinf(ssm) & ~isnan(ssm)));    
+    if (isempty(minVal)) minVal = 0; end
+    for iy = 1:1:size(ssm,1) 
+        for ix = 1:1:size(ssm,2)
+            if logical(isnan(ssm(iy,ix))) || (logical(isinf(ssm(iy,ix))) && ssm(iy,ix) < 0)
+                ssm(iy,ix) = 2*minVal;
+            elseif logical(isinf(ssm(iy,ix))) && ssm(iy,ix) > 0
+                ssm(iy,ix) = 2*maxVal;
+            end
+        end
+    end
+sm_ssm =  round(normalization(ssm)*255);
 
 figure(1);
 roc_pft = computeROC(sm_pft,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
