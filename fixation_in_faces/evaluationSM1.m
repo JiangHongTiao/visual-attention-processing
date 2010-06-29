@@ -28,6 +28,9 @@ params.useIttiKochInsteadOfGBVS = 1;
 sm_itti = SMVJ_Main(img,params);
 sm_itti = round(sm_itti.master_map_resized*255);
 
+sm_ssm = spatialSaliencyMap(rgb2gray(img),8,'hadamard',30);
+sm_ssm =  round(normalization(sm_ssm)*255);
+
 figure(1);
 roc_pft = computeROC(sm_pft,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
 title('ROC of PFT');
