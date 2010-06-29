@@ -1,5 +1,14 @@
-function PFT(img,varargin)
-
+function saliencyFeatures = PFT(img,varargin)
+%%The pft function computes the phase-based fourier transform and generates
+%%saliency map
+% img: an input RGB image
+% input
+% varargin: 
+% (1) - type of filter for smoothing saliency map
+% (2) - apply the optical flow mask 
+% (3) - generate the RGB / grayscale image
+% output
+% 
 close all;
 
 %% Read info of img 
@@ -55,15 +64,7 @@ saliencyMask = imresize(saliencyMask, [row,col], 'bilinear');
 tmp(:,:,1) = tmp_img(:,:,1) .* uint8(saliencyMask);
 tmp(:,:,2) = tmp_img(:,:,2) .* uint8(saliencyMask);
 tmp(:,:,3) = tmp_img(:,:,3) .* uint8(saliencyMask);
-grayRoadMask = RoadColorExtraction(tmp,'rgb');
-saliencyMask = saliencyMask - grayRoadMask;
 tmp = []; % Delete temporary variable
-
-%% LME as post-processing step
-if isequal(varargin{2},'lanemark_pospro') || isequal(varargin{2},'lanemark')   
-    lm_img = LME(tmp_img);
-    saliencyMask = saliencyMask | (rgb2gray(lm_img) > 0);
-end
 
 %% Result Presentation in Grayscale or Color
 img = tmp_img;
@@ -77,7 +78,5 @@ elseif isequal(varargin{3},'color')
     saliencyFeatures(:,:,2) = img(:,:,2) .* uint8(saliencyMask);
     saliencyFeatures(:,:,3) = img(:,:,3) .* uint8(saliencyMask);
 end
-
-imshow(saliencyFeatures,[0 255]);
 
 end
