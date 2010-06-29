@@ -93,6 +93,8 @@ Sample video preparation
    * M = 8: the result comes out nicely
    * M = 4: some gray-part of the road comes out as infinity values.   
 
+  # The spatial saliency works well with videos and frames captured by normal cameras, however, it may not works with the high quality images.
+
   # After running spatial information saliency on synthesized samples, black_img, white_img, hybrid, the saliency value depends on the grayscale values of these pixels. The brighter the pixels are, the larger their saliency values are.
 = Results =
 
