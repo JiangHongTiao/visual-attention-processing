@@ -3,22 +3,19 @@ function evaluationSM1()
 %%faces database. 
 
 % load the data
-addpath('D:\PhD Research\Simulations\Experiments\Experiment_8\FixationsInFaces\faces-tif');
+addpath('/home/lengoanhcat/PhD_Research/trunk/Simulations/Experiments/Experiment_9 - fixations in faces/faces-tif');
+addpath('/home/lengoanhcat/PhD_Research/trunk/Simulations/Experiments/Experiment_9 - fixations in faces');
 load fixations.mat;
 load imgList.mat;
 load annotations.mat;
 
 % plot the image (image 16 - chosen arbitrarily)
-img = imread(imgList{16});
-img = rgb2gray(img);
-img = imresize(img,0.5);
-ssm = spatialSaliencyMap(img,8,'hadamard',30);
+img = imread(imgList{20});
+sm = PFT(img,'gaussian','general','color');
 
 figure(1);
 subplot(1,2,1);
-%imagesc(ssm);
-colormap('gray');
-imagesc(ssm);
+imshow(sm);
 hold on;
 
 % plot the fixations (subject 2 - chosen arbitrarily)
