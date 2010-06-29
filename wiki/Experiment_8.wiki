@@ -85,9 +85,15 @@ Sample video preparation
   
  # Test the spatialTemporal saliency with different size of window M = 2,4,8. 
   # M = 8, the temporal saliency map is totally a black out. It is due to the fact that there is too much difference between framess
-  # M = 4 it is th e right size for windows
+  # M = 4 it is the right size for windows
   # M = 2 the image are divided into too many pieces then it takes a lot of time for processing
 
+ # Testing the spatial information only
+  # After running spatial information on some samples, it is seem that resizing image into smaller size affect results. Therefore, the image won't be resized when they are put into spatialSaliencyMap function
+   * M = 8: the result comes out nicely
+   * M = 4: some gray-part of the road comes out as infinity values.   
+
+  # After running spatial information saliency on synthesized samples, black_img, white_img, hybrid, the saliency value depends on the grayscale values of these pixels. The brighter the pixels are, the larger their saliency values are.
 = Results =
 
 Add your content here.  Format your content with:
