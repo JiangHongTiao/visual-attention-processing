@@ -88,10 +88,9 @@ Sample video preparation
   # M = 4 it is the right size for windows
   # M = 2 the image are divided into too many pieces then it takes a lot of time for processing
 
- * Testing the spatial information only
-  # After running spatial information on some samples, it is seem that resizing image into smaller size affect results. Therefore, the image won't be resized when they are put into spatialSaliencyMap function
-   * M = 8: the result comes out nicely
-   * M = 4: some gray-part of the road comes out as infinity values.   
+ * Testing the spatial information only. After running spatial information on some samples, it is seem that resizing image into smaller size affect results. Therefore, the image won't be resized when they are put into spatialSaliencyMap function
+   # M = 8: the result comes out nicely
+   # M = 4: some gray-part of the road comes out as infinity values.   
 
   * The spatial saliency works well with videos and frames captured by normal cameras, however, it may not works with the high quality images.
 
