@@ -14,7 +14,7 @@ function demo()
     %% Predefined parameters 
     transEng = 'hadamard';% What type of transform engine: hadamard,dct
     noCoff = 30; % Number of reserved components        
-    noImgs = 8;
+    noImgs = 4;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
 %     imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
@@ -31,36 +31,37 @@ function demo()
 %     imgs = cat(3,img1,img2,img3,img4,img5);          
 
     %% Sample images for testing with M = 8
-    imgPath1 = './figures/set8/L_1.jpg'; 
-    imgPath2 = './figures/set8/L_2.jpg'; 
-    imgPath3 = './figures/set8/L_3.jpg'; 
-    imgPath4 = './figures/set8/L_4.jpg'; 
-    imgPath5 = './figures/set8/L_5.jpg'; 
-    imgPath6 = './figures/set8/L_6.jpg'; 
-    imgPath7 = './figures/set8/L_7.jpg'; 
-    imgPath8 = './figures/set8/L_8.jpg'; 
-    imgPath9 = './figures/set8/L_9.jpg'; 
+%     imgPath1 = './figures/set8/L_1.jpg'; 
+%     imgPath2 = './figures/set8/L_2.jpg'; 
+%     imgPath3 = './figures/set8/L_3.jpg'; 
+%     imgPath4 = './figures/set8/L_4.jpg'; 
+%     imgPath5 = './figures/set8/L_5.jpg'; 
+%     imgPath6 = './figures/set8/L_6.jpg'; 
+%     imgPath7 = './figures/set8/L_7.jpg'; 
+%     imgPath8 = './figures/set8/L_8.jpg'; 
+%     imgPath9 = './figures/set8/L_9.jpg'; 
     
-%     imgPath1 = './figures/set8_1/frame-0001.jpg'; 
-%     imgPath2 = './figures/set8_1/frame-0002.jpg'; 
-%     imgPath3 = './figures/set8_1/frame-0003.jpg'; 
-%     imgPath4 = './figures/set8_1/frame-0004.jpg'; 
-%     imgPath5 = './figures/set8_1/frame-0005.jpg'; 
-%     imgPath6 = './figures/set8_1/frame-0006.jpg'; 
-%     imgPath7 = './figures/set8_1/frame-0007.jpg'; 
-%     imgPath8 = './figures/set8_1/frame-0008.jpg'; 
-%     imgPath9 = './figures/set8_1/frame-0009.jpg'; 
+    imgPath1 = './figures/set8_1/frame-0001.jpg'; 
+    imgPath2 = './figures/set8_1/frame-0002.jpg'; 
+    imgPath3 = './figures/set8_1/frame-0003.jpg'; 
+    imgPath4 = './figures/set8_1/frame-0004.jpg'; 
+    imgPath5 = './figures/set8_1/frame-0005.jpg'; 
+    imgPath6 = './figures/set8_1/frame-0006.jpg'; 
+    imgPath7 = './figures/set8_1/frame-0007.jpg'; 
+    imgPath8 = './figures/set8_1/frame-0008.jpg'; 
+    imgPath9 = './figures/set8_1/frame-0009.jpg'; 
     
     % All images are resized by 1/2
-    img1 = imresize(rgb2gray(imread(imgPath1)),0.25);
-    img2 = imresize(rgb2gray(imread(imgPath2)),0.25);
-    img3 = imresize(rgb2gray(imread(imgPath3)),0.25);
-    img4 = imresize(rgb2gray(imread(imgPath4)),0.25);    
-    img5 = imresize(rgb2gray(imread(imgPath5)),0.25);        
-    img6 = imresize(rgb2gray(imread(imgPath6)),0.25);        
-    img7 = imresize(rgb2gray(imread(imgPath7)),0.25);        
-    img8 = imresize(rgb2gray(imread(imgPath8)),0.25);
-    img9 = imresize(rgb2gray(imread(imgPath9)),0.25);        
+    scaleValue = 1;
+    img1 = imresize(rgb2gray(imread(imgPath1)),scaleValue);
+    img2 = imresize(rgb2gray(imread(imgPath2)),scaleValue);
+    img3 = imresize(rgb2gray(imread(imgPath3)),scaleValue);
+    img4 = imresize(rgb2gray(imread(imgPath4)),scaleValue);    
+    img5 = imresize(rgb2gray(imread(imgPath5)),scaleValue);        
+    img6 = imresize(rgb2gray(imread(imgPath6)),scaleValue);        
+    img7 = imresize(rgb2gray(imread(imgPath7)),scaleValue);        
+    img8 = imresize(rgb2gray(imread(imgPath8)),scaleValue);
+    img9 = imresize(rgb2gray(imread(imgPath9)),scaleValue);        
     
     if (noImgs == 8)
         imgs = cat(3,img1,img2,img3,img4,img5,img6,img7,img8,img9);      
