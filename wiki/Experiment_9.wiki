@@ -12,8 +12,9 @@
 
 Redo the experiment described in [Fixations in Faces research website http://www.klab.caltech.edu/~moran/fifadb/].
 
-Add your content here.
+First few steps have been done to compare following saliency methods with GBVS and Itti Koch Saliency Method:
 
+Over few experiments, the ROC results show the superior of GBVS and Itti comparing to PFT and PQFT methods.
 
 = Details =
 
