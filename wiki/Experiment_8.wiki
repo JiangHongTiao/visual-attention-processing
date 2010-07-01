@@ -81,7 +81,13 @@ Sample video preparation
    # The original values of saliency maps are floating points; however, they have to be converted into integer so as to be stored as video.
   * Results: 
    # Folder: 1.5_engine-hadamard_nc-30_date-20100525T145555 - for marked video
-   # Folder: 
+   # Folder: 1.5_repainted_20100525T115516_full_modification_5_engine-hadamard_nc-30_date-20100630T160423
+ 
+ * After using evaluationSM1 method, following statistic data has been collected:
+    pctFrames_maxsSaliency: 0.0200
+    pctFrames_minsSaliency: 0.3700
+    avgPctScore_avgsSaliency: 0.2912
+
   
  * Test the spatialTemporal saliency with different size of window M = 2,4,8. 
   # M = 8, the temporal saliency map is totally a black out. It is due to the fact that there is too much difference between framess
