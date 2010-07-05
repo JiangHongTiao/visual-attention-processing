@@ -47,6 +47,26 @@ Compare the PQFT / Spatiotemporal / Koch algorithm on their eye-gazed fixation d
 
 Smooth and inpaint first 16 frames of the video for samples by spatial and temporal smoothing.
 
+= Conversation with both supervisors (05/07/2010) =
+
+The redundancy of applying both spatial and temporal saliency map is plausible by both professors. That leads to the requirement of identifying effects of spatial and temporal saliency maps separately. Then, a psychological mechanism needs to be found so as to combine both maps together if these maps fit into experimental psychological data.
+
+Near future goals and research questions
+
+(Dr. Kenneth)
+How can I choose a suitable window size for spatial-temporal saliency ? Hint: comparing the spatial-temporal algorithm with center-surround mechanism of Itti method.
+
+Comparison between Spatial, Temporal and Itti method
+
+Spatial temporal Itti model
+
+(Dr Qiu)
+Automatically video processing program for various saliency algorithms ? Hint: develop a native code of programs so as to run faster.
+
+Far future goals and research questions:
+
+Overlay of points: Spatial-temporal PFT
+
 = Le Ngo Anh Cat 's idea =
 
 Buying the EMR-9 device of NAC to carry out the experiment in UNMC
