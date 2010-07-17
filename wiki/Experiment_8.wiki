@@ -60,7 +60,12 @@ How can I choose a suitable window size for spatial-temporal saliency ? Hint: co
 
 Comparison between Spatial, Temporal and Itti method
  
- * Answer: the comparison can be made on the fixations in faces database.
+ * Answer: the comparison can be made on the fixations in faces database. 
+  ** Criteria for evaluating the saliency map
+   # Extract salient objects in Videos and Images
+   # Predict the Human Eye Fixations: receiver operating characteristic (ROC) is recently used to predict human eye fixations in natural images.
+   # Image Sequences
+   #    
 
 Spatial-Temporal Itti model
 
