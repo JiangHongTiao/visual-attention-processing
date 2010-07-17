@@ -9,28 +9,34 @@ addpath('../infoSaliencyMap/');
 addpath('./faces-tif');
 addpath('../comMLFuncs/');
 addpath('./SMVJ/');
+addpath('./SMVJ/gbvs/');
 load fixations.mat;
 load imgList.mat;
 load annotations.mat;
 
 % plot the image (image 16 - chosen arbitrarily)
-imgNum = 25;
+imgNum = 30;
 img = imread(imgList{imgNum});
 
-
+%% produce saliency map of Phase Frequency Method 
 [~,~,sm_pft] = PFT(img,'gaussian','general','color');
 sm_pft = round(normalization(sm_pft)*255);
 
+%% produce saliency map of Phase Quaternion Frequency Method
 [~,~,sm_pqft] = PQFT(img,img,'gaussian',64);
 sm_pqft = round(normalization(sm_pqft)*255);
 
+%% produce saliency map of GBVS Method
 sm_gbvs = SMVJ_Main(img);
 sm_gbvs = round(sm_gbvs.master_map_resized*255);
+
+%% produce saliency mpa of Itti Method
 params = makeGBVSParams;
 params.useIttiKochInsteadOfGBVS = 1;
 sm_itti = SMVJ_Main(img,params);
 sm_itti = round(sm_itti.master_map_resized*255);
 
+%% produce the saliency map by Dr Guoping Qiu method
 sm_ssm = spatialSaliencyMap(rgb2gray(imresize(img,[576 704])),16,'hadamard',30);
 ssm = sm_ssm;
     % Replace -Inf and NaN value by minimum value * 2;
