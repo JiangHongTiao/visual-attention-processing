@@ -56,9 +56,13 @@ Near future goals and research questions
 (Dr. Kenneth)
 How can I choose a suitable window size for spatial-temporal saliency ? Hint: comparing the spatial-temporal algorithm with center-surround mechanism of Itti method.
 
-Comparison between Spatial, Temporal and Itti method
+ * Answer: center belongs to {2,3,4} , theta belongs to {3,4}, surround = center + theta; therefore center-surround pairs belongs to {2-5, 2-6, 3-6,3-7, 4-7, 4-8}. Window size is the ratio between surround and centers {2.5,3,2,2.33,1.75,2} whose average is 2.26. 
 
-Spatial temporal Itti model
+Comparison between Spatial, Temporal and Itti method
+ 
+ * Answer: the comparison can be made on the fixations in faces database.
+
+Spatial-Temporal Itti model
 
 (Dr Qiu)
 Automatically video processing program for various saliency algorithms ? Hint: develop a native code of programs so as to run faster.
