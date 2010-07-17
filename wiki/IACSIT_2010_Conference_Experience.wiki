@@ -28,6 +28,7 @@ IACSIT 2010 is organized in Chengdu, China from 9th to 12th, July, 2010, and the
 
  * Presentation skill: not so fluent English, waste time of controlling slides by mouse and keyboard (*Presentation Tools*). 
  
+*The presentation should be prepared in several versions of office presentation or web pages in order to be compatible with conference computers.*
 === Other speakers ===
 
 Most of speakers except those from UNMC are not interested in Image and Video Processing Technology; therefore, their talks do not benefit my knowledge much and via verse. It is blamed for the disability of conference organizers which would classify and arrange speakers who interest in the same topic in the same calendar. However, there are speakers who impress me by their skills and preparation.
