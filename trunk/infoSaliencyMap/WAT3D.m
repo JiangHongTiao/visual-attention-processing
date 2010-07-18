@@ -22,7 +22,10 @@ function Y = WAT3D(X, order)
 
 if nargin < 2, order = 'sequency'; end
 
-N = length(X); % Invalid N will be handeled by the matrix-generating functions
+% N = length(X); % Invalid N will be handeled by the matrix-generating functions
+if (size(X,1) == size(X,2)) N = size(X,1);
+else error('2D dimension matrix must be square matrix');
+end
 
 switch lower(order)
   case {'sequency', 'walsh'}
@@ -34,17 +37,19 @@ switch lower(order)
          ' implemented yet']);
 end
 
-Y = zeros(N,N,N);
+% Y = zeros(N,N,N);
+Y = zeros(size(X));
 
 % First do 2D transform of the x-y-plane through all z layers
-for i = 1:N,
+nr = size(X,1); nc = size(X,2); nl = size(X,3);
+for i = 1:nl,
     Y(:,:,i) = W*X(:,:,i)*W;
 end
 
 % Now perform 1D transform along the z direction
-for l = 1:N,
+for c = 1:nc,
     % Note: squeeze function is slow. Use reshape instead.
-    A = reshape( Y(:,l,:), [N N] );
+    A = reshape( Y(:,c,:), [nr nl] );
     % Transform all rows (1D)
-    Y(:,l,:) = A*W/sqrt(N*N*N);
+    Y(:,c,:) = W*A/sqrt(N*N*N);
 end
