@@ -7,7 +7,7 @@ function evaluationSM3(binFileName,noFrames,noFramesEachPlot,nSize)
 % nSize: the segment size of square area whose values are used to estimate
 % the saliency score
 % evaluationSM2 displays the saliency score at eye-fixated points of
-% noFrames, but it does not display all noFrames in one plot. It is diviced
+% noFrames, but it does not display all noFrames in one plot. It is divided
 % in several small plots which is limited into the noFramesEachPlot number
 % of frames.
 % evaluationSM3 is similar to evaluationSM2 except the saliency score is estimated by usage of those in surrounding area instead
@@ -19,7 +19,7 @@ function evaluationSM3(binFileName,noFrames,noFramesEachPlot,nSize)
             'BitstreamFormat','Planar', ...
             'VideoComponentCount',1,...
             'SignedData',true,...
-            'VideoComponentSizes',[135 180], ...
+            'VideoComponentSizes',[544 720], ...
             'VideoComponentBits',[16]);    
         
     %% Loading the location of eye-fixated points
@@ -35,10 +35,11 @@ function evaluationSM3(binFileName,noFrames,noFramesEachPlot,nSize)
             iFrame = iFrame + 1;
             img = step(hbfr);
             cEyeFixatedPoint = Loc.Data(:,:,(iPlot-1)*noFramesEachPlot + iFrame);            
-            y = round(cEyeFixatedPoint(1)/4);
-            x = round(cEyeFixatedPoint(2)/4);
+            y = round(cEyeFixatedPoint(1));
+            x = round(cEyeFixatedPoint(2));
             sSaliency(1,iFrame) = min(min(img));            
-            sSaliency(2,iFrame) = saliencyScoreEstimation(img,[y,x],nSize);
+%             sSaliency(2,iFrame) = saliencyScoreEstimation(img,[y,x],nSize);
+            sSaliency(2,iFrame) = img(y,x);
             sSaliency(3,iFrame) = max(max(img));            
             if (iFrame >= noFramesEachPlot)
                 break;
@@ -57,9 +58,9 @@ function evaluationSM3(binFileName,noFrames,noFramesEachPlot,nSize)
         ylabel('Saliency Score');         
      end
      
-     savePlotFlag = 1;
+     savePlotFlag = 0;
      if (savePlotFlag == 1)
-         outputFolder = ['./results/evaluation2_graphs_&_data_date-' datestr(now,'yyyymmddTHHMMSS')];
+         outputFolder = ['./results/evaluation3_graphs_&_data_date-' datestr(now,'yyyymmddTHHMMSS')];
          mkdir(outputFolder);
          currentFolder = pwd;
          cd(outputFolder);
