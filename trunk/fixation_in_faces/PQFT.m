@@ -1,4 +1,4 @@
-function [saliencyFeatures,saliencyMap,saliencyMask] = PQFT(img,img_3,varargin)
+function [saliencyFeatures,saliencyMask,saliencyMap] = PQFT(img,img_3,varargin)
 %%PQFT is written to demonstrate the ability of generating PQFT saliency
 %%map
 % Article: A Novel Multiresoulution Spatiotemporal Saliency Detection Model
