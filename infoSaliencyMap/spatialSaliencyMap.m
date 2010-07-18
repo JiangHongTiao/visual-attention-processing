@@ -20,7 +20,7 @@ switch transEng
     case 'hadamard'
         %% Transform patches into Hadamar Space
         for i = 1:1:nP
-            c(:,:,i) = WAT2D(B(:,:,i));    
+            c(:,:,i) = WAT(B(:,:,i),'hadamard');    
         end
     case 'dct'
         %% Transforms patches into independent space by 3-DCT
