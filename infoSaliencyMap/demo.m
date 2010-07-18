@@ -14,7 +14,8 @@ function demo()
     %% Predefined parameters 
     transEng = 'hadamard';% What type of transform engine: hadamard,dct
     noCoff = 30; % Number of reserved components        
-    noImgs = 4;
+    noImgs = 2;
+    szPatches = 8;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
 %     imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
@@ -64,21 +65,21 @@ function demo()
     img9 = imresize(rgb2gray(imread(imgPath9)),scaleValue);        
     
     if (noImgs == 8)
-        imgs = cat(3,img1,img2,img3,img4,img5,img6,img7,img8,img9);      
+        imgs = cat(3,img1,img2,img3,img4,img5,img6,img7,img8);      
     elseif (noImgs == 6)
-        imgs = cat(3,img1,img2,img3,img4,img5,img6,img7);
+        imgs = cat(3,img1,img2,img3,img4,img5,img6);
     elseif (noImgs == 4)
-        imgs = cat(3,img1,img2,img3,img4,img5);
+        imgs = cat(3,img1,img2,img3,img4);
     elseif (noImgs == 2)
-        imgs = cat(3,img1,img2,img3);
+        imgs = cat(3,img1,img2);
     end
     
     tic;
-    [tsm,ssm,ism] = infoSaliencyMap(imgs,noImgs,transEng,noCoff);
+    [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches,transEng,noCoff);
     toc;
     
     % Define filter used for smooth the saliency map
-    avg_filter = fspecial('average',4);
+    avg_filter = fspecial('average',szPatches);
     
     % Apply low-pass filter and normalization function on information saliency map a   
     ism_avgfilted = normalization(imfilter(ism,avg_filter));         
@@ -98,7 +99,7 @@ function demo()
     % Showing results     
     figure(4);    
     imshow(ism_avgfilted);
-    title('Information Saliency Map Filted by Average Filter 4x4 - 2D');    
+    title(['Information Saliency Map Filted by Average Filter ' num2str(szPatches) 'x' num2str(szPatches) ' - 2D']);    
     
     figure(5);    
     gridx1 = 1:1:size(img1,1);
