@@ -13,7 +13,8 @@ function tsm = temporalSaliencyMap(imgs,M,transEng,noCoff)
 
 % M = 4; % size of pathces
 V1 = []; V2 = [];
-for iImg = 1:1:size(imgs,3)
+noImgs = size(imgs,3);
+for iImg = 1:1:noImgs
     %% Resize image ( if necessary )
     img = imgs(:,:,iImg);
 
@@ -21,12 +22,12 @@ for iImg = 1:1:size(imgs,3)
     [Ps,nrP,ncP] = cutImages(img,M);        
 
     %% Create spatiotemporal events V1
-    if (iImg >= 1 && iImg <= M)
+    if (iImg >= 1 && iImg <= noImgs - 1)
         V1 = cat(4,V1,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,...
     end
 
     %% Create spatiotemporal events V2
-    if (iImg >= 2 && iImg <= M+1)
+    if (iImg >= 1 && iImg <= noImgs)
         V2 = cat(4,V2,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,...
     end    
 end
@@ -40,8 +41,8 @@ switch transEng
     case 'hadamard'
         %% Transform patches into idependent space by 3D-Hadamard  
         for i = 1:1:nP        
-            c1(:,:,i,:) = WAT3D(squeeze(V1(:,:,i,:)));    
-            c2(:,:,i,:) = WAT3D(squeeze(V2(:,:,i,:)));    
+            c1(:,:,i,:) = WAT(squeeze(V1(:,:,i,:)),'hadamard');    
+            c2(:,:,i,:) = WAT(squeeze(V2(:,:,i,:)),'hadamard');    
         end
     case 'dct'
         %% Transforms patches into independent space by 3D-DCT
@@ -75,28 +76,12 @@ pV1 = prod(pC1,2);
 pV2 = prod(pC2,2);
 
 %% Calculate spatiotemporal event probability
-P = pV2 ./ pV1;
-S = -1*log(P);
-
-%% Calculate the log propability for each patch
-% 
-% eps = log(min(min(pC1(pC1 ~= 0)),min(pC2(pC2 ~=0))))-1;
-% 
-% pV1 = zeros(size(pC1,1),1);
-% pV2 = zeros(size(pC2,1),1);
-% 
-% for iP = 1:1:size(pC1,1)    
-%     pV1(iP) = sum(log(pC1(iP,:)));
-%     pV2(iP) = sum(log(pC2(iP,:)));
-% end
-% 
-%% Calculate temporal event probability
-% S = zeros(size(pV1,1),1);
-% for iP = 1:1:size(pV1,1)
-%     if ( ~isinf(pV1(iP)) && ~isinf(pV2(iP)) )
-%         S(iP) = -1*(pV2(iP) - pV1(iP));
-%     end
-% end
+S = zeros(size(pV1));
+for ipV1 = 1:1:length(pV1)
+    if (pV1(ipV1) == 0) S(ipV1) = +Inf;
+    else S(ipV1) = -log(pV2(ipV1) / pV1(ipV1));
+    end
+end
 
 %% Representing spatiotemporal probability on images
 tsm = zeros(size(img));
