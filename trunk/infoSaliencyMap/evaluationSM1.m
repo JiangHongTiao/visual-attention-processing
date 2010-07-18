@@ -6,7 +6,7 @@ function evaluationSM1(binFileName,noFrames)
             'VideoFormat','Custom', ...
             'BitstreamFormat','Planar', ...
             'VideoComponentCount',1,...
-            'VideoComponentSizes',[135 180], ...
+            'VideoComponentSizes',[544 720], ...
             'VideoComponentBits',[8]); 
 
     %% Initialization
@@ -27,8 +27,8 @@ function evaluationSM1(binFileName,noFrames)
         iFrame = iFrame + 1;
         img = step(hbfr);
         cEyeFixatedPoint = Loc.Data(:,:,iFrame);
-        y = round(cEyeFixatedPoint(1)/4);
-        x = round(cEyeFixatedPoint(2)/4);
+        y = round(cEyeFixatedPoint(1));
+        x = round(cEyeFixatedPoint(2));
         sEyeFixatedPoint(iFrame) = img(y,x);  
         
         if (sEyeFixatedPoint(iFrame) == 255)
