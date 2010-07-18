@@ -5,4 +5,4 @@
 
 demo1 is the demonstration of how to use infoSaliencyAttentionPoint(images , transformation engine, number of coefficients, locations of attention point)
 demo1_video is similar to demo1 but integrating psychology_data.mat and video into infoSaliencyAttentionPoint_video.
-
+demo2_video is similar to demo1_video but using only spatial saliency map instead of spatial temporal saliency map.
