@@ -15,16 +15,16 @@ load imgList.mat;
 load annotations.mat;
 
 % plot the image (image 16 - chosen arbitrarily)
-imgNum = 30;
+imgNum = 50;
 img = imread(imgList{imgNum});
 
 %% produce saliency map of Phase Frequency Method 
-[~,~,sm_pft] = PFT(img,'gaussian','general','color');
-sm_pft = round(normalization(sm_pft)*255);
+[~,~,sm_pft] = PFT(img,'gaussian','general','grayscale');
+sm_pft = round(mat2gray(sm_pft)*255);
 
 %% produce saliency map of Phase Quaternion Frequency Method
-[~,~,sm_pqft] = PQFT(img,img,'gaussian',64);
-sm_pqft = round(normalization(sm_pqft)*255);
+[~,~,sm_pqft] = PQFT(img,img,'gaussian',64,'grayscale');
+sm_pqft = round(mat2gray(sm_pqft)*255);
 
 %% produce saliency map of GBVS Method
 sm_gbvs = SMVJ_Main(img);
@@ -37,7 +37,7 @@ sm_itti = SMVJ_Main(img,params);
 sm_itti = round(sm_itti.master_map_resized*255);
 
 %% produce the saliency map by Dr Guoping Qiu method
-sm_ssm = spatialSaliencyMap(rgb2gray(imresize(img,[576 704])),16,'hadamard',30);
+sm_ssm = spatialSaliencyMap(rgb2gray(img),4,'hadamard',30);
 ssm = sm_ssm;
     % Replace -Inf and NaN value by minimum value * 2;
     % Replace +Inf by maximum * 2;
@@ -54,7 +54,7 @@ ssm = sm_ssm;
             end
         end
     end
-sm_ssm =  round(normalization(ssm)*255);
+sm_ssm = round(mat2gray(ssm)*255);
 
 figure(1);
 roc_pft = computeROC(sm_pft,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
@@ -75,4 +75,10 @@ figure(4);
 roc_itti = computeROC(sm_itti,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
 title('ROC of ITTI');
 sprintf('ROC of Itti Saliency Map = %f',roc_itti)
+
+figure(5);
+roc_ssm = computeROC(sm_ssm,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
+title('ROC of SSM');
+sprintf('ROC of Spatial Saliency Map = %f',roc_ssm)
+
 end
