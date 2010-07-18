@@ -1,4 +1,4 @@
-function [tsm,ssm,ism] = infoSaliencyMap(imgs,noImgs,transEng,noCoff)
+function [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches,transEng,noCoff)
 % The MATLAB program is developed to test simulate the ided represented in
 % the paper "An Information Theoretic Model of Spatiotemporal Visual
 % Saliency".
@@ -13,26 +13,25 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,noImgs,transEng,noCoff)
 %   ism is information saliency map
     
     % Calculate temporal Saliency Map    
-    tsm = temporalSaliencyMap(imgs,noImgs,transEng,noCoff);
+    tsm = temporalSaliencyMap(imgs,szPatches,transEng,noCoff);
 %     tsm = normalization(tsm);
     % Calculate spatial Saliency Map;
-    ssm = spatialSaliencyMap(imgs(:,:,noImgs+1),noImgs,transEng,noCoff);    
+    ssm = spatialSaliencyMap(imgs(:,:,size(imgs,3)),szPatches,transEng,noCoff);    
 %     ssm = normalization(ssm);
-    % Fuse spatial and temporal map together to create saliency map
-    ism = tsm + ssm;   
+    % Fuse spatial and temporal map together to create saliency map    
     
     % Replace -Inf and NaN value by minimum value * 2;
     % Replace +Inf by maximum * 2;
-    maxVal = max(ism(~isinf(ism) & ~isnan(ism)));
+    maxVal = max(tsm(~isinf(tsm) & ~isnan(tsm)));
     if (isempty(maxVal)) maxVal = 1; end
-    minVal = min(ism(~isinf(ism) & ~isnan(ism)));    
+    minVal = min(tsm(~isinf(tsm) & ~isnan(tsm)));    
     if (isempty(minVal)) minVal = 0; end
-    for iy = 1:1:size(ism,1) 
-        for ix = 1:1:size(ism,2)
-            if logical(isnan(ism(iy,ix))) || (logical(isinf(ism(iy,ix))) && ism(iy,ix) < 0)
-                ism(iy,ix) = 2*minVal;
-            elseif logical(isinf(ism(iy,ix))) && ism(iy,ix) > 0
-                ism(iy,ix) = 2*maxVal;
+    for iy = 1:1:size(tsm,1) 
+        for ix = 1:1:size(tsm,2)
+            if logical(isnan(tsm(iy,ix))) || (logical(isinf(tsm(iy,ix))) && tsm(iy,ix) < 0)
+                tsm(iy,ix) = 2*minVal;
+            elseif logical(isinf(tsm(iy,ix))) && tsm(iy,ix) > 0
+                tsm(iy,ix) = 2*maxVal;
             end
         end
     end
@@ -52,4 +51,6 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,noImgs,transEng,noCoff)
             end
         end
     end
+    
+    ism = tsm + ssm;   
 end
