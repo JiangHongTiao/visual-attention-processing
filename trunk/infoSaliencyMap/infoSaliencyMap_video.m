@@ -1,9 +1,12 @@
-function infoSaliencyMap_video(inVid,outFld,noImgs,transEng,noCoff)
+function infoSaliencyMap_video(inVid,noFrames,outFld,noImgs,szPatches,transEng,noCoff)
 %% Developing Lane-mark Extraction by using 
 % This video_systemObject is created to test the idea of using "Information
 % Saliency Map" on video
 % inVid: input video ( lane-marks, etc ..)
+% noFrames: number of initial frames to be processed
 % outFld: ouput folder ( results, etc )
+% noImgs: number of images in a temporal sequence ( 1:1:8 )
+% szPatches: size of one patch ( 2,4,8 )
 % transEng: type of transform engine ( dct, hadamard, etc )
 % noCoff: number of reserved coefficients
 % Copyright 2010, The University of Nottingham
@@ -133,10 +136,10 @@ halphablend = video.AlphaBlender('Operation','Blend','Opacity',0.25);
 % noCoff = 20; % Number of reserved components  
 
 % Initialize some variables used in plotting motion vectors.
-M = noImgs + 1;
+M = noImgs;
 hbfi = info(hbfr);
 iFrame = 0;
-frame_scale_ratio = 0.25;
+frame_scale_ratio = 1;
 frame_size = fliplr(hbfi.VideoSize)*frame_scale_ratio;
 
 %% Put M-1 frames into FIFO sequences in the order from 2 to M
@@ -193,18 +196,19 @@ hvideo6.WindowPosition([4 3]) = frame_size;
 %% Process stream of videos
 while ~isDone(hbfr)    
     queue = circshift(queue,[0 0 -1]); % Rotate the queue to get new input value
-    queue(:,:,M) = imresize(step(hcsc1,step(hbfr)),frame_scale_ratio,'bilinear');        % Convert color image to intensity and scale it 1/4
+%     queue(:,:,M) = imresize(step(hcsc1,step(hbfr)),frame_scale_ratio,'bilinear');        % Convert color image to intensity and scale it 1/4
+    queue(:,:,M) = step(hcsc1,step(hbfr)); % Convert color image to intensity
     orgFrm = imresize(step(hbfr1),frame_scale_ratio,'bilinear');
     iFrame = iFrame + 1;    
     if ( sum(sum(queue(:,:,1))) ~= 0 ) 
         % Detecting lane-mark by saliency method
         tic;
-        [tsm,ssm,ism] = infoSaliencyMap(queue,noImgs,transEng,noCoff);               
+        [tsm,ssm,ism] = infoSaliencyMap(queue,szPatches,transEng,noCoff);               
 %         probeVar('ism_map_raw','add',ism);
         step(hbfw1,int16(round(ism)));
         step(hbfw3,int16(round(ssm)));
         % Define filter used for smooth the saliency map
-        avg_filter = fspecial('average',4);
+        avg_filter = fspecial('average',szPatches);
 
         % Apply low-pass filter and normalization function on information
         % saliency map
@@ -238,7 +242,7 @@ while ~isDone(hbfr)
         step(hmfw5,ism_blended1);
         step(hmfw6,ism_blended2);
     end
-    if (iFrame >= 1500) 
+    if (iFrame >= noFrames) 
         break; 
     end        
 end
