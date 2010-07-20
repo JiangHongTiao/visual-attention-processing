@@ -14,7 +14,7 @@ function demo()
     %% Predefined parameters 
     transEng = 'hadamard';% What type of transform engine: hadamard,dct
     noCoff = 30; % Number of reserved components        
-    noImgs = 2;
+    noImgs = 6;
     szPatches = 8;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
@@ -108,7 +108,7 @@ function demo()
     surf(gridx1,gridx2,ism);   
     title('Information Saliency Map - 3D');    
     
-    saveFiguresFlag = 1;
+    saveFiguresFlag = 0;
     if (saveFiguresFlag == 1)
         %% Results folder
         resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder    
