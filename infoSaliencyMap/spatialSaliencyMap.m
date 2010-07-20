@@ -1,4 +1,4 @@
-function ssm = spatialSaliencyMap(imgB,M,transEng,noCoff)
+function ssm = spatialSaliencyMap(imgB,szPatches,transEng,noCoff)
 %% Build the spatiotemporal saliency method 
 % The method is described in the paper: An information theoretic model of
 % spatiotemporal visual saliency
@@ -7,7 +7,7 @@ function ssm = spatialSaliencyMap(imgB,M,transEng,noCoff)
 % imgB = imresize(imgB,size(imgB)/4);
 
 %% Image Information
-% M = 4; % size of pathces
+M = szPatches; 
 [Ps,nrP,ncP] = cutImages(imgB,M);
 nP = nrP*ncP;
 
@@ -34,9 +34,12 @@ end
 epsilon = 0;
 npoints = 100;
 pC = [];
+gss_filter = gausswin(noCoff/2);
 for iP = 1:1:size(c,3)
     c_patch = reshape(c(:,:,iP),[1 numel(c(:,:,iP))]);
-    pC = [pC;ksdensity(c_patch,'npoints',npoints,'function','pdf')+epsilon];
+%     pC = [pC;ksdensity(c_patch,'npoints',npoints,'function','pdf')+epsilon];
+    pC = [pC;ksdensity(c_patch,'npoints',npoints,'width',noCoff,'function','pdf')+epsilon];
+%     pC = [pC;conv(ksdensity(c_patch,'npoints',npoints,'function','pdf'),gss_filter)+epsilon];
 end
 
 %% Choose number of components reserved
