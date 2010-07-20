@@ -69,6 +69,14 @@ Comparison between Spatial, Temporal and Itti method
 
 Spatial-Temporal Itti model
 
+= Conversation with Dr. Kenneth (20/07/2010) =
+
+Question: Does saliency result of spatial temporal saliency depend on the intensity value ?
+
+Answer:
+
+Question: Should kdensity produce the pdf with summation 1 ?
+
 (Dr Qiu)
 Automatically video processing program for various saliency algorithms ? Hint: develop a native code of programs so as to run faster.
 
