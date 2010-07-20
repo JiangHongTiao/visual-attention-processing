@@ -58,12 +58,17 @@ end
 epsilon = 0;
 npoints = 100;
 pC1 = []; pC2 = [];
+gss_filter = gausswin(noCoff/2);
 for iP = 1:1:size(c1,3)
     c1_patch = reshape(c1(:,:,iP,:),[1 numel(c1(:,:,iP,:))]);
-    pC1 = [pC1;ksdensity(c1_patch,'npoints',npoints,'function','pdf')+epsilon];
-
+%     pC1 = [pC1;ksdensity(c1_patch,'npoints',npoints,'function','pdf')+epsilon];
+%     pC1 = [pC1;conv(ksdensity(c1_patch,'npoints',npoints,'function','pdf'),gss_filter)+epsilon];
+    pC1 = [pC1;ksdensity(c1_patch,'npoints',npoints,'width',noCoff,'function','pdf')+epsilon];
+    
     c2_patch = reshape(c2(:,:,iP,:),[1 numel(c2(:,:,iP,:))]);
-    pC2 = [pC2;ksdensity(c2_patch,'npoints',npoints,'function','pdf')+epsilon];
+%     pC2 = [pC2;ksdensity(c2_patch,'npoints',npoints,'function','pdf')+epsilon];
+%     pC2 = [pC2;conv(ksdensity(c2_patch,'npoints',npoints,'function','pdf'),gss_filter)+epsilon];
+    pC2 = [pC2;ksdensity(c2_patch,'npoints',npoints,'width',noCoff,'function','pdf')+epsilon];
 end
 
 %% Choose number of components reserved
