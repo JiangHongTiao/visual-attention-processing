@@ -107,8 +107,15 @@ function demo()
     [gridx2,gridx1] = meshgrid(gridx2,gridx1);
     surf(gridx1,gridx2,ism);   
     title('Information Saliency Map - 3D');    
+        
+    orgImg = imgs(:,:,noImgs);
+    gridx1 = 1:1:size(orgImg,1);
+    gridx2 = 1:1:size(orgImg,2);
+    [gridx2,gridx1] = meshgrid(gridx2,gridx1);    
+    figure(6),imshow(orgImg),title('Processed Image - 2D');
+    figure(7),surf(gridx1,gridx2,double(orgImg)),title('Processed Image - 3D');
     
-    saveFiguresFlag = 0;
+    saveFiguresFlag = 1;
     if (saveFiguresFlag == 1)
         %% Results folder
         resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder    
@@ -118,5 +125,7 @@ function demo()
         saveas(3,[resFld 'ims-2d.fig']);    
         saveas(4,[resFld 'ims-avgfilted-2d.fig']);
         saveas(5,[resFld 'ims-3d.fig']);
+        saveas(6,[resFld 'org-2d.fig']);
+        saveas(7,[resFld 'org-3d.fig']);
     end
 end
