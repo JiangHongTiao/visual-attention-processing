@@ -37,8 +37,11 @@ pC = [];
 gss_filter = gausswin(noCoff/2);
 for iP = 1:1:size(c,3)
     c_patch = reshape(c(:,:,iP),[1 numel(c(:,:,iP))]);
-%     pC = [pC;ksdensity(c_patch,'npoints',npoints,'function','pdf')+epsilon];
-    pC = [pC;ksdensity(c_patch,'npoints',npoints,'width',noCoff,'function','pdf')+epsilon];
+    pC = [pC;ksdensity(c_patch,'npoints',npoints,'function','pdf')+epsilon];
+    % Test with non-matlab kdensity function
+%     pC(iP,:) =  pC(iP,:) / sum(pC(iP,:)); % Eliminate the intensity
+%     contribution in the saliency map.
+%     pC = [pC;ksdensity(c_patch,'npoints',npoints,'width',noCoff,'function','pdf')+epsilon];
 %     pC = [pC;conv(ksdensity(c_patch,'npoints',npoints,'function','pdf'),gss_filter)+epsilon];
 end
 
