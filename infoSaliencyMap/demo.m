@@ -107,15 +107,25 @@ function demo()
     [gridx2,gridx1] = meshgrid(gridx2,gridx1);
     surf(gridx1,gridx2,ism);   
     title('Information Saliency Map - 3D');    
-        
+    
     orgImg = imgs(:,:,noImgs);
     gridx1 = 1:1:size(orgImg,1);
     gridx2 = 1:1:size(orgImg,2);
     [gridx2,gridx1] = meshgrid(gridx2,gridx1);    
     figure(6),imshow(orgImg),title('Processed Image - 2D');
     figure(7),surf(gridx1,gridx2,double(orgImg)),title('Processed Image - 3D');
+
+    % Show top n salient regions of the image
+    n = 30;    
+    saliency_values = sort(unique(ism),'descend');
+    saliency_threshold = saliency_values(n);
+    ism_mask = ism > saliency_threshold;
+    img_threshold = imgs(:,:,noImgs).*uint8(ism_mask);
+    figure(8);
+    imshow(img_threshold);
+    title(['Top ' num2str(n) 'regions in the image']);    
     
-    saveFiguresFlag = 1;
+    saveFiguresFlag = 0;
     if (saveFiguresFlag == 1)
         %% Results folder
         resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder    
