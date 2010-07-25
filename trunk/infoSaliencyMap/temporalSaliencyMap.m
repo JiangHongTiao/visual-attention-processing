@@ -85,7 +85,7 @@ pV2 = prod(pC2,2);
 %% Calculate spatiotemporal event probability
 S = zeros(size(pV1));
 for ipV1 = 1:1:length(pV1)
-    if (pV1(ipV1) == 0) S(ipV1) = +Inf;
+    if (pV1(ipV1) == 0) S(ipV1) = -Inf;
     else S(ipV1) = -log(pV2(ipV1) / pV1(ipV1));
     end
 end
