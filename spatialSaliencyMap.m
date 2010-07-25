@@ -52,9 +52,9 @@ pC(:,noCoff:1:npoints) = [];
 pB = prod(pC,2);
 
 
-%% Calculate spatiotemporal event probability
+%% Calculate spatial event probability
 P = pB;
-S = -1*log(P);
+S = -1*log(P/sum(P)); % The spatial saliency value is calculated P(B|F) = P(B^F) / P(F), where P(F) = P(B1 U B2 U ... BN ) = P(B1) + P(B2) + P(B3) ... P(BN)
 
 %% Calculate the log propability for each patch
 % pB = zeros(size(pC,1),1);
@@ -72,9 +72,11 @@ S = -1*log(P);
 
 %% Representing spatiotemporal probability on images
 ssm = zeros(size(imgB));
+r_offset = [ -1 0 1 -1 0 1 -1 0 1 ];
+c_offset = [ -1 -1 -1 0 0 0 1 1 1 ];
 for ir = 0:1:nrP-1
-    for ic = 0:1:ncP-1
-        ssm(ir*M+1:(ir+1)*M,ic*M+1:(ic+1)*M) = ones(M,M)*S(ir*ncP+ic+1);
+    for ic = 0:1:ncP-1        
+        ssm(ir*M+1:(ir+1)*M,ic*M+1:(ic+1)*M) = ones(M,M)*S(ir*ncP+ic+1);        
     end
 end
 
