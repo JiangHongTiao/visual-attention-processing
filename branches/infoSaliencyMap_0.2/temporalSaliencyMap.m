@@ -22,13 +22,13 @@ for iImg = 1:1:noImgs
     [Ps,nrP,ncP] = cutImages(img,M);        
 
     %% Create spatiotemporal events V1
-    if (iImg >= 1 && iImg <= noImgs - 1)
-        V1 = cat(4,V1,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,...
+    if (iImg >= 1 && iImg <= noImgs)
+        V1 = cat(4,V1,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,... . Contain the patches of all frames in the series
     end
 
     %% Create spatiotemporal events V2
-    if (iImg >= 1 && iImg <= noImgs)
-        V2 = cat(4,V2,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,...
+    if (iImg >=noImgs && iImg <= noImgs)
+        V2 = cat(4,V2,Ps); % Contain only the patch of the last frame in the series
     end    
 end
 
