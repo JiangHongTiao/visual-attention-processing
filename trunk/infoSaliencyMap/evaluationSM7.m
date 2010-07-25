@@ -335,26 +335,29 @@ exp_record.intro = 'images with 2 rectangle gray blocks: block 1 191 in intensit
 % % Test 19 
 % exp_record.input.i19.type = 'image';
 % exp_record.input.i19.path = './figures/evaluationSM7/';
-% exp_record.input.i19.name = '';
+% exp_record.input.i19.name = 'input_img_19.fig';
 % exp_record.input.i19.note = 'The test is done to verify the saliency score at high constrast region will bigger than the small constrast region';
 % img = [];
 % for i = 1:1:255    
 %     rimg = zeros(4,12);
 %     rimg(:) = i;
-%     rimg(:,7:12) = 255;
+%     rimg(:,6:12) = 255;
 %     img = [img;rimg];
 % end
+% exp_record.input.i19.data = img;
+% exp_record.input.i19.dataintro = 'Data is an array with size ( 255x12 ); It can be seeen as three separated columns; First column (255x4) has increasing value columnwise. Third column (255x4) has a fixed value 255. Second column is the combination of half first and third columns'
 % 
 % sm_ssm_4 = spatialSaliencyMap(img,4,'hadamard',30)
-% figure(42), imshow(img), title('Test 19 - Input Image');
-% figure(43); 
-% plot(sm_ssm_4(1:4:255*4,1),'-r'), hold on;
-% plot(sm_ssm_4(1:4:255*4,5),'-g'), hold on;
-% plot(sm_ssm_4(1:4:255*4,9),'-b');
+% figure(42), colormap('gray'), imagesc(img), title('Test 19 - Input Image');
+% figure(43), colormap('gray'), imagesc(sm_ssm_4), title('Test 19 - Output Image');
+% figure(44), colormap('gray'), imagesc(sm_ssm_4), title('Test 19 - Plot Image');
 % 
-% exp_record.output.o19.type = 'image';
-% exp_record.output.o19.name = 'output_img_19.fig';
-% exp_record.output.o19.note = 'The graph include three plots: green, red, and blue lines. Blue plot represents saliency value of white color (255). Red curve describes the saliency value of region of increasing intensity from 0 to 255. Green plot shows a saliency response at the highly contrast border between regions represented by blue and red curves.';
+% plot(1:1:255,sm_ssm_4(1:4:255*4,1:4:9));
+% 
+% exp_record.output.o19.type = {'image','plot'};
+% exp_record.output.o19.name = {'output_img_19.fig','output_plot_19.fig'};
+% exp_record.output.o19.note = 'The graph includes three plots: green, red, and blue lines. Blue plot represents saliency value of white color (255). Red curve describes the saliency value of region of increasing intensity from 0 to 255. Green plot shows a saliency response at the highly contrast border between regions represented by blue and red curves.';
+% exp_record.output.o19.data = sm_ssm_4;
 
 % Test 20
 exp_record.input.i20.type = 'image';
@@ -364,26 +367,33 @@ exp_record.input.i20.note = 'The test is done to verify the saliency score of th
 
 img1 = [ 255*ones(4,4), [zeros(4,1), ones(4,2)*255, zeros(4,1)] , [zeros(4,1), ones(4,2)*255, zeros(4,1)], [zeros(4,1), ones(4,2)*255, zeros(4,1)]', [zeros(4,1), ones(4,2)*255, zeros(4,1)]', zeros(4,4)];
 img2 = [ 255*ones(4,4), [zeros(4,2), ones(4,2)*255], [ones(4,2)*255, zeros(4,2)], [zeros(4,2), ones(4,2)*255]', [ones(4,2)*255, zeros(4,2)]', zeros(4,4)];
-
 imgs = cat(3,img1,img2);
-figure(44), subplot(2,1,1), 
+
+exp_record.input.i20.data = imgs;
+
+figure(45), subplot(2,1,1), 
 imshow(img1), title('Test 20 - Input Image 1');
 subplot(2,1,2), imshow(img2), title('Test 20 - Input Image 2');
 sm_tsm = temporalSaliencyMap(imgs,4,'hadamard',30)
 
-% saveOutputFlag = 0;
-% if (saveOutputFlag == 1) 
-%     outputFolder = ['./results/evaluation7_graphs_&_data_date-' datestr(now,'yyyymmddTHHMMSS')];
-%     exp_record.output.path = outputFolder;
-%     mkdir(outputFolder);
-%     currentFolder = pwd;
-%     cd(outputFolder);       
-%     
-%     saveas(8,exp_record.output.o5.name);
-%     
-%     save('experiment_record.mat','exp_record');
-%     cd(currentFolder);    
-%     close all;
-% end
+exp_record.output.o20.data = sm_tsm;
+exp_record.output.o20.type = {'image'};
+exp_record.output.o20.name = {'output_img_20.fig'};
+exp_record.output.o20.note = 'The temporal saliency values are smaller than 0. Why are they ?';
+
+saveOutputFlag = 0;
+if (saveOutputFlag == 1) 
+    outputFolder = ['./results/evaluation7_graphs_&_data_date-' datestr(now,'yyyymmddTHHMMSS')];
+    exp_record.output.path = outputFolder;
+    mkdir(outputFolder);
+    currentFolder = pwd;
+    cd(outputFolder);           
+    
+    saveas(42,exp_record.input.i19.name);
+    saveas(43,exp_record.output.o19.name);
+    
+    save('experiment_record.mat','exp_record');
+    cd(currentFolder);        
+end
 
 end
