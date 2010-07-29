@@ -365,8 +365,25 @@ exp_record.input.i20.path = './figures/evaluationSM7/';
 exp_record.input.i20.name = '';
 exp_record.input.i20.note = 'The test is done to verify the saliency score of the spatial-temporal saliency map';
 
-img1 = [ 255*ones(4,4), [zeros(4,1), ones(4,2)*255, zeros(4,1)] , [zeros(4,1), ones(4,2)*255, zeros(4,1)], [zeros(4,1), ones(4,2)*255, zeros(4,1)]', [zeros(4,1), ones(4,2)*255, zeros(4,1)]', zeros(4,4)];
-img2 = [ 255*ones(4,4), [zeros(4,2), ones(4,2)*255], [ones(4,2)*255, zeros(4,2)], [zeros(4,2), ones(4,2)*255]', [ones(4,2)*255, zeros(4,2)]', zeros(4,4)];
+% img1 = [ 255*ones(4,4), [zeros(4,1), ones(4,2)*255, zeros(4,1)] , [zeros(4,1), ones(4,2)*255, zeros(4,1)], [zeros(4,1), ones(4,2)*255, zeros(4,1)]', [zeros(4,1), ones(4,2)*255, zeros(4,1)]', zeros(4,4)];
+% img2 = [ 255*ones(4,4), [zeros(4,2), ones(4,2)*255], [ones(4,2)*255, zeros(4,2)], [zeros(4,2), ones(4,2)*255]', [ones(4,2)*255, zeros(4,2)]', zeros(4,4)];
+
+% % Right -> Left
+% img1 = [zeros(4,2), ones(4,2)*255];
+% img2 = [ones(4,2)*255, zeros(4,2)];
+
+% % Bottom -> Top
+% img1 = [zeros(4,2), ones(4,2)*255]';
+% img2 = [ones(4,2)*255, zeros(4,2)]';
+
+% % Left -> Right
+% img1 = [ones(4,2)*255, zeros(4,2)];
+% img2 = [zeros(4,2), ones(4,2)*255];
+
+% % Top -> Bottom
+img1 = [ones(4,2)*255, zeros(4,2)]';
+img2 = [zeros(4,2), ones(4,2)*255]';
+
 imgs = cat(3,img1,img2);
 
 exp_record.input.i20.data = imgs;
