@@ -1,6 +1,5 @@
 % Article: A Novel Multiresoulution Spatiotemporal Saliency Detection Model
 % and Its Applications in Image and Video Compression
-
 function PQFT(img,img_3,varargin)
 
 close all;
