@@ -103,10 +103,11 @@ while ~isDone(hmfr)
     [~,~,smnorm] = pft_systemObject(imgray);        
   
     % Resize to the original scale
-    smnorm = imresize(smnorm,size(imgray_org),'bilinear');    
-
+    smnorm = imresize(smnorm,size(imgray_org),'bilinear');        
+    
     %% Result Presentation in Grayscale or Color    
     smgray = smnorm .* imgray_org;
+    smnorm = round(smnorm*255);
     imblended = step(halphablend,double(smgray),double(imgray_org));
     if (demoFlg == 1)
         step(hvideo1, imrgb_org);        % Display Original Video
