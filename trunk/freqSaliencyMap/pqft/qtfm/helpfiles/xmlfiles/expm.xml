@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE function SYSTEM "qtfmfunction.dtd">
+<function name = "expm" overload = "true">
+<short>Matrix exponential</short>
+<syntax>Unimplemented function</syntax>
+<long>
+<para>
+<code>expm(X)</code> is currently an unimplemented function in QTFM. It may
+be implemented at a later date.
+</para>
+</long>
+<seealso>
+<matlabfun name = "expm"/>
+</seealso>
+</function>
+
+<!--$Id: expm.xml,v 1.2 2009/02/08 19:35:55 sangwine Exp $-->

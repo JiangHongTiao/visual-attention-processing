@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE function SYSTEM "qtfmfunction.dtd">
+<function name = "minus" overload = "true">
+<short>+ Plus</short>
+<syntax>Y = A + B</syntax>
+<long>
+<para>
+This function implements the elementwise binary addition operator for
+quaternion arrays.
+It is implemented
+for both full and pure quaternions and will implicitly supply a zero scalar
+part when needed. It also will work where one of the operands is not a
+quaternion, for example to add a real or complex value to a quaternion
+(implicitly to the scalar part).
+</para>
+</long>
+<examples>
+<precode>
+>> 1 + qi + qj + qk
+ 
+ans = 1 + 1 * I + 1 * J + 1 * K
+</precode>
+</examples>
+<seealso>
+<matlabfun name = "plus"/>
+<qtfmfun name = "minus"/>
+<qtfmfun name = "uminus"/>
+</seealso>
+</function>
+
+<!--$Id: plus.xml,v 1.2 2009/02/08 19:35:55 sangwine Exp $-->
