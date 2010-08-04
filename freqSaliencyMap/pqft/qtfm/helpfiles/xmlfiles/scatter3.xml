@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE function SYSTEM "qtfmfunction.dtd">
+<function name = "scatter3" overload = "true">
+<short>3D scatter plot from quaternion array.</short>
+<syntax>scatter3(q, varargin)</syntax>
+<long>
+    <para>
+        <code>scatter3</code> plots a 3D scatter plot of elements in a 
+        pure quaternion vector. It supports the same parameter profiles as the &matlab;
+        function of the same name, but the first parameter must be a quaternion
+        array.
+    </para>
+</long>
+<examples>
+<precode>
+>> scatter3(randv(1,128)); axis equal
+</precode>
+<para>
+results in the creation of the following plot.
+</para>
+<figure>scatter.png</figure>
+</examples>
+<seealso>
+<matlabfun name = "scatter3"/>
+</seealso>
+</function>
+
+<!--$Id: scatter3.xml,v 1.1 2009/07/22 14:26:23 sangwine Exp $-->
