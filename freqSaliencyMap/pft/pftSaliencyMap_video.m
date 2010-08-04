@@ -106,8 +106,8 @@ while ~isDone(hmfr)
     smnorm = imresize(smnorm,size(imgray_org),'bilinear');    
 
     %% Result Presentation in Grayscale or Color    
-    smnorm = smnorm .* imgray_org;
-    imblended = step(halphablend,double(smnorm),double(imgray_org));
+    smgray = smnorm .* imgray_org;
+    imblended = step(halphablend,double(smgray),double(imgray_org));
     if (demoFlg == 1)
         step(hvideo1, imrgb_org);        % Display Original Video
         step(hvideo2, imblended);
