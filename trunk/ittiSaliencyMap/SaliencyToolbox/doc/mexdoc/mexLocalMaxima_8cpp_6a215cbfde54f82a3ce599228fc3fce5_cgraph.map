@@ -1,0 +1,4 @@
+<area shape="rect" href="$classMexParams.html#6b95a9a99fb8c1530b6985b63d1d814b" title="Returns one of the input variables." alt="" coords="399,5,543,32">
+<area shape="rect" href="$classMexParams.html#5f3448b08efe2108cf473f66a04c761c" title="Returns one of the input variables as a scalar." alt="" coords="156,31,337,57">
+<area shape="rect" href="$classMexParams.html#83965eab5dee31740630a1ed7ccfa986" title="Sets an output variable to a scalar value." alt="" coords="151,81,343,108">
+<area shape="rect" href="$classMexParams.html#ca1030087a28bd08892789c1ae0379d2" title="Sets an output variable to a mxArray." alt="" coords="393,81,548,108">

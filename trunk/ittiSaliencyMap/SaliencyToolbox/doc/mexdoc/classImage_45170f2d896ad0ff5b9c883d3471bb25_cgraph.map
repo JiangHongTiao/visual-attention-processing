@@ -1,0 +1,6 @@
+<area shape="rect" href="$classImage.html#41f3b405c696797677f2f9c797c00e43" title="Returns a read&#45;only iterator to the beginning of the Image data." alt="" coords="168,5,264,32">
+<area shape="rect" href="$classImage.html#351895110c6e396b457079afedb0c68d" title="Check if the coordinates are within the bounds of the Image." alt="" coords="155,107,277,133">
+<area shape="rect" href="$classImage.html#45dd31ebd02682c5963858f62aa53dd9" title="Returns the height of the Image." alt="" coords="325,56,445,83">
+<area shape="rect" href="$classImage.html#2b7a8efd57ba635958dfe126e59d8c70" title="Returns a constant pointer to the underlying Matlab array." alt="" coords="495,56,641,83">
+<area shape="rect" href="$classImage.html#02d05b5c1bbd2c600adc76e5123bdaf9" title="Returns whether the Image is initialized." alt="" coords="504,107,632,133">
+<area shape="rect" href="$classImage.html#dbe5f8b9f79338c7eb6a66bdc69ca0b7" title="Returns the width of the Image." alt="" coords="328,107,443,133">

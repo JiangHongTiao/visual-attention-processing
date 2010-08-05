@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of initializeGlobal</title>
+  <meta name="keywords" content="initializeGlobal">
+  <meta name="description" content="initializeGlobal - initializes global variables">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="#">mfiles</a> &gt; initializeGlobal.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for .\mfiles&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>initializeGlobal
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>initializeGlobal - initializes global variables</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function initializeGlobal(varargin) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> initializeGlobal - initializes global variables
+
+ initializeGlobal initializes the following global variables:
+    IS_INITIALIZED is set to 1 as a flag that initializeGlobal was called.
+    PD is set to the appropriate path delimiter for your operating system
+       ('/' for Unix variants, '\' for MS Windows).
+    IMG_EXTENSIONS is a cell arrays with possible extensions for image files.
+    DEBUG_FID is the file identifier for debugMsg output. It is by default
+       set to 0. Set to 1 for stdout or to the fid of a text file that
+       is open for write access.
+    BASE_DIR is set to ''.
+    IMG_DIR is set to ''.
+    DATA_DIR is set to ''.
+    TMP_DIR is set to the Matlab standard tempdir.
+
+ In the SaliencyToolbox, all paths to images are assumed to be relative
+ to IMG_DIR, and all paths to data files relative to DATA_DIR. If no
+ base directory is supplied at the call of initializeGlobal, all these
+ paths are empty, and all image paths will have to be absolute paths
+ or relative to the current directory. Setting a base path allows for
+ more flexibility in migrating data to other locations in the path,
+ because paths will be relative to the base path, whch can be different
+ on different machines, for example.
+
+ initializeGlobal(base_dir) does the same as above, except:
+    BASE_DIR is set to base_dir and created if it doesn't exist.
+    IMG_DIR is set to base_dir/img and created if it doesn't exist.
+    DATA_DIR is set to base_dir/data and created if it doesn't exist.
+    TMP_DIR is set to base_dir/tmp and created if it doesn't exist.
+
+ See also <a href="declareGlobal.html" class="code" title="">declareGlobal</a>, <a href="ensureDirExists.html" class="code" title="function ensureDirExists(directory)">ensureDirExists</a>, <a href="debugMsg.html" class="code" title="function debugMsg(message,varargin)">debugMsg</a>.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="declareGlobal.html" class="code" title="">declareGlobal</a>	declareGlobal - declares global variables.</li><li><a href="ensureDirExists.html" class="code" title="function ensureDirExists(directory)">ensureDirExists</a>	ensureDirExists - makes sure that directory exists.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="declareGlobal.html" class="code" title="">declareGlobal</a>	declareGlobal - declares global variables.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% initializeGlobal - initializes global variables</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% initializeGlobal initializes the following global variables:</span>
+0004 <span class="comment">%    IS_INITIALIZED is set to 1 as a flag that initializeGlobal was called.</span>
+0005 <span class="comment">%    PD is set to the appropriate path delimiter for your operating system</span>
+0006 <span class="comment">%       ('/' for Unix variants, '\' for MS Windows).</span>
+0007 <span class="comment">%    IMG_EXTENSIONS is a cell arrays with possible extensions for image files.</span>
+0008 <span class="comment">%    DEBUG_FID is the file identifier for debugMsg output. It is by default</span>
+0009 <span class="comment">%       set to 0. Set to 1 for stdout or to the fid of a text file that</span>
+0010 <span class="comment">%       is open for write access.</span>
+0011 <span class="comment">%    BASE_DIR is set to ''.</span>
+0012 <span class="comment">%    IMG_DIR is set to ''.</span>
+0013 <span class="comment">%    DATA_DIR is set to ''.</span>
+0014 <span class="comment">%    TMP_DIR is set to the Matlab standard tempdir.</span>
+0015 <span class="comment">%</span>
+0016 <span class="comment">% In the SaliencyToolbox, all paths to images are assumed to be relative</span>
+0017 <span class="comment">% to IMG_DIR, and all paths to data files relative to DATA_DIR. If no</span>
+0018 <span class="comment">% base directory is supplied at the call of initializeGlobal, all these</span>
+0019 <span class="comment">% paths are empty, and all image paths will have to be absolute paths</span>
+0020 <span class="comment">% or relative to the current directory. Setting a base path allows for</span>
+0021 <span class="comment">% more flexibility in migrating data to other locations in the path,</span>
+0022 <span class="comment">% because paths will be relative to the base path, whch can be different</span>
+0023 <span class="comment">% on different machines, for example.</span>
+0024 <span class="comment">%</span>
+0025 <span class="comment">% initializeGlobal(base_dir) does the same as above, except:</span>
+0026 <span class="comment">%    BASE_DIR is set to base_dir and created if it doesn't exist.</span>
+0027 <span class="comment">%    IMG_DIR is set to base_dir/img and created if it doesn't exist.</span>
+0028 <span class="comment">%    DATA_DIR is set to base_dir/data and created if it doesn't exist.</span>
+0029 <span class="comment">%    TMP_DIR is set to base_dir/tmp and created if it doesn't exist.</span>
+0030 <span class="comment">%</span>
+0031 <span class="comment">% See also declareGlobal, ensureDirExists, debugMsg.</span>
+0032 
+0033 <span class="comment">% This file is part of the SaliencyToolbox - Copyright (C) 2006-2008</span>
+0034 <span class="comment">% by Dirk B. Walther and the California Institute of Technology.</span>
+0035 <span class="comment">% See the enclosed LICENSE.TXT document for the license agreement.</span>
+0036 <span class="comment">% More information about this project is available at:</span>
+0037 <span class="comment">% http://www.saliencytoolbox.net</span>
+0038 
+0039 <a name="_sub0" href="#_subfunctions" class="code">function initializeGlobal(varargin)</a>
+0040 
+0041 <span class="keyword">global</span> IS_INITIALIZED;
+0042 IS_INITIALIZED = 1;
+0043 
+0044 <a href="declareGlobal.html" class="code" title="">declareGlobal</a>;
+0045 
+0046 dbstop <span class="keyword">if</span> error;
+0047 
+0048 <span class="comment">% this is the path delimiter set according to your OS</span>
+0049 <span class="keyword">switch</span> (computer)
+0050   <span class="keyword">case</span> <span class="string">'PCWIN'</span>
+0051     PD = <span class="string">'\'</span>;
+0052   <span class="keyword">case</span> <span class="string">'MAC'</span>
+0053     PD = <span class="string">'/'</span>;  <span class="comment">% OS X uses '/' instead of ':'</span>
+0054   <span class="keyword">otherwise</span>
+0055     PD = <span class="string">'/'</span>;
+0056 <span class="keyword">end</span>
+0057 
+0058 <span class="keyword">if</span> nargin &gt;= 1
+0059   BASE_DIR = [varargin{1} PD];     <a href="ensureDirExists.html" class="code" title="function ensureDirExists(directory)">ensureDirExists</a>(BASE_DIR);
+0060   IMG_DIR = [BASE_DIR <span class="string">'img'</span> PD];   <a href="ensureDirExists.html" class="code" title="function ensureDirExists(directory)">ensureDirExists</a>(IMG_DIR);
+0061   DATA_DIR = [BASE_DIR <span class="string">'data'</span> PD]; <a href="ensureDirExists.html" class="code" title="function ensureDirExists(directory)">ensureDirExists</a>(DATA_DIR);
+0062   TMP_DIR = [BASE_DIR <span class="string">'tmp'</span> PD];   <a href="ensureDirExists.html" class="code" title="function ensureDirExists(directory)">ensureDirExists</a>(TMP_DIR);
+0063 <span class="keyword">else</span>
+0064   BASE_DIR = <span class="string">''</span>;
+0065   IMG_DIR = <span class="string">''</span>;
+0066   DATA_DIR = <span class="string">''</span>;
+0067   TMP_DIR = tempdir; <a href="ensureDirExists.html" class="code" title="function ensureDirExists(directory)">ensureDirExists</a>(TMP_DIR);
+0068 <span class="keyword">end</span>
+0069 
+0070 
+0071 IMG_EXTENSIONS = {<span class="string">'*.pgm'</span>,<span class="string">'*.ppm'</span>,<span class="string">'*.tif'</span>,<span class="string">'*.tiff'</span>,<span class="string">'*.TIF'</span>,<span class="keyword">...</span>
+0072                   <span class="string">'*.jpg'</span>,<span class="string">'*.JPG'</span>,<span class="string">'*.jpeg'</span>,<span class="string">'*.png'</span>,<span class="string">'*.PNG'</span>,<span class="keyword">...</span>
+0073                   <span class="string">'*.gif'</span>,<span class="string">'*.GIF'</span>,<span class="string">'*.JPEG'</span>,<span class="string">'*.PGM'</span>,<span class="string">'*.PPM'</span>,<span class="keyword">...</span>
+0074                   <span class="string">'*.bmp'</span>,<span class="string">'*.BMP'</span>};
+0075 
+0076 DEBUG_FID = 0;
+0077 DBW_FID = 240.75;
+0078 
+0079 fprintf(<span class="string">'\nSaliency Toolbox (http://www.saliencytoolbox.net)\n'</span>);
+0080 fprintf(<span class="string">'For licensing details type ''STBlicense'' at the prompt.\n\n'</span>);
+0081 
+0082 <span class="comment">% need to rename old dll mex files to avoid Matlab warning?</span>
+0083 <span class="keyword">if</span> strcmp(mexext,<span class="string">'mexw32'</span>)
+0084   mexfiles = {<span class="string">'mexConv2PreserveEnergy'</span>,<span class="string">'mexGaussianSubsample'</span>,<span class="string">'mexLocalMaxima'</span>};
+0085   numMex = length(mexfiles);
+0086   <span class="keyword">for</span> m = 1:numMex
+0087     bad(m) = (exist([mexfiles{m} <span class="string">'.dll'</span>]) == 3);
+0088   <span class="keyword">end</span>
+0089   <span class="keyword">if</span> any(bad)
+0090     me = mfilename;
+0091     myPath = which(me);
+0092     myPath = myPath(1:end-(length(me)+2));
+0093     mexPath = [myPath <span class="string">'..'</span> PD <span class="string">'mex'</span> PD];
+0094 
+0095     fprintf(<span class="string">'This version of Matlab (%s) uses .mexw32 instead of .dll mex files.\n'</span>,version);
+0096     <span class="keyword">for</span> m = find(bad)
+0097       fprintf(<span class="string">'Renaming %s.dll to %s.dll.old ... '</span>,mexfiles{m},mexfiles{m});
+0098       [success,message] = movefile([mexPath mexfiles{m} <span class="string">'.dll'</span>],[mexPath mexfiles{m} <span class="string">'.dll.old'</span>]);
+0099       <span class="keyword">if</span> success
+0100         fprintf(<span class="string">'done.\n'</span>);
+0101       <span class="keyword">else</span>
+0102         fprintf(<span class="string">'failed: %s\n'</span>,message);
+0103       <span class="keyword">end</span>
+0104     <span class="keyword">end</span>
+0105     fprintf(<span class="string">'\n'</span>);
+0106     rehash;
+0107   <span class="keyword">end</span>
+0108 <span class="keyword">end</span>
+0109 
+0110 
+0111</pre></div>
+<hr><address>Generated on Fri 22-Aug-2008 00:09:19 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

@@ -1,0 +1,11 @@
+<area shape="rect" href="$classMexParams.html#6b95a9a99fb8c1530b6985b63d1d814b" title="Returns one of the input variables." alt="" coords="156,5,300,32">
+<area shape="rect" href="$Filters_8cpp.html#fd05058fad5d4735eef3352b93dcce30" title="Low&#45;pass with a 6x6 separable kernel in X and decimate in X by factor 2." alt="" coords="171,56,285,83">
+<area shape="rect" href="$Filters_8cpp.html#36928c645d464b6dfed7dfd50a5e2d28" title="Low&#45;pass with a 6x6 separable kernel in Y and decimate in Y by factor 2." alt="" coords="171,107,285,133">
+<area shape="rect" href="$classMexParams.html#ca1030087a28bd08892789c1ae0379d2" title="Sets an output variable to a mxArray." alt="" coords="151,157,305,184">
+<area shape="rect" href="$classImage.html#41f3b405c696797677f2f9c797c00e43" title="Returns a read&#45;only iterator to the beginning of the Image data." alt="" coords="367,5,463,32">
+<area shape="rect" href="$classImage.html#9987bf538358f25470af7d628e97694a" title="Returns a read/write iterator to the beginning of the Image data." alt="" coords="363,157,467,184">
+<area shape="rect" href="$classImage.html#45dd31ebd02682c5963858f62aa53dd9" title="Returns the height of the Image." alt="" coords="355,56,475,83">
+<area shape="rect" href="$classImage.html#dbe5f8b9f79338c7eb6a66bdc69ca0b7" title="Returns the width of the Image." alt="" coords="357,107,472,133">
+<area shape="rect" href="$classImage.html#2b7a8efd57ba635958dfe126e59d8c70" title="Returns a constant pointer to the underlying Matlab array." alt="" coords="524,56,671,83">
+<area shape="rect" href="$classImage.html#eef0da5d895782bbb9ce3a17b538cf1b" title="Returns a pointer to the underlying Matlab array." alt="" coords="541,157,653,184">
+<area shape="rect" href="$classImage.html#02d05b5c1bbd2c600adc76e5123bdaf9" title="Returns whether the Image is initialized." alt="" coords="533,107,661,133">

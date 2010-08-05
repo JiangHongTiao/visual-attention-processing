@@ -1,0 +1,4 @@
+<area shape="rect" href="$classImage.html#41f3b405c696797677f2f9c797c00e43" title="Returns a read&#45;only iterator to the beginning of the Image data." alt="" coords="145,5,241,32">
+<area shape="rect" href="$classImage.html#03b6118e39e68aedf9f6242477ba6704" title="Returns the number of pixels in the Image." alt="" coords="140,56,247,83">
+<area shape="rect" href="$classImage.html#2b7a8efd57ba635958dfe126e59d8c70" title="Returns a constant pointer to the underlying Matlab array." alt="" coords="297,5,444,32">
+<area shape="rect" href="$classImage.html#02d05b5c1bbd2c600adc76e5123bdaf9" title="Returns whether the Image is initialized." alt="" coords="307,56,435,83">

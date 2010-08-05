@@ -1,0 +1,201 @@
+<html>
+<head>
+<title>SaliencyToolbox 2.2</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<style type="text/css">
+<!--
+.main_heading {  font-family: Arial, Helvetica, sans-serif; font-size: 250%; font-weight: bold; color: #336600}
+.main_text {  font-family: Arial, Helvetica, sans-serif; font-size: 120%}
+a {  color: #CC0000; text-decoration: none}
+a:hover { color: #FF0000; cursor: hand; text-decoration: underline}
+.sub_heading { font-family: Arial, Helvetica, sans-serif; font-size: 180%; font-weight: bold; color: #336600 }
+.datefield {  font-family: "Times New Roman", Times, serif; font-size: 90%; font-style: italic; color: #666666}
+.subsub_heading { font-family: Arial, Helvetica, sans-serif; font-size: 130%; font-weight: bold; color: #336600 ; font-style: italic}
+code {  font-size: 120%; font-weight: bold; color: #000066}
+.main_text_small { font-family: Arial, Helvetica, sans-serif; font-size: 100%}
+-->
+</style>
+</head>
+<body bgcolor="#FFFFFF" text="#000000">
+<p class="main_heading" align="center">SaliencyToolbox 2.2 - documentation</p>
+<hr>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+  <tr valign="top"> 
+    <td width="24%" height="74" class="main_text"> 
+      <p><a href="#installation">Installation<br>
+        </a><a href="#quick">Quick Start</a> <br>
+        <a href="#compile">Mex file compilation</a> </p>
+    </td>
+    <td width="35%" height="74" class="main_text"> 
+      <p><a href="mdoc/index.html">m-file documentation<br>
+        </a><a href="mexdoc/files.html">C++ source documentation</a><br>
+        <a href="#bugs">Bug reports</a></p>
+    </td>
+    <td width="41%" height="74" class="main_text"><a href="../license.html">License</a><br>
+      <a href="http://www.saliencytoolbox.net"> official SaliencyToolbox web 
+      page</a> </td>
+  </tr>
+</table>
+<hr>
+<p class="sub_heading"><a name="installation"></a>Installation</p>
+<p class="main_text">Unpacking the code creates a directory structure under SaliencyToolbox. 
+  Simply add the SaliencyToolbox directory including its subdirectories to your 
+  Matlab path:</p>
+<p class="main_text"><code>addpath(genpath('<i>&lt;your SaliencyToolbox path&gt;</i>'));</code></p>
+<p class="main_text">If you want to have access to the toolbox everytime you start 
+  Matlab, then place the above command into your startup.m file, which is located 
+  in ~/matlab/startup.m for Linux, Mac OS X and other Unix flavors, and in the 
+  &quot;Start in&quot; directory for your Matlab desktop shortcut under MS Windows.</p>
+<hr>
+<p class="sub_heading"><a name="quick"></a>Quick Start</p>
+<p class="main_text">Okay, now that installation was so simple, you have some 
+  time left for a test drive, right? Version 2.0 sports a new graphical user interface 
+  (GUI) version of the saliency code. In Matlab, change to the SaliencyToolbox 
+  directory, then type:</p>
+<p class="main_text"><code>guiSaliency('img/balloons.png');</code></p>
+<p class="main_text">Hit &quot;Start&quot; to start the saliency computation. 
+  Everything else should be fairly intuitive.</p>
+<p class="main_text">There is also the command-line version of the program:</p>
+<p class="main_text"><code>runSaliency('img/balloons.png');</code></p>
+<p class="main_text">After a few moments, you should see four figure windows with 
+  various intermediate results, and in the Matlab window you will see details 
+  about the most salient location, which is also marked in the image. You can 
+  now hit Return to go to the next most salient location and so forth. To quit, 
+  simply enter 'q' and press Return.</p>
+<p class="main_text">If you want to compute the saliency maps and fixations for 
+  several images in batch mode, then check out <a href="mdoc/mfiles/batchSaliency.html">batchSaliency</a>.</p>
+<p class="main_text"></p>
+<p class="main_text">If you receive a fatal error &quot;MEX file xxx could not 
+  be found.&quot; and you are sure that you have set the paths correctly, then 
+  you might need to <a href="#compile">compile</a> the mex files for your system.</p>
+<p class="main_text">The SaliencyToolbox/img directory contains a few example 
+  images for you to play with. The guiSaliency, runSaliency, and batchSaliency 
+  functions also takes an optional second argument, a saliencyParams structure. 
+  Start exploring the documentation for <a href="mdoc/mfiles/runSaliency.html">runSaliency</a>, 
+  <a href="mdoc/mfiles/batchSaliency.html">batchSaliency</a>, <a href="mdoc/mfiles/defaultSaliencyParams.html">defaultSaliencyParams</a>, 
+  and <a href="mdoc/mfiles/dataStructures.html">dataStructures</a> to get an idea 
+  of what is happening. It may be a good idea to make a copy of runSaliency and 
+  start dissecting and adapting it for your purpose.</p>
+<p class="main_text">If you want to get more feedback on what is happening at 
+  each time step, then try switching debugging messages on in the GUI version. 
+  In the command-line version, you can do the following:</p>
+<p class="main_text"><code>declareGlobal;<br>
+  DEBUG_FID = 1;<br>
+  runSaliency('img/balloons.png');</code></p>
+<p class="main_text">See the documentations for <a href="mdoc/mfiles/initializeGlobal.html">initializeGlobal</a>, 
+  <a href="mdoc/mfiles/declareGlobal.html">declareGlobal</a>, and <a href="mdoc/mfiles/debugMsg.html">debugMsg</a> 
+  for what is happening here.</p>
+<hr>
+<p class="sub_heading"><a name="compile"></a>Compilation</p>
+<p class="main_text">Most users don't need to compile the mex files. Binaries 
+  for the most common architectures are included with the toolbox. Compilation 
+  may become necessary, if the binaries for your operating system and CPU combination 
+  are not in the SaliencyToolbox/bin directory yet. In this case, please send 
+  me a note once you have successfully compiled your mex files, and I may include 
+  the binaries for your system in the next release. Compilation is also necessary, 
+  of course, if you modify the C++ code of the mex files.</p>
+<p class="main_text">&nbsp;</p>
+<p class="subsub_heading">Linux, Mac OS X, other Unix flavors</p>
+<p class="main_text">You need the <a href="http://gcc.gnu.org/" target="_blank">GNU 
+  gcc compiler</a>, version 3.2.3, if possible. The compiler should be named &quot;gcc-3&quot; 
+  and its C++ equivalent &quot;g++-3&quot;. Create an alias or link if your compiler 
+  is called differently. Check by typing:</p>
+<p class="main_text"><code>gcc-3 --version</code></p>
+<p class="main_text">The 3.3 variants in Fedora Core and OS X work as well. Gcc 
+  3.4.x definitely does NOT work for mex files, they won't link correctly at Matlab 
+  runtime because of a known compiler bug. Gcc versions before 3.0 won't work 
+  either, because they don't fully implement the standard template library. Gcc 
+  4 seems to work, at least on some architectures. Please let me know if you have 
+  some other experiences with the various compiler versions.</p>
+<p class="main_text">The <code>mex</code> shell script that comes with Matlab 
+  needs to be in your executable path. The <code>mex</code> scripts of Matlab 
+  releases 13 and earlier don't understand the '-cxx' option to signal C++ code, 
+  release 14 requires it. Hence, if your Matlab version is R13 or older, you need 
+  to edit two lines around line 23 of your SaliencyToolbox/src/Makefile to this:</p>
+<p class="main_text"><code>#MEXFLAGS := -cxx<br>
+  MEXFLAGS :=</code></p>
+<p class="main_text">With all this out of the way, you can now change into directory 
+  SaliencyToolbox/src and type:</p>
+<p class="main_text"><code>make</code></p>
+<p class="main_text">This will create the binaries for your operating system in 
+  SaliencyToolbox/bin. If you get a message saying that nothing needs to be done, 
+  but you are sure that you need to recompile the code, then use this command:</p>
+<p class="main_text"><code>make clean all</code></p>
+<p class="main_text"><br>
+</p>
+<p class="subsub_heading">Microsoft Windows (32 bit)</p>
+<p class="main_text">To compile the code under Windows, you will need to install 
+  MinGW (minimalistic GNU for Windows) and MSYS (Minimalistic SYStem). This is 
+  free software in the public domain. Follow these steps to install a working 
+  environment for compiling mex files (all downloads are available at <a href="http://www.mingw.org/old/download.shtml" target="_blank">http://www.mingw.org/old/download.shtml</a>):</p>
+<ol>
+  <li class="main_text">Download <a href="http://prdownloads.sourceforge.net/mingw/mingw-runtime-3.8.tar.gz?download" target="_blank">mingw-runtime-3.8.tar.gz</a> 
+    and unpack into a new folder c:\mingw.</li>
+  <li class="main_text">Download <a href="http://prdownloads.sourceforge.net/mingw/binutils-2.15.91-20040904-1.tar.gz?download" target="_blank">binutils-2.15.91-20040904-1.tar.gz</a> 
+    and unpack into c:\mingw.</li>
+  <li class="main_text">Download <a href="http://prdownloads.sourceforge.net/mingw/gcc-3.2.3-20030504-1.tar.gz?download" target="_blank">gcc-3.2.3-20030504-1.tar.gz</a> 
+    and unpack into c:\mingw. If you are asked if you wish to overwrite some existing 
+    files, click on 'yes to all'.</li>
+  <li class="main_text">Download <a href="http://prdownloads.sourceforge.net/mingw/w32api-3.3.tar.gz?download" target="_blank">w32api-3.3.tar.gz</a> 
+    and unpack into c:\mingw.</li>
+  <li class="main_text">Download <a href="http://prdownloads.sourceforge.net/mingw/MSYS-1.0.10.exe?download" target="_blank">MSYS-1.0.10.exe</a> 
+    and run the installer, install into c:\msys.</li>
+  <li class="main_text">During the postinstall, answer <code>y</code> on the question 
+    if you have mingw, then enter <code>/c/mingw</code> as its installation path.</li>
+</ol>
+<p><i class="main_text_small">(Note: Of course, you can also choose different 
+  installation paths and more recent packages. However, I have tested the above 
+  configuration, and it works for sure.)</i></p>
+<p class="main_text">Start you newly installed Msys environment, which will give 
+  you a Unix-like shell, and change the directory to SaliencyToolbox/src. Make 
+  sure that the global environment variable MATLABROOT is set to the Matlab installation 
+  directory, either by adding it to your Windows environment variables (My Computer, right click, properties, Advanced, Environment Variables, New), or by 
+  typing in Msys:</p>
+<p class="main_text"><code>export MATLABROOT=&quot;C:\\Program Files\\MATLAB\\R2008a&quot;</code></p>
+<p class="main_text">You can also place this line into your .profile file in your Msys home directory. Now you can compile the code by typing:</p>
+<p class="main_text"><code>make</code></p>
+<p class="main_text">which creates the Windows .mexw32 files in SaliencyToolbox/bin. 
+  If you get a message saying that nothing needs to be done, but you are sure 
+  that you need to recompile the code, use this command:</p>
+<p class="main_text"><code>make clean all</code></p>
+<p class="main_text"><em>Note for older Matlab versions:</em> The mex files for 32 bit Windows have the extension mexw32. Matlab versions before  7.1 (R14SP3) used the extension dll. The toolbox recognizes this and automatically renames the mexw32 files into dll files on older Matlab versions during the first call to <a href="mdoc/mfiles/initializeGlobal.html">initializeGlobal</a>.</p>
+<p class="main_text">&nbsp;</p>
+<p class="subsub_heading">Microsoft Vista, 64 bit</p>
+<p class="main_text">Unfortunately, there is so far no POSIX compatible compilation environment for 64 bit Vista.  <span email="zavata.afnan@gmail.com">Mostafa Jabarouti Moghaddam</span> has managed to compile the mex routines for 64 bit Vista using Visual Studio. With his permission, I am including the compiled mex files (with the extension .mexw64) in the distribution. Here are Mostafa's notes on how to do the compilation:</p>
+<p class="main_text"><a href="http://www.saliencytoolbox.net/mexw64/CompileWin64.pdf" target="_blank">CompileWin64.pdf</a> - a description of the compilation process<br>
+  <a href="http://www.saliencytoolbox.net/mexw64/saliencyToolboxMex.rar">saliencyToolboxMex.rar</a> - the compilation environment and auxiliary files<br>
+  <a href="http://www.saliencytoolbox.net/mexw64/mexw64.rar">mexw64.rar</a> - the compiled mexw64 files</p>
+<p class="main_text">Thanks, Mostafa!</p>
+<p class="main_text">&nbsp;</p>
+<p class="subsub_heading">Generating the documentation</p>
+<p class="main_text">In order to re-create the documentation for the C++ source 
+  code for the mex files, you need to have <a href="http://www.stack.nl/%7Edimitri/doxygen/" target="_blank">doxygen</a> 
+  and <a href="http://www.graphviz.org/" target="_blank">graphviz</a> (for the 
+  <code>dot</code> command) installed and in your executable path. Then change 
+  to the SaliencyToolbox/mex directory and type:</p>
+<p class="main_text"><code>make doc</code></p>
+<p class="main_text">This will create the <a href="mexdoc/files.html">documentation</a> 
+  in SaliencyToolbox/doc/mexdoc.</p>
+<p class="main_text">The documentation for the m-files is generated from within 
+  Matlab, using the <a href="http://www.artefact.tk/software/matlab/m2html/" target="_blank">m2html 
+  toolbox</a>. Make sure that m2html is in your Matlab path, then change to the 
+  SaliencyToolbox base directory and type:</p>
+<p class="main_text"><code>STBgenerateDoc;</code></p>
+<p class="main_text">And you'll have the <a href="mdoc/index.html">documentation</a> 
+  for the m-files in SaliencyToolbox/doc/mdoc.</p>
+<hr>
+<p class="sub_heading"><a name="bugs"></a>Bug reports</p>
+<p class="main_text">Please submit any bugs, feature requests and support requests 
+  to:</p>
+<p class="main_text"><a href="mailto:walther@saliencytoolbox.net">walther@saliencytoolbox.net</a></p>
+<hr>
+<a href="http://www.saliencytoolbox.net"><span class="main_text">SaliencyToolbox 
+homepage</span></a> 
+<div align="right"><span class="datefield"> last modified: 
+  <!-- #BeginDate format:Sw1 -->25 September, 2008<!-- #EndDate -->
+  </span> </div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+</body>
+</html>
