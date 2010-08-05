@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of conv2PreserveEnergy</title>
+  <meta name="keywords" content="conv2PreserveEnergy">
+  <meta name="description" content="">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="#">mfiles</a> &gt; conv2PreserveEnergy.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for .\mfiles&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>conv2PreserveEnergy
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong></strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function result = conv2PreserveEnergy(data,filter) </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"></pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+</ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <a name="_sub0" href="#_subfunctions" class="code">function result = conv2PreserveEnergy(data,filter)</a>
+0002 
+0003 result = conv2(data,filter,<span class="string">'same'</span>);
+0004 rsize = size(result);
+0005 fsize = size(filter);
+0006 fsize2 = (fsize - 1)/2;
+0007 fsum = sum(filter(:));
+0008 
+0009 ystart = 1 + fsize2(1);
+0010 yend = rsize(1) - fsize2(1);
+0011 xstart = 1 + fsize2(2);
+0012 xend = rsize(2) - fsize2(2);
+0013 
+0014 <span class="keyword">if</span> (rsize(1) &gt; fsize(1))
+0015   <span class="keyword">for</span> y = 1:fsize2(1)
+0016     <span class="comment">% top</span>
+0017     fSumTop = sum(sum(filter(fsize(1)-y:fsize(1),:)));
+0018     <span class="keyword">if</span> (fSumTop ~= 0)
+0019       result(y,xstart:xend) = result(y,xstart:xend) * fsum / fSumTop;
+0020     <span class="keyword">end</span>
+0021     
+0022     <span class="comment">% bottom</span>
+0023     fSumBottom = sum(sum(filter(1:y,:)));
+0024     <span class="keyword">if</span> (fSumBottom ~= 0)
+0025       result(rsize(1)-y+1,xstart:xend) = result(rsize(1)-y+1,xstart:xend) * fsum / fSumBottom;
+0026     <span class="keyword">end</span>
+0027   <span class="keyword">end</span>
+0028 <span class="keyword">end</span>
+0029 
+0030 <span class="keyword">if</span> (rsize(2) &gt; rsize(1))
+0031   <span class="keyword">for</span> x = 1:fsize2(2)
+0032     <span class="comment">% left</span>
+0033     fSumLeft = sum(sum(filter(:,fsize(2)-x:fsize(2))));
+0034     <span class="keyword">if</span> (fSumLeft ~= 0)
+0035       result(ystart:yend,x) = result(ystart:yend,x) * fsum / fSumLeft;
+0036     <span class="keyword">end</span>
+0037     
+0038     <span class="comment">% right</span>
+0039     fSumRight = sum(sum(filter(:,1:x)));
+0040     <span class="keyword">if</span> (fSumRight ~= 0)
+0041       result(ystart:yend,rsize(2)-x+1) = result(ystart:yend,rsize(2)-x+1) * fsum / fSumRight;
+0042     <span class="keyword">end</span>
+0043     
+0044     <span class="comment">% corners</span>
+0045     <span class="keyword">if</span> (rsize(1) &gt; fsize(1))
+0046       <span class="keyword">for</span> y = 1:fsize2(1)
+0047         fSumTL = sum(sum(filter(fsize(1)-y:fsize(1),fsize(2)-x:fsize(2))));
+0048         <span class="keyword">if</span> (fSumTL ~= 0)
+0049           result(y,x) = result(y,x) * fsum / fSumTL;
+0050         <span class="keyword">end</span>
+0051         
+0052         fSumTR = sum(sum(filter(fsize(1)-y:fsize(1),1:x)));
+0053         <span class="keyword">if</span> (fSumTR ~= 0)
+0054           result(y,rsize(2)-x+1) = result(y,rsize(2)-x+1) * fsum / fSumTR;
+0055         <span class="keyword">end</span>
+0056         
+0057         fSumBL = sum(sum(filter(1:y,fsize(2)-x:fsize(2))));
+0058         <span class="keyword">if</span> (fSumBL ~= 0)
+0059           result(rsize(1)-y+1,x) = result(rsize(1)-y+1,x) * fsum / fSumBL;
+0060         <span class="keyword">end</span>
+0061         
+0062         fSumBR = sum(sum(filter(1:y,1:x)));
+0063         <span class="keyword">if</span> (fSumBR ~= 0)
+0064           result(rsize(1)-y+1,rsize(2)-x+1) = result(rsize(1)-y+1,rsize(2)-x+1) * fsum / fSumBR;
+0065         <span class="keyword">end</span>
+0066       <span class="keyword">end</span>
+0067     <span class="keyword">end</span>
+0068   <span class="keyword">end</span>
+0069 <span class="keyword">end</span></pre></div>
+<hr><address>Generated on Fri 22-Aug-2008 00:09:19 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>

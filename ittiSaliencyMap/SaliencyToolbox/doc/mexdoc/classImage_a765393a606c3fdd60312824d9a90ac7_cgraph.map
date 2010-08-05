@@ -1,0 +1,6 @@
+<area shape="rect" href="$classImage.html#9987bf538358f25470af7d628e97694a" title="Returns a read/write iterator to the beginning of the Image data." alt="" coords="325,5,429,32">
+<area shape="rect" href="$classImage.html#6bd3897cec644d5fa71e3c10a0f8b393" title="Returns a read/write iterator to the one&#45;past&#45;the&#45;end of the Image data." alt="" coords="180,56,273,83">
+<area shape="rect" href="$classImage.html#02d05b5c1bbd2c600adc76e5123bdaf9" title="Returns whether the Image is initialized." alt="" coords="491,107,619,133">
+<area shape="rect" href="$classImage.html#eef0da5d895782bbb9ce3a17b538cf1b" title="Returns a pointer to the underlying Matlab array." alt="" coords="499,5,611,32">
+<area shape="rect" href="$classImage.html#03b6118e39e68aedf9f6242477ba6704" title="Returns the number of pixels in the Image." alt="" coords="324,56,431,83">
+<area shape="rect" href="$classImage.html#2b7a8efd57ba635958dfe126e59d8c70" title="Returns a constant pointer to the underlying Matlab array." alt="" coords="481,56,628,83">

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+                "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+<head>
+  <title>Description of initializeImage</title>
+  <meta name="keywords" content="initializeImage">
+  <meta name="description" content="initializeImage - initializes an image structure.">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+  <meta name="generator" content="m2html &copy; 2003 Guillaume Flandin">
+  <meta name="robots" content="index, follow">
+  <link type="text/css" rel="stylesheet" href="../m2html.css">
+</head>
+<body>
+<a name="_top"></a>
+<div><a href="../index.html">Home</a> &gt;  <a href="#">mfiles</a> &gt; initializeImage.m</div>
+
+<!--<table width="100%"><tr><td align="left"><a href="../index.html"><img alt="<" border="0" src="../left.png">&nbsp;Master index</a></td>
+<td align="right"><a href="index.html">Index for .\mfiles&nbsp;<img alt=">" border="0" src="../right.png"></a></td></tr></table>-->
+
+<h1>initializeImage
+</h1>
+
+<h2><a name="_name"></a>PURPOSE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>initializeImage - initializes an image structure.</strong></div>
+
+<h2><a name="_synopsis"></a>SYNOPSIS <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="box"><strong>function [Img,err] = initializeImage(varargin); </strong></div>
+
+<h2><a name="_description"></a>DESCRIPTION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre class="comment"> initializeImage - initializes an image structure.
+
+ [Image,err] = initializeImage(filename);
+    Initializes an Image structure given an image file name.
+    The file name is assumed to be relative to IMG_DIR.
+    If there is an error in reading the file, it is returned
+    in err.
+
+ Image = initializeImage(imgData);
+    Initialize an Image structure with the image
+    content instead of the file name.
+
+ [Image,err] = initializeImage(filename,imgData);
+    Initialize an Image structure with both the image
+    content and the file name.
+
+ [Image,err] = initializeImage(...,type);
+    Gives Image the text label type. Default is 'unknown'.
+
+ The Image structure has the following members:
+   filename - the file name relative to IMG_DIR 
+   data - the actual content of the image
+          Each image structure has to contain the filename or the data
+          field. It can have both.
+   type - some text label
+   size - the size of the image
+   dims - the number of dimensions of the image (2 or 3)
+   date - the time and date this structure was created
+
+ See also <a href="dataStructures.html" class="code" title="">dataStructures</a>.</pre></div>
+
+<!-- crossreference -->
+<h2><a name="_cross"></a>CROSS-REFERENCE INFORMATION <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+This function calls:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="declareGlobal.html" class="code" title="">declareGlobal</a>	declareGlobal - declares global variables.</li><li><a href="timeString.html" class="code" title="function s = timeString()">timeString</a>	timeString returns the current time and date in a convenient string format.</li></ul>
+This function is called by:
+<ul style="list-style-image:url(../matlabicon.gif)">
+<li><a href="batchSaliency.html" class="code" title="function [salMaps,fixations] = batchSaliency(images,numFixations,params)">batchSaliency</a>	batchSaliency - batch processing of lists of images.</li><li><a href="contrastModulate.html" class="code" title="function resultImg = contrastModulate(img, modulationMap, varargin)">contrastModulate</a>	contrastModulate - contrast modulates an image according to a map</li><li><a href="guiSaliency.html" class="code" title="function varargout = guiSaliency(varargin)">guiSaliency</a>	guiSaliency - a graphical user interface (GUI) version of the saliency code.</li><li><a href="runSaliency.html" class="code" title="function runSaliency(inputImage,varargin)">runSaliency</a>	runSaliency - compute and display saliency map and fixations.</li></ul>
+<!-- crossreference -->
+
+
+<h2><a name="_source"></a>SOURCE CODE <a href="#_top"><img alt="^" border="0" src="../up.png"></a></h2>
+<div class="fragment"><pre>0001 <span class="comment">% initializeImage - initializes an image structure.</span>
+0002 <span class="comment">%</span>
+0003 <span class="comment">% [Image,err] = initializeImage(filename);</span>
+0004 <span class="comment">%    Initializes an Image structure given an image file name.</span>
+0005 <span class="comment">%    The file name is assumed to be relative to IMG_DIR.</span>
+0006 <span class="comment">%    If there is an error in reading the file, it is returned</span>
+0007 <span class="comment">%    in err.</span>
+0008 <span class="comment">%</span>
+0009 <span class="comment">% Image = initializeImage(imgData);</span>
+0010 <span class="comment">%    Initialize an Image structure with the image</span>
+0011 <span class="comment">%    content instead of the file name.</span>
+0012 <span class="comment">%</span>
+0013 <span class="comment">% [Image,err] = initializeImage(filename,imgData);</span>
+0014 <span class="comment">%    Initialize an Image structure with both the image</span>
+0015 <span class="comment">%    content and the file name.</span>
+0016 <span class="comment">%</span>
+0017 <span class="comment">% [Image,err] = initializeImage(...,type);</span>
+0018 <span class="comment">%    Gives Image the text label type. Default is 'unknown'.</span>
+0019 <span class="comment">%</span>
+0020 <span class="comment">% The Image structure has the following members:</span>
+0021 <span class="comment">%   filename - the file name relative to IMG_DIR</span>
+0022 <span class="comment">%   data - the actual content of the image</span>
+0023 <span class="comment">%          Each image structure has to contain the filename or the data</span>
+0024 <span class="comment">%          field. It can have both.</span>
+0025 <span class="comment">%   type - some text label</span>
+0026 <span class="comment">%   size - the size of the image</span>
+0027 <span class="comment">%   dims - the number of dimensions of the image (2 or 3)</span>
+0028 <span class="comment">%   date - the time and date this structure was created</span>
+0029 <span class="comment">%</span>
+0030 <span class="comment">% See also dataStructures.</span>
+0031 
+0032 <span class="comment">% This file is part of the SaliencyToolbox - Copyright (C) 2006-2008</span>
+0033 <span class="comment">% by Dirk B. Walther and the California Institute of Technology.</span>
+0034 <span class="comment">% See the enclosed LICENSE.TXT document for the license agreement.</span>
+0035 <span class="comment">% More information about this project is available at:</span>
+0036 <span class="comment">% http://www.saliencytoolbox.net</span>
+0037 
+0038 <a name="_sub0" href="#_subfunctions" class="code">function [Img,err] = initializeImage(varargin);</a>
+0039 
+0040 <a href="declareGlobal.html" class="code" title="">declareGlobal</a>;
+0041 err = [];
+0042 
+0043 <span class="keyword">if</span> (nargin &lt; 1)
+0044   error(<span class="string">'Must have at least one argument!'</span>);
+0045 <span class="keyword">elseif</span> (nargin &lt; 2)
+0046   <span class="keyword">switch</span> class(varargin{1})
+0047     <span class="keyword">case</span> <span class="string">'char'</span>
+0048       Img.filename = varargin{1};
+0049       Img.data = NaN;
+0050       Img.type = <span class="string">'unknown'</span>;
+0051     <span class="keyword">case</span> {<span class="string">'uint8'</span>,<span class="string">'double'</span>}
+0052       Img.filename = NaN;
+0053       Img.data = varargin{1};
+0054       Img.type = <span class="string">'unknown'</span>;
+0055     <span class="keyword">otherwise</span>
+0056       error([<span class="string">'Don''t know how to handle data of class'</span> class(varargin{1})]);
+0057   <span class="keyword">end</span>
+0058 <span class="keyword">elseif</span> (nargin &lt; 3)
+0059   <span class="keyword">switch</span> class(varargin{1})
+0060     <span class="keyword">case</span> <span class="string">'char'</span>
+0061       Img.filename = varargin{1};
+0062       <span class="keyword">switch</span> class(varargin{2})
+0063         <span class="keyword">case</span> <span class="string">'char'</span>
+0064           Img.data = NaN;
+0065           Img.type = varargin{2};
+0066         <span class="keyword">case</span> {<span class="string">'uint8'</span>,<span class="string">'double'</span>}
+0067           Img.data = varargin{2};
+0068           Img.type = <span class="string">'unknown'</span>;
+0069         <span class="keyword">otherwise</span>
+0070           error(<span class="string">'Don''t know how to handle image data of class %s.'</span>,class(varargin{2}));  
+0071       <span class="keyword">end</span>
+0072       
+0073     <span class="keyword">case</span> {<span class="string">'uint8'</span>,<span class="string">'double'</span>}
+0074       Img.filename = NaN;
+0075       Img.data = varargin{1};
+0076       Img.type = varargin{2};
+0077       
+0078     <span class="keyword">otherwise</span>
+0079       error([<span class="string">'Don''t know how to handle data of class'</span> class(varargin{1})]);
+0080   <span class="keyword">end</span>
+0081 <span class="keyword">else</span>
+0082   Img.filename = varargin{1};
+0083   Img.data = varargin{2};
+0084   Img.type = varargin{3};
+0085 <span class="keyword">end</span>
+0086 
+0087 <span class="keyword">if</span> (isnan(Img.data))
+0088   <span class="keyword">try</span>
+0089     im = imread([IMG_DIR Img.filename]);
+0090   <span class="keyword">catch</span>
+0091     Img = [];
+0092     err = lasterror;
+0093     <span class="keyword">if</span> (nargout &lt; 2)
+0094       rethrow(err);
+0095     <span class="keyword">end</span>
+0096     <span class="keyword">return</span>;
+0097   <span class="keyword">end</span>
+0098   Img.data = im;
+0099   Img.size = size(im);
+0100 <span class="keyword">else</span>
+0101   Img.size = size(Img.data);
+0102 <span class="keyword">end</span>
+0103 
+0104 Img.dims = length(Img.size);
+0105 Img.date = <a href="timeString.html" class="code" title="function s = timeString()">timeString</a>;</pre></div>
+<hr><address>Generated on Fri 22-Aug-2008 00:09:19 by <strong><a href="http://www.artefact.tk/software/matlab/m2html/">m2html</a></strong> &copy; 2003</address>
+</body>
+</html>
