@@ -1,4 +1,4 @@
-function pqftSaliencyMap_video(inVid,outVid,savFlg,demoFlg)
+function pqftSaliencyMap_video(inVid,outVid,savFlg,demoFlg,inDat)
 %% Developing Phase Shifting Transform in System Object
 % This simulation is done to show the effectiveness of PFT on lane-mark
 % detection and extraction in a video sequence
@@ -98,7 +98,9 @@ end
 while ~isDone(hmfr)    
     queue = circshift(queue,[0 0 0 -1]); % Rotate the queue to get new input value
     queue(:,:,:,M) = step(hmfr); % Convert color image to intensity    
-    iFrame = iFrame + 1;    
+    iFrame = iFrame + 1;
+    yLoc = inDat(:,1,iFrame);
+    xLoc = inDat(:,2,iFrame);
     if ( sum(sum(queue(:,:,:,1))) ~= 0 )             
         % Detecting Lane-mark by saliency method
         [~,~,smraw] = PQFT_2(uint8(queue(:,:,:,M)),uint8(queue(:,:,:,M-2)),'gaussian',w,'grayscale');        
@@ -111,6 +113,9 @@ while ~isDone(hmfr)
         smgray = imggray .* smnorm;
         smnorm = round(smnorm * 255);
         imblended = step(halphablend,double(smgray),double(imggray));
+        if (yLoc - 2 > 0 && yLoc + 2 <= frame_size(1) && xLoc - 2 > 0 && xLoc + 2 < frame_size(2)) 
+            imblended(yLoc-2:yLoc+2,xLoc-2:xLoc+2)=1;
+        end
         if (demoFlg == 1)
             step(hvideo1, queue(:,:,:,M));        % Display Original Video
             step(hvideo2, imblended);
