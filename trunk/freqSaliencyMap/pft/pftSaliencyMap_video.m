@@ -1,4 +1,4 @@
-function pftSaliencyMap_video(inVid,outVid,savFlg,demoFlg)
+function pftSaliencyMap_video(inVid,outVid,savFlg,demoFlg,inDat)
 %% Developing Phase Shifting Transform in System Object
 % This simulation is done to show the effectiveness of PFT on lane-mark
 % detection and extraction in a video sequence
@@ -59,7 +59,8 @@ halphablend = video.AlphaBlender('Operation','Blend','Opacity',0.25);
 % Initalize variables
 iFrame = 0;
 hmfi = info(hmfr);
-
+frame_scale_ratio = 1;
+frame_size = fliplr(hmfi.VideoSize)*frame_scale_ratio;
 % Initialize some variables used in plotting motion vectors.
 w = 64;
 
@@ -70,12 +71,12 @@ if (demoFlg == 1)
     hvideo1 = video.VideoPlayer('WindowCaption', 'Original Video');
     hvideo1.WindowPosition(1) = 0;
     hvideo1.WindowPosition(2) = 0;
-    hvideo1.WindowPosition([4 3]) = fliplr(hmfi.VideoSize);
+    hvideo1.WindowPosition([4 3]) = frame_size;
 
     hvideo2 = video.VideoPlayer('WindowCaption', 'Results Grayscale');
     hvideo2.WindowPosition(1) = hvideo1.WindowPosition(1);
     hvideo2.WindowPosition(2) = hvideo1.WindowPosition(2) + hvideo1.WindowPosition(4);
-    hvideo2.WindowPosition([4 3]) = fliplr(hmfi.VideoSize);
+    hvideo2.WindowPosition([4 3]) = frame_size;
 end
 % hvideo3 = video.VideoPlayer('WindowCaption', 'Results RGB');
 % hvideo3.WindowPosition(1) = hvideo2.WindowPosition(1) + 350;
@@ -95,6 +96,8 @@ end
 % detected by the BinaryFileReader System object.
 while ~isDone(hmfr)    
     iFrame = iFrame + 1;
+    yLoc = inDat(:,1,iFrame);
+    xLoc = inDat(:,2,iFrame);
     imrgb_org = step(hmfr);     % Read input video frame                
     imgray_org = step(hcsc1, imrgb_org);        % Convert color image to intensity    
     imgray = imresize(imgray_org, [w w], 'bilinear');
@@ -109,6 +112,9 @@ while ~isDone(hmfr)
     smgray = smnorm .* imgray_org;
     smnorm = round(smnorm*255);
     imblended = step(halphablend,double(smgray),double(imgray_org));
+    if (yLoc - 2 > 0 && yLoc + 2 <= frame_size(1) && xLoc - 2 > 0 && xLoc + 2 < frame_size(2)) 
+        imblended(yLoc-2:yLoc+2,xLoc-2:xLoc+2)=1;
+    end    
     if (demoFlg == 1)
         step(hvideo1, imrgb_org);        % Display Original Video
         step(hvideo2, imblended);
