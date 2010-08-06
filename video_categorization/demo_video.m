@@ -4,6 +4,7 @@ function demo_video()
     addpath('../freqSaliencyMap/pqft');
     addpath('../ittiSaliencyMap/');
     addpath('../gbvsSaliencyMap/');
+    addpath('../infoSaliencyMap/');
     % I/O Part
     dbname = 'digikam4.db';
     albname = 'autosplit';
@@ -13,7 +14,7 @@ function demo_video()
 %     inputVideos =  cVideos(dbname,albname);
     saveFlag = 0; 
     demoFlag = 1;
-    pftSaliencyMap = 0; pqftSaliencyMap = 0; ittiSaliencyMap = 0; gbvsSaliencyMap = 1;
+    pftSaliencyMap = 0; pqftSaliencyMap = 0; ittiSaliencyMap = 0; gbvsSaliencyMap = 0; infoSaliencyMap = 1;
     
     if (pftSaliencyMap == 1)
         outputFolder = ['./results' '/' albname '/pftSaliencyMaps_date-' datestr(now,'yyyymmddTHHMMSS')];    
@@ -121,5 +122,32 @@ function demo_video()
             % processing part    
             gbvsSaliencyMap_video(inputVideo,outputVideo,saveFlag,demoFlag,inputData);
         end
-    end        
+    end
+
+    if (infoSaliencyMap == 1)
+        outputFolder = ['./results' '/' albname '/infoSaliencyMaps_date-' datestr(now,'yyyymmddTHHMMSS')];
+        if (saveFlag == 1)
+            if (exist(outputFolder,'dir') ~= 7) 
+                mkdir(outputFolder);
+            else
+                warning('The folder is already existed');
+            end
+        end        
+
+        for i = 1:1:length(inputVideos.vidpaths)    
+            inputVideo = inputVideos.vidpaths{i};    
+            
+            %% Add eye-fixated location data
+            inputData = inputVideo;
+            inputData(end-2:end) = 'mat';
+            load(inputData);
+            inputData = subLoc.Data;
+            
+            [~,name,~] = fileparts(inputVideo);            
+            outputVideo = [outputFolder '/' name];
+            % saveFlag is used for controlling save action
+            % processing part    
+            infoSaliencyMap_video_1(inputVideo,outputVideo,saveFlag,demoFlag,inputData);
+        end
+    end       
 end
