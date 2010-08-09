@@ -1,4 +1,4 @@
-function ssm = spatialSaliencyMap(imgB,szPatches,transEng,noCoff)
+function ssm = spatialSaliencyMap(imgB,szPatches)
 %% Build the spatiotemporal saliency method 
 % The method is described in the paper: An information theoretic model of
 % spatiotemporal visual saliency
@@ -11,69 +11,27 @@ M = szPatches;
 [Ps,nrP,ncP] = cutImages(imgB,M);
 nP = nrP*ncP;
 
-%% Transform patches by different transform engine
-
-B = Ps;
-c = zeros(size(B));
-
-switch transEng
-    case 'hadamard'
-        %% Transform patches into Hadamar Space
-        for i = 1:1:nP
-            c(:,:,i) = WAT(B(:,:,i),'hadamard');    
-        end
-    case 'dct'
-        %% Transforms patches into independent space by 3-DCT
-        for i = 1:1:nP
-            c(:,:,i) = mirt_dctn(B(:,:,i));    
-        end
-    otherwise
-        error('Invalid choide of transform engine');
-end
 %% Calculate the dimensional probabilities for each patch
-epsilon = 0;
-npoints = 100;
-pC = [];
-gss_filter = gausswin(noCoff/2);
-for iP = 1:1:size(c,3)
-    c_patch = reshape(c(:,:,iP),[1 numel(c(:,:,iP))]);
-    pC = [pC;ksdensity(c_patch,'npoints',npoints,'function','pdf')+epsilon];
-    % Test with non-matlab kdensity function
-%     pC(iP,:) =  pC(iP,:) / sum(pC(iP,:)); % Eliminate the intensity
-%     contribution in the saliency map.
-%     pC = [pC;ksdensity(c_patch,'npoints',npoints,'width',noCoff,'function','pdf')+epsilon];
-%     pC = [pC;conv(ksdensity(c_patch,'npoints',npoints,'function','pdf'),gss_filter)+epsilon];
+% pB = [];
+S = zeros(1,nP);
+for iP = 1:1:nP    
+%     if (iP - ncP > 0) aP1 = concat(aP1,Ps(:,:,iP-ncP));
+%     else (iP - 1 > 0) aP1 = concat(aP1,Ps(:,:,iP-1));
+%     else (iP + 1 < ) aP1 = concat(aP1,Ps(:,:,iP+1)
+    if (iP >= ncP + 1 && iP <= nP - (ncP + 1))
+        aP1 = Ps(:,:,[iP - ncP, iP - 1, iP + 1, iP + ncP]); % Using only N,W,S,E blocks for calculating the HF1
+        aP2 = Ps(:,:,[iP - ncP, iP - 1, iP, iP + 1, iP + ncP]); % Using only N,W,C,S,E blocks for calculating the HF2
+        HE = kdpee(reshape(Ps(:,:,iP),[numel(Ps(:,:,iP)) 1]));
+        HF1 = kdpee(reshape(aP1(:,:,:),[size(aP1,1)*size(aP1,2), size(aP1,3)]));
+        HF2 = kdpee(reshape(aP2(:,:,:),[size(aP2,1)*size(aP2,2), size(aP2,3)]));
+        S(iP) = HF2 - (HF1 + HE);
+    end
 end
-
-%% Choose number of components reserved
-pC(:,noCoff:1:npoints) = [];
-
-%% Calculate the probabilities for each patch
-pB = prod(pC,2);
-
-
-%% Calculate spatial event probability
-P = pB;
-S = -1*log(P/sum(P)); % The spatial saliency value is calculated P(B|F) = P(B^F) / P(F), where P(F) = P(B1 U B2 U ... BN ) = P(B1) + P(B2) + P(B3) ... P(BN)
-
-%% Calculate the log propability for each patch
-% pB = zeros(size(pC,1),1);
-% 
-% for iP = 1:1:size(pB,1)
-%     pB(iP) = sum(log(pC(iP,:)));
-% end
-%% Calculate temporal event probability
-% S = zeros(size(pB,1),1);
-% for iP = 1:1:size(pB)
-%     if ~isinf(pB(iP)) 
-%         S(iP) = -1*pB(iP);
-%     end
-% end
 
 %% Representing spatiotemporal probability on images
 ssm = zeros(size(imgB));
-r_offset = [ -1 0 1 -1 0 1 -1 0 1 ];
-c_offset = [ -1 -1 -1 0 0 0 1 1 1 ];
+% r_offset = [ -1 0 1 -1 0 1 -1 0 1 ];
+% c_offset = [ -1 -1 -1 0 0 0 1 1 1 ];
 for ir = 0:1:nrP-1
     for ic = 0:1:ncP-1        
         ssm(ir*M+1:(ir+1)*M,ic*M+1:(ic+1)*M) = ones(M,M)*S(ir*ncP+ic+1);        
