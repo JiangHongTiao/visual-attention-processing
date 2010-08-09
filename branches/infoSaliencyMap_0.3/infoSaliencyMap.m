@@ -13,44 +13,44 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches,transEng,noCoff)
 %   ism is information saliency map
     
     % Calculate temporal Saliency Map    
-    tsm = temporalSaliencyMap(imgs,szPatches,transEng,noCoff);
+    tsm = temporalSaliencyMap(imgs,szPatches);
 %     tsm = normalization(tsm);
     % Calculate spatial Saliency Map;
-    ssm = spatialSaliencyMap(imgs(:,:,size(imgs,3)),szPatches,transEng,noCoff);    
+    ssm = spatialSaliencyMap(imgs(:,:,size(imgs,3)),szPatches);    
 %     ssm = normalization(ssm);
     % Fuse spatial and temporal map together to create saliency map    
     
-    % Replace -Inf and NaN value by minimum value * 2;
-    % Replace +Inf by maximum * 2;
-    maxVal = max(tsm(~isinf(tsm) & ~isnan(tsm)));
-    if (isempty(maxVal)) maxVal = 1; end
-    minVal = min(tsm(~isinf(tsm) & ~isnan(tsm)));    
-    if (isempty(minVal)) minVal = 0; end
-    for iy = 1:1:size(tsm,1) 
-        for ix = 1:1:size(tsm,2)
-            if logical(isnan(tsm(iy,ix))) || (logical(isinf(tsm(iy,ix))) && tsm(iy,ix) < 0)
-                tsm(iy,ix) = 2*minVal;
-            elseif logical(isinf(tsm(iy,ix))) && tsm(iy,ix) > 0
-                tsm(iy,ix) = 2*maxVal;
-            end
-        end
-    end
-    
-    % Replace -Inf and NaN value by minimum value * 2;
-    % Replace +Inf by maximum * 2;
-    maxVal = max(ssm(~isinf(ssm) & ~isnan(ssm)));
-    if (isempty(maxVal)) maxVal = 1; end
-    minVal = min(ssm(~isinf(ssm) & ~isnan(ssm)));    
-    if (isempty(minVal)) minVal = 0; end
-    for iy = 1:1:size(ssm,1) 
-        for ix = 1:1:size(ssm,2)
-            if logical(isnan(ssm(iy,ix))) || (logical(isinf(ssm(iy,ix))) && ssm(iy,ix) < 0)
-                ssm(iy,ix) = 2*minVal;
-            elseif logical(isinf(ssm(iy,ix))) && ssm(iy,ix) > 0
-                ssm(iy,ix) = 2*maxVal;
-            end
-        end
-    end
-    
+%     % Replace -Inf and NaN value by minimum value * 2;
+%     % Replace +Inf by maximum * 2;
+%     maxVal = max(tsm(~isinf(tsm) & ~isnan(tsm)));
+%     if (isempty(maxVal)) maxVal = 1; end
+%     minVal = min(tsm(~isinf(tsm) & ~isnan(tsm)));    
+%     if (isempty(minVal)) minVal = 0; end
+%     for iy = 1:1:size(tsm,1) 
+%         for ix = 1:1:size(tsm,2)
+%             if logical(isnan(tsm(iy,ix))) || (logical(isinf(tsm(iy,ix))) && tsm(iy,ix) < 0)
+%                 tsm(iy,ix) = 2*minVal;
+%             elseif logical(isinf(tsm(iy,ix))) && tsm(iy,ix) > 0
+%                 tsm(iy,ix) = 2*maxVal;
+%             end
+%         end
+%     end
+%     
+%     % Replace -Inf and NaN value by minimum value * 2;
+%     % Replace +Inf by maximum * 2;
+%     maxVal = max(ssm(~isinf(ssm) & ~isnan(ssm)));
+%     if (isempty(maxVal)) maxVal = 1; end
+%     minVal = min(ssm(~isinf(ssm) & ~isnan(ssm)));    
+%     if (isempty(minVal)) minVal = 0; end
+%     for iy = 1:1:size(ssm,1) 
+%         for ix = 1:1:size(ssm,2)
+%             if logical(isnan(ssm(iy,ix))) || (logical(isinf(ssm(iy,ix))) && ssm(iy,ix) < 0)
+%                 ssm(iy,ix) = 2*minVal;
+%             elseif logical(isinf(ssm(iy,ix))) && ssm(iy,ix) > 0
+%                 ssm(iy,ix) = 2*maxVal;
+%             end
+%         end
+%     end
+%     
     ism = tsm + ssm;   
 end
