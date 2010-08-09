@@ -14,7 +14,7 @@ function demo()
     %% Predefined parameters 
     transEng = 'hadamard';% What type of transform engine: hadamard,dct
     noCoff = 30; % Number of reserved components        
-    noImgs = 2;
+    noImgs = 4;
     szPatches = 8;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
@@ -75,67 +75,10 @@ function demo()
     end
     
     tic;
-    [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches,transEng,noCoff);
+    [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches);
     toc;
     
-    % Define filter used for smooth the saliency map
-    avg_filter = fspecial('average',szPatches);
-    
-    % Apply low-pass filter and normalization function on information saliency map a   
-    ism_avgfilted = normalization(imfilter(ism,avg_filter));         
-    
-    % Represent temporal saliency map
-    figure(1), colormap('gray'), imagesc(tsm);
-    title('Temporal Saliency Map - 2D');    
-
-    % Represent spatial saliency map
-    figure(2), colormap('gray'), imagesc(ssm);
-    title('Spatial Saliency Map - 2D');    
-    
-    % Represent the information saliency map
-    figure(3), colormap('gray'), imagesc(ism);
-    title('Information Saliency Map - 2D');    
-    
-    % Showing results     
-    figure(4);    
-    imshow(ism_avgfilted);
-    title(['Information Saliency Map Filted by Average Filter ' num2str(szPatches) 'x' num2str(szPatches) ' - 2D']);    
-    
-    figure(5);    
-    gridx1 = 1:1:size(img1,1);
-    gridx2 = 1:1:size(img1,2);
-    [gridx2,gridx1] = meshgrid(gridx2,gridx1);
-    surf(gridx1,gridx2,ism);   
-    title('Information Saliency Map - 3D');    
-    
-    orgImg = imgs(:,:,noImgs);
-    gridx1 = 1:1:size(orgImg,1);
-    gridx2 = 1:1:size(orgImg,2);
-    [gridx2,gridx1] = meshgrid(gridx2,gridx1);    
-    figure(6),imshow(orgImg),title('Processed Image - 2D');
-    figure(7),surf(gridx1,gridx2,double(orgImg)),title('Processed Image - 3D');
-
-    % Show top n salient regions of the image
-    n = 30;    
-    saliency_values = sort(unique(ism),'descend');
-    saliency_threshold = saliency_values(n);
-    ism_mask = ism > saliency_threshold;
-    img_threshold = imgs(:,:,noImgs).*uint8(ism_mask);
-    figure(8);
-    imshow(img_threshold);
-    title(['Top ' num2str(n) 'regions in the image']);    
-    
-    saveFiguresFlag = 0;
-    if (saveFiguresFlag == 1)
-        %% Results folder
-        resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder    
-        mkdir(resFld);        
-        saveas(1,[resFld 'tms-2D.fig']);
-        saveas(2,[resFld 'ssm-2D.fig']);    
-        saveas(3,[resFld 'ims-2d.fig']);    
-        saveas(4,[resFld 'ims-avgfilted-2d.fig']);
-        saveas(5,[resFld 'ims-3d.fig']);
-        saveas(6,[resFld 'org-2d.fig']);
-        saveas(7,[resFld 'org-3d.fig']);
-    end
+    th = sort(unique(ism),'descend');
+    ism(ism < th(500)) = 0;
+    imshow(ism);
 end
