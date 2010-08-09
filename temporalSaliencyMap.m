@@ -1,4 +1,4 @@
-function tsm = temporalSaliencyMap(imgs,M,transEng,noCoff)
+function tsm = temporalSaliencyMap(imgs,M)
 %% Build the spatiotemporal saliency method 
 % The method is described in the paper: An information theoretic model of
 % spatiotemporal visual saliency
@@ -22,72 +22,27 @@ for iImg = 1:1:noImgs
     [Ps,nrP,ncP] = cutImages(img,M);        
 
     %% Create spatiotemporal events V1
-    if (iImg >= 1 && iImg <= noImgs)
+    if (iImg >= 1 && iImg <= noImgs-1)
         V1 = cat(4,V1,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,... . Contain the patches of all frames in the series
     end
 
     %% Create spatiotemporal events V2
-    if (iImg >=noImgs && iImg <= noImgs)
-        V2 = cat(4,V2,Ps); % Contain only the patch of the last frame in the series
-    end    
+    if (iImg >=1 && iImg <= noImgs)
+        V2 = cat(4,V2,Ps); % Concat Ps1 (3D) and Ps2 (3D) into array of 4D where the 4th dimension represents time N = 1,2,3,... . Contain the patches of all frames in the series
+    end
 end
 
 nP = nrP*ncP;
 
-%% Try transform with different transform techniques
-c1 = zeros(size(V1));
-c2 = zeros(size(V2));
-switch transEng
-    case 'hadamard'
-        %% Transform patches into idependent space by 3D-Hadamard  
-        for i = 1:1:nP        
-            c1(:,:,i,:) = WAT(squeeze(V1(:,:,i,:)),'hadamard');    
-            c2(:,:,i,:) = WAT(squeeze(V2(:,:,i,:)),'hadamard');    
-        end
-    case 'dct'
-        %% Transforms patches into independent space by 3D-DCT
-        for i = 1:1:nP        
-            c1(:,:,i,:) = mirt_dctn(squeeze(V1(:,:,i,:)));    
-            c2(:,:,i,:) = mirt_dctn(squeeze(V2(:,:,i,:)));    
-        end
-    otherwise
-        error('Invalid choide of transform engine');
-end
-
 %% Calculate the dimensional probabilities for each patch
-epsilon = 0;
-npoints = 100;
-pC1 = []; pC2 = [];
-gss_filter = gausswin(noCoff/2);
-for iP = 1:1:size(c1,3)
-    c1_patch = reshape(c1(:,:,iP,:),[1 numel(c1(:,:,iP,:))]);
-    pC1 = [pC1;ksdensity(c1_patch,'npoints',npoints,'function','pdf')+epsilon];
-%     pC1(iP,:) =  pC1(iP,:) / sum(pC1(iP,:));
-%     pC1 = [pC1;conv(ksdensity(c1_patch,'npoints',npoints,'function','pdf'),gss_filter)+epsilon];
-%     pC1 = [pC1;ksdensity(c1_patch,'npoints',npoints,'width',noCoff,'function','pdf')+epsilon];
-    
-    c2_patch = reshape(c2(:,:,iP,:),[1 numel(c2(:,:,iP,:))]);
-    pC2 = [pC2;ksdensity(c2_patch,'npoints',npoints,'function','pdf')+epsilon];
-%     pC2(iP,:) =  pC2(iP,:) / sum(pC2(iP,:));
-%     pC2 = [pC2;conv(ksdensity(c2_patch,'npoints',npoints,'function','pdf'),gss_filter)+epsilon];
-%     pC2 = [pC2;ksdensity(c2_patch,'npoints',npoints,'width',noCoff,'function','pdf')+epsilon];
-end
-
-%% Choose number of components reserved
-
-pC1(:,noCoff:end) = [];
-pC2(:,noCoff:end) = [];
-
-%% Calculate the probabilities for each patch
-pV1 = prod(pC1,2);
-pV2 = prod(pC2,2);
-
-%% Calculate spatiotemporal event probability
-S = zeros(size(pV1));
-for ipV1 = 1:1:length(pV1)
-    if (pV1(ipV1) == 0) S(ipV1) = -Inf;
-    else S(ipV1) = -log(pV2(ipV1) / pV1(ipV1));
-    end
+% pB = [];
+S = zeros(1,nP);
+for iP = 1:1:nP
+    aP1 = squeeze(V1(:,:,iP,:));
+    aP2 = squeeze(V2(:,:,iP,:));
+    HV1 = kdpee(reshape(aP1,[size(aP1,1)*size(aP1,2), size(aP1,3)]));
+    HV2 = kdpee(reshape(aP2,[size(aP2,1)*size(aP2,2), size(aP2,3)]));
+    S(iP) = HV2 - HV1;
 end
 
 %% Representing spatiotemporal probability on images
