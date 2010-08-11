@@ -11,14 +11,12 @@ function demo()
     %% Precprocess steps
     clc; close all;
 
-    %% Predefined parameters 
-    transEng = 'hadamard';% What type of transform engine: hadamard,dct
-    noCoff = 30; % Number of reserved components        
+    %% Predefined parameters      
     noImgs = 4;
     szPatches = 8;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
-%     imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
+    imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
 %     imgPath3 = './figures/set4/L_3.jpg'; % Image at t = -1;
 %     imgPath4 = './figures/set4/L_4.jpg'; % Image at t = 0; 
 %     imgPath5 = './figures/set4/L_5.jpg'; % Image at t = 1; current image
@@ -32,15 +30,15 @@ function demo()
 %     imgs = cat(3,img1,img2,img3,img4,img5);          
 
     %% Sample images for testing with M = 8
-    imgPath1 = './figures/set8/L_1.jpg'; 
-    imgPath2 = './figures/set8/L_2.jpg'; 
-    imgPath3 = './figures/set8/L_3.jpg'; 
-    imgPath4 = './figures/set8/L_4.jpg'; 
-    imgPath5 = './figures/set8/L_5.jpg'; 
-    imgPath6 = './figures/set8/L_6.jpg'; 
-    imgPath7 = './figures/set8/L_7.jpg'; 
-    imgPath8 = './figures/set8/L_8.jpg'; 
-    imgPath9 = './figures/set8/L_9.jpg'; 
+%     imgPath1 = './figures/set8/L_1.jpg'; 
+%     imgPath2 = './figures/set8/L_2.jpg'; 
+%     imgPath3 = './figures/set8/L_3.jpg'; 
+%     imgPath4 = './figures/set8/L_4.jpg'; 
+%     imgPath5 = './figures/set8/L_5.jpg'; 
+%     imgPath6 = './figures/set8/L_6.jpg'; 
+%     imgPath7 = './figures/set8/L_7.jpg'; 
+%     imgPath8 = './figures/set8/L_8.jpg'; 
+%     imgPath9 = './figures/set8/L_9.jpg'; 
     
 %     imgPath1 = './figures/set8_1/frame-0001.jpg'; 
 %     imgPath2 = './figures/set8_1/frame-0002.jpg'; 
@@ -51,6 +49,16 @@ function demo()
 %     imgPath7 = './figures/set8_1/frame-0007.jpg'; 
 %     imgPath8 = './figures/set8_1/frame-0008.jpg'; 
 %     imgPath9 = './figures/set8_1/frame-0009.jpg'; 
+ 
+    imgPath1 = './figures/set8_2/frame-0011.jpg'; 
+    imgPath2 = './figures/set8_2/frame-0012.jpg'; 
+    imgPath3 = './figures/set8_2/frame-0013.jpg'; 
+    imgPath4 = './figures/set8_2/frame-0014.jpg'; 
+    imgPath5 = './figures/set8_2/frame-0015.jpg'; 
+    imgPath6 = './figures/set8_2/frame-0016.jpg'; 
+    imgPath7 = './figures/set8_2/frame-0017.jpg'; 
+    imgPath8 = './figures/set8_2/frame-0018.jpg'; 
+    imgPath9 = './figures/set8_2/frame-0019.jpg'; 
     
     % All images are resized by 1/2
     scaleValue = 1;
@@ -63,6 +71,16 @@ function demo()
     img7 = imresize(rgb2gray(imread(imgPath7)),scaleValue);        
     img8 = imresize(rgb2gray(imread(imgPath8)),scaleValue);
     img9 = imresize(rgb2gray(imread(imgPath9)),scaleValue);        
+% 
+%     img1 = imresize(imread(imgPath1),scaleValue);
+%     img2 = imresize(imread(imgPath2),scaleValue);
+%     img3 = imresize(imread(imgPath3),scaleValue);
+%     img4 = imresize(imread(imgPath4),scaleValue);
+%     img5 = imresize(imread(imgPath5),scaleValue);
+%     img6 = imresize(imread(imgPath6),scaleValue);
+%     img7 = imresize(imread(imgPath7),scaleValue);
+%     img8 = imresize(imread(imgPath8),scaleValue);
+%     img9 = imresize(imread(imgPath9),scaleValue);    
     
     if (noImgs == 8)
         imgs = cat(3,img1,img2,img3,img4,img5,img6,img7,img8);      
@@ -76,9 +94,9 @@ function demo()
     
     tic;
     [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches);
-    toc;
-    
+%     ism = temporalSaliencyMap(imgs,szPatches);
+    toc;    
     th = sort(unique(ism),'descend');
-    ism(ism < th(500)) = 0;
+    ism(ism < th(1000)) = 0;
     imshow(ism);
 end
