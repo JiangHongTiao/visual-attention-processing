@@ -9,13 +9,13 @@ addpath('../infoSaliencyMap/');
 addpath('./faces-tif');
 addpath('../comMLFuncs/');
 addpath('./SMVJ/');
-addpath('./SMVJ/gbvs/');
+% addpath('./SMVJ/gbvs/');
 load fixations.mat;
 load imgList.mat;
 load annotations.mat;
 
 % plot the image (image 16 - chosen arbitrarily)
-imgNum = 50;
+imgNum = 16;
 img = imread(imgList{imgNum});
 
 %% produce saliency map of Phase Frequency Method 
@@ -37,7 +37,7 @@ sm_itti = SMVJ_Main(img,params);
 sm_itti = round(sm_itti.master_map_resized*255);
 
 %% produce the saliency map by Dr Guoping Qiu method
-sm_ssm = spatialSaliencyMap(rgb2gray(img),4,'hadamard',30);
+sm_ssm = spatialSaliencyMap(rgb2gray(img),8,'hadamard',30);
 ssm = sm_ssm;
     % Replace -Inf and NaN value by minimum value * 2;
     % Replace +Inf by maximum * 2;
