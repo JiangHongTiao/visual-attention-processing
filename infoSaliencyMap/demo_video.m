@@ -10,8 +10,8 @@ function demo_video()
     noFrames = 25;
     noImgs = 4;
     szPatches = 8;    
-%     inputVideo = './data/1.5.mp4';
-    inputVideo =  './data/1.5_repainted_20100525T115516_full_modification_5.avi';
+    inputVideo = './data/turn_right_0.mp4';
+%     inputVideo = './data/1.5_repainted_20100525T115516_full_modification_5.avi';
     outputFolder = './results';
     transformEngine = 'hadamard';
     numberOfCoefficients = 30;
