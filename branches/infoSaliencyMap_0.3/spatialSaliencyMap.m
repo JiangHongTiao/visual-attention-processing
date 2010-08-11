@@ -18,7 +18,8 @@ for iP = 1:1:nP
 %     if (iP - ncP > 0) aP1 = concat(aP1,Ps(:,:,iP-ncP));
 %     else (iP - 1 > 0) aP1 = concat(aP1,Ps(:,:,iP-1));
 %     else (iP + 1 < ) aP1 = concat(aP1,Ps(:,:,iP+1)
-    if (iP >= ncP + 1 && iP <= nP - (ncP + 1))
+% The following approach did not take bordering pixels into account
+    if (iP >= ncP + 1 && iP <= nP - (ncP + 1) && rem(iP,ncP) ~= 1 && rem(iP,ncP) ~= 0)
         aP1 = Ps(:,:,[iP - ncP, iP - 1, iP + 1, iP + ncP]); % Using only N,W,S,E blocks for calculating the HF1
         aP2 = Ps(:,:,[iP - ncP, iP - 1, iP, iP + 1, iP + ncP]); % Using only N,W,C,S,E blocks for calculating the HF2
         HE = kdpee(reshape(Ps(:,:,iP),[numel(Ps(:,:,iP)) 1]));
@@ -29,7 +30,7 @@ for iP = 1:1:nP
 end
 
 %% Representing spatiotemporal probability on images
-ssm = zeros(size(imgB));
+ssm = zeros(size(imgB,1),size(imgB,2));
 % r_offset = [ -1 0 1 -1 0 1 -1 0 1 ];
 % c_offset = [ -1 -1 -1 0 0 0 1 1 1 ];
 for ir = 0:1:nrP-1
@@ -41,18 +42,25 @@ end
 end
 
 function [P,r,c] = cutImages(I,M)    
-    [nrow,ncol] = size(I);
+    nrow = size(I,1);
+    ncol = size(I,2);   
+    nlay = size(I,3);
+    ndim = ndims(I);
     r = nrow / M;
-    c = ncol / M;        
-    P = zeros(M,M,r*c);    
+    c = ncol / M;    
+    P = zeros(M,M*nlay,r*c);   
     
     for ir = 0:1:(r-1) % r: number of patches vertically 
         for ic = 0:1:(c-1) %s: number of patches horizontallly 
             xl = 1 + ir*M;
             yl = 1 + ic*M;
             xr = (ir+1)*M;
-            yr = (ic+1)*M;
-            P(:,:,ir*c + ic + 1) = I(xl:1:xr,yl:1:yr);        
+            yr = (ic+1)*M;            
+            if (ndim == 2)
+                P(:,:,ir*c + ic + 1) = I(xl:1:xr,yl:1:yr);        
+            else
+                P(:,:,ir*c + ic + 1) = [I(xl:1:xr,yl:1:yr,1),I(xl:1:xr,yl:1:yr,2),I(xl:1:xr,yl:1:yr,3)];        
+            end
         end
     end
 end
