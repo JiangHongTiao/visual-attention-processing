@@ -6,7 +6,7 @@ function demo()
 % There are 4 consecutive images used to calculate the temporal saliency
 % map.
     %% Add the common MATLAB fucntions into the folder
-    addpath('../comMLFuncs/');
+    addpath('../../vap_svn_ghost/trunk/comMLFuncs/');
     
     %% Precprocess steps
     clc; close all;
@@ -32,16 +32,16 @@ function demo()
 %     imgs = cat(3,img1,img2,img3,img4,img5);          
 
     %% Sample images for testing with M = 8
-    imgPath1 = './figures/set8/L_1.jpg'; 
-    imgPath2 = './figures/set8/L_2.jpg'; 
-    imgPath3 = './figures/set8/L_3.jpg'; 
-    imgPath4 = './figures/set8/L_4.jpg'; 
-    imgPath5 = './figures/set8/L_5.jpg'; 
-    imgPath6 = './figures/set8/L_6.jpg'; 
-    imgPath7 = './figures/set8/L_7.jpg'; 
-    imgPath8 = './figures/set8/L_8.jpg'; 
-    imgPath9 = './figures/set8/L_9.jpg'; 
-    
+%     imgPath1 = './figures/set8/L_1.jpg'; 
+%     imgPath2 = './figures/set8/L_2.jpg'; 
+%     imgPath3 = './figures/set8/L_3.jpg'; 
+%     imgPath4 = './figures/set8/L_4.jpg'; 
+%     imgPath5 = './figures/set8/L_5.jpg'; 
+%     imgPath6 = './figures/set8/L_6.jpg'; 
+%     imgPath7 = './figures/set8/L_7.jpg'; 
+%     imgPath8 = './figures/set8/L_8.jpg'; 
+%     imgPath9 = './figures/set8/L_9.jpg'; 
+    %% Sample images for driving inside a car
 %     imgPath1 = './figures/set8_1/frame-0001.jpg'; 
 %     imgPath2 = './figures/set8_1/frame-0002.jpg'; 
 %     imgPath3 = './figures/set8_1/frame-0003.jpg'; 
@@ -51,7 +51,37 @@ function demo()
 %     imgPath7 = './figures/set8_1/frame-0007.jpg'; 
 %     imgPath8 = './figures/set8_1/frame-0008.jpg'; 
 %     imgPath9 = './figures/set8_1/frame-0009.jpg'; 
-    
+    %% Sample images for life images
+%     imgPath1 = './figures/set8_2/frame-0001.jpg'; 
+%     imgPath2 = './figures/set8_2/frame-0002.jpg'; 
+%     imgPath3 = './figures/set8_2/frame-0003.jpg'; 
+%     imgPath4 = './figures/set8_2/frame-0004.jpg'; 
+%     imgPath5 = './figures/set8_2/frame-0005.jpg'; 
+%     imgPath6 = './figures/set8_2/frame-0006.jpg'; 
+%     imgPath7 = './figures/set8_2/frame-0007.jpg'; 
+%     imgPath8 = './figures/set8_2/frame-0008.jpg'; 
+%     imgPath9 = './figures/set8_2/frame-0009.jpg';     
+    %% Sample images for life images
+%     imgPath1 = './figures/set8_3/frame-0001.jpg';
+%     imgPath2 = './figures/set8_3/frame-0002.jpg';
+%     imgPath3 = './figures/set8_3/frame-0003.jpg';
+%     imgPath4 = './figures/set8_3/frame-0004.jpg';
+%     imgPath5 = './figures/set8_3/frame-0005.jpg';
+%     imgPath6 = './figures/set8_3/frame-0006.jpg';
+%     imgPath7 = './figures/set8_3/frame-0007.jpg';
+%     imgPath8 = './figures/set8_3/frame-0008.jpg';
+%     imgPath9 = './figures/set8_3/frame-0009.jpg';
+    %% Sample images for life images
+    imgPath1 = './figures/set8_4/frame-0009.jpg';
+    imgPath2 = './figures/set8_4/frame-0010.jpg';
+    imgPath3 = './figures/set8_4/frame-0011.jpg';
+    imgPath4 = './figures/set8_4/frame-0012.jpg';
+    imgPath5 = './figures/set8_4/frame-0013.jpg';
+    imgPath6 = './figures/set8_4/frame-0014.jpg';
+    imgPath7 = './figures/set8_4/frame-0015.jpg';
+    imgPath8 = './figures/set8_4/frame-0016.jpg';
+    imgPath9 = './figures/set8_4/frame-0017.jpg';
+
     % All images are resized by 1/2
     scaleValue = 1;
     img1 = imresize(rgb2gray(imread(imgPath1)),scaleValue);
@@ -116,7 +146,7 @@ function demo()
     figure(7),surf(gridx1,gridx2,double(orgImg)),title('Processed Image - 3D');
 
     % Show top n salient regions of the image
-    n = 30;    
+    n = 40;    
     saliency_values = sort(unique(ism),'descend');
     saliency_threshold = saliency_values(n);
     ism_mask = ism > saliency_threshold;
@@ -125,7 +155,19 @@ function demo()
     imshow(img_threshold);
     title(['Top ' num2str(n) 'regions in the image']);    
     
-    saveFiguresFlag = 0;
+    % Drawing borders around salient regions
+    se_merge = strel('disk',8);
+    se_border = strel('disk',4);
+    closeMSK = imclose(ism_mask,se_merge);
+    dilateCloseMSK = imdilate(closeMSK,se_border);
+    borderMSK = logical(dilateCloseMSK - closeMSK);
+    ovrIMG = imgs(:,:,noImgs);
+    ovrIMG(borderMSK) = 255;
+    figure(9);
+    imshow(ovrIMG);
+    title(['Images with borders arround an attentive image']);
+    
+    saveFiguresFlag = 1;
     if (saveFiguresFlag == 1)
         %% Results folder
         resFld = ['./results/' transEng '/results_nc' num2str(noCoff) '/' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder    
@@ -137,5 +179,15 @@ function demo()
         saveas(5,[resFld 'ims-3d.fig']);
         saveas(6,[resFld 'org-2d.fig']);
         saveas(7,[resFld 'org-3d.fig']);
+        saveas(8,[resFld 'overlayed.fig']);
+        saveas(9,[resFld 'bordered.fig']);
+        data.ism = ism;
+        data.tsm = tsm;
+        data.ssm = ssm;
+        data.msk = ism_mask;
+        curFld = pwd;
+        cd(resFld);
+        save('data.mat','data');
+        cd(curFld);
     end
 end
