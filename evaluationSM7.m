@@ -341,7 +341,7 @@ exp_record.intro = 'images with 2 rectangle gray blocks: block 1 191 in intensit
 % for i = 1:1:255    
 %     rimg = zeros(4,12);
 %     rimg(:) = i;
-%     rimg(:,6:12) = 255;
+%     rimg(:,7:12) = 255;
 %     img = [img;rimg];
 % end
 % exp_record.input.i19.data = img;
@@ -373,8 +373,8 @@ img1 = [zeros(4,2), ones(4,2)*255];
 img2 = [ones(4,2)*255, zeros(4,2)];
 
 % % Bottom -> Top
-% img1 = [zeros(4,2), ones(4,2)*255]';
-% img2 = [ones(4,2)*255, zeros(4,2)]';
+img1 = [zeros(4,2), ones(4,2)*255]';
+img2 = [ones(4,2)*255, zeros(4,2)]';
 
 % % Left -> Right
 % img1 = [ones(4,2)*255, zeros(4,2)];
