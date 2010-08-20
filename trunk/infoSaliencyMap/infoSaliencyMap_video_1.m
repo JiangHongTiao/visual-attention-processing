@@ -113,10 +113,11 @@ while ~isDone(hmfr)
         [~,~,smraw] = infoSaliencyMap(queue,szPatches,transEng,noCoff); 
         toc;
         avg_filter = fspecial('average',szPatches);
-        smraw = imfilter(smraw,avg_filter);
+        
         % Resize to the original scale
         smnorm = mat2gray(smraw);
-
+        smraw = imfilter(smraw,avg_filter);
+        
         %% Result Presentation in Grayscale or Color    
         imggray = queue(:,:,M);
         smgray = imggray .* smnorm;
