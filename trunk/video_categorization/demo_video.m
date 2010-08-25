@@ -9,12 +9,12 @@ function demo_video()
     % I/O Part
     dbname = 'digikam4.db';
     albname = 'autosplit';
-    ptagname = 'our_car';
-    ctagname = 'go_up';
-    inputVideos =  cVideos(dbname,albname,ptagname,ctagname);    
-%     inputVideos =  cVideos(dbname,albname);
-    saveFlag = 0;
-    demoFlag = 1;
+%     ptagname = 'our_car';
+%     ctagname = 'go_up';
+%     inputVideos =  cVideos(dbname,albname,ptagname,ctagname);    
+    inputVideos =  cVideos(dbname,albname);
+    saveFlag = 1;
+    demoFlag = 0;
     pftSaliencyMap = 0; pqftSaliencyMap = 0; ittiSaliencyMap = 0; gbvsSaliencyMap = 0; infoSaliencyMap = 1; infoSaliencyMap_3 = 0;
     
     if (pftSaliencyMap == 1)
@@ -135,7 +135,7 @@ function demo_video()
             end
         end        
 
-        for i = 1:1:length(inputVideos.vidpaths)    
+        for i = 1:1:length(inputVideos.vidpaths)  
             inputVideo = inputVideos.vidpaths{i};    
             
             %% Add eye-fixated location data
