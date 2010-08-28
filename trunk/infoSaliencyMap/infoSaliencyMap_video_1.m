@@ -59,7 +59,7 @@ halphablend = video.AlphaBlender('Operation','Blend','Opacity',0.25);
 szPatches = 8;
 transEng = 'hadamard';
 noCoff = 30;
-noFrames = 1;
+noFrames = 4;
 
 % Initalize variables
 iFrame = 0;
@@ -110,8 +110,8 @@ while ~isDone(hmfr)
     if ( sum(sum(queue(:,:,1))) ~= 0 )             
         % Detecting Lane-mark by saliency method
         tic;
-%         [~,~,smraw] = infoSaliencyMap(queue,szPatches,transEng,noCoff); 
-        smraw = spatialSaliencyMap(queue,szPatches,transEng,noCoff); 
+        [~,~,smraw] = infoSaliencyMap(queue,szPatches,transEng,noCoff); 
+%         smraw = spatialSaliencyMap(queue,szPatches,transEng,noCoff); 
         toc;       
         % Resize to the original scale        
         smnorm = mat2gray(smraw);
