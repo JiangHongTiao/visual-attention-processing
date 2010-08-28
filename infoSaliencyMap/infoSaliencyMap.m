@@ -52,5 +52,6 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches,transEng,noCoff)
         end
     end
     
-    ism = tsm + ssm;   
+    ism = tsm + ssm;
+    ism(ism < 0) = min(min(ism(ism > 0)));
 end
