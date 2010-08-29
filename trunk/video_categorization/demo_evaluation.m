@@ -49,8 +49,8 @@ for i = 1:1:length(inputVideos.vidpaths)
 %     SVAEM_Extraction(inputVideo,1,0,params);
     
 %% Extract the saliency values at eye marks
-%     SVBRM_Extraction(inputVideo,1,0,params1);    
-%     CAS_Calculation(inputVideo,1,1,params2);
+    SVBRM_Extraction(inputVideo,1,0,params1);    
+    CAS_Calculation(inputVideo,1,1,params2);
     
 % %% Extract the maximum saliency values of a frame
 % %     SVAMP_Extraction(inputVideo,1,0,params4);
