@@ -59,6 +59,6 @@ for i = 1:1:length(inputVideos.vidpaths)
 %% Threshold saliency map by 128 and count percentage 
 %     SPAVG_Extraction(inputVideo,1,0,params6);
 end
-% CAS_Display(inputVideos,1,1,params3);
+CAS_Display(inputVideos,1,1,params3);
 %  AVG_Mean(inputVideos,1,1,params7);
 end
