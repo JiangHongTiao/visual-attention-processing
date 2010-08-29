@@ -135,7 +135,7 @@ function demo_video()
             end
         end        
 
-        for i = 1:1:length(inputVideos.vidpaths)  
+        for i = 1:1:length(inputVideos.vidpaths)
             inputVideo = inputVideos.vidpaths{i};    
             
             %% Add eye-fixated location data
