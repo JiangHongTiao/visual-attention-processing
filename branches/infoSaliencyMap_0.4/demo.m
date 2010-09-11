@@ -40,25 +40,25 @@ function demo()
 %     imgPath8 = './figures/set8/L_8.jpg'; 
 %     imgPath9 = './figures/set8/L_9.jpg'; 
     
-%     imgPath1 = './figures/set8_1/frame-0001.jpg'; 
-%     imgPath2 = './figures/set8_1/frame-0002.jpg'; 
-%     imgPath3 = './figures/set8_1/frame-0003.jpg'; 
-%     imgPath4 = './figures/set8_1/frame-0004.jpg'; 
-%     imgPath5 = './figures/set8_1/frame-0005.jpg'; 
-%     imgPath6 = './figures/set8_1/frame-0006.jpg'; 
-%     imgPath7 = './figures/set8_1/frame-0007.jpg'; 
-%     imgPath8 = './figures/set8_1/frame-0008.jpg'; 
-%     imgPath9 = './figures/set8_1/frame-0009.jpg'; 
+    imgPath1 = './figures/set8_1/frame-0001.jpg'; 
+    imgPath2 = './figures/set8_1/frame-0002.jpg'; 
+    imgPath3 = './figures/set8_1/frame-0003.jpg'; 
+    imgPath4 = './figures/set8_1/frame-0004.jpg'; 
+    imgPath5 = './figures/set8_1/frame-0005.jpg'; 
+    imgPath6 = './figures/set8_1/frame-0006.jpg'; 
+    imgPath7 = './figures/set8_1/frame-0007.jpg'; 
+    imgPath8 = './figures/set8_1/frame-0008.jpg'; 
+    imgPath9 = './figures/set8_1/frame-0009.jpg'; 
  
-    imgPath1 = './figures/set8_2/frame-0011.jpg'; 
-    imgPath2 = './figures/set8_2/frame-0012.jpg'; 
-    imgPath3 = './figures/set8_2/frame-0013.jpg'; 
-    imgPath4 = './figures/set8_2/frame-0014.jpg'; 
-    imgPath5 = './figures/set8_2/frame-0015.jpg'; 
-    imgPath6 = './figures/set8_2/frame-0016.jpg'; 
-    imgPath7 = './figures/set8_2/frame-0017.jpg'; 
-    imgPath8 = './figures/set8_2/frame-0018.jpg'; 
-    imgPath9 = './figures/set8_2/frame-0019.jpg'; 
+%     imgPath1 = './figures/set8_2/frame-0011.jpg'; 
+%     imgPath2 = './figures/set8_2/frame-0012.jpg'; 
+%     imgPath3 = './figures/set8_2/frame-0013.jpg'; 
+%     imgPath4 = './figures/set8_2/frame-0014.jpg'; 
+%     imgPath5 = './figures/set8_2/frame-0015.jpg'; 
+%     imgPath6 = './figures/set8_2/frame-0016.jpg'; 
+%     imgPath7 = './figures/set8_2/frame-0017.jpg'; 
+%     imgPath8 = './figures/set8_2/frame-0018.jpg'; 
+%     imgPath9 = './figures/set8_2/frame-0019.jpg'; 
     
     % All images are resized by 1/2
     scaleValue = 1;
