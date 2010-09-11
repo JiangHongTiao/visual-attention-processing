@@ -20,12 +20,15 @@ for iP = 1:1:nP
 %     else (iP + 1 < ) aP1 = concat(aP1,Ps(:,:,iP+1)
 % The following approach did not take bordering pixels into account
     if (iP >= ncP + 1 && iP <= nP - (ncP + 1) && rem(iP,ncP) ~= 1 && rem(iP,ncP) ~= 0)
-        aP1 = Ps(:,:,[iP - ncP, iP - 1, iP + 1, iP + ncP]); % Using only N,W,S,E blocks for calculating the HF1
+        % Commented lines of codes is for converting entropy-based saliency
+        % map to information saliency map
+%         aP1 = Ps(:,:,[iP - ncP, iP - 1, iP + 1, iP + ncP]); % Using only N,W,S,E blocks for calculating the HF1
         aP2 = Ps(:,:,[iP - ncP, iP - 1, iP, iP + 1, iP + ncP]); % Using only N,W,C,S,E blocks for calculating the HF2
-        HE = kdpee(reshape(Ps(:,:,iP),[numel(Ps(:,:,iP)) 1]));
-        HF1 = kdpee(reshape(aP1(:,:,:),[size(aP1,1)*size(aP1,2), size(aP1,3)]));
+%         HE = kdpee(reshape(Ps(:,:,iP),[numel(Ps(:,:,iP)) 1]));
+%         HF1 = kdpee(reshape(aP1(:,:,:),[size(aP1,1)*size(aP1,2), size(aP1,3)]));
         HF2 = kdpee(reshape(aP2(:,:,:),[size(aP2,1)*size(aP2,2), size(aP2,3)]));
-        S(iP) = HF2 - (HF1 + HE);
+%         S(iP) = HF2 - (HF1 + HE);
+        S(iP) = HF2;
     end
 end
 

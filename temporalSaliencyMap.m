@@ -18,11 +18,14 @@ nP = nrP*ncP;
 % pB = [];
 S = zeros(1,nP);
 for iP = 1:1:nP
-    aP1 = double(V1(:,:,:,iP));
+        % Commented lines of codes is for converting entropy-based saliency
+        % map to information saliency map    
+%     aP1 = double(V1(:,:,:,iP));
     aP2 = double(V2(:,:,:,iP));
-    HV1 = kdpee(reshape(aP1,[size(aP1,1)*size(aP1,2), size(aP1,3)]));
+%     HV1 = kdpee(reshape(aP1,[size(aP1,1)*size(aP1,2), size(aP1,3)]));
     HV2 = kdpee(reshape(aP2,[size(aP2,1)*size(aP2,2), size(aP2,3)]));
-    S(iP) = HV2 - HV1;
+%     S(iP) = HV2 - HV1;
+    S(iP) = HV2;
 end
 
 %% Representing spatiotemporal probability on images
