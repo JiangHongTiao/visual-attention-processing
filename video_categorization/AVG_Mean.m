@@ -29,6 +29,7 @@ if (savFlg == 1)
     curFld = pwd;
     cd(params.savePath);
     save('meanAVG.mat','meanAVG');
+    export(meanAVG,'XLSFile','meanAVG.xls');
 %     saveas(1,'samples.fig');    
     cd(curFld);
 end 
