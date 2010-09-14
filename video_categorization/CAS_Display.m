@@ -28,6 +28,7 @@ if (savFlg == 1)
     curFld = pwd;
     cd(params.savePath);
     save('samples.mat','CASs');
+    export(CASs,'XLSfile','samples.xls');
 %     saveas(1,'samples.fig');    
     cd(curFld);
 end 
