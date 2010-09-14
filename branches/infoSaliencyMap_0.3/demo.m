@@ -40,25 +40,25 @@ function demo()
 %     imgPath8 = './figures/set8/L_8.jpg'; 
 %     imgPath9 = './figures/set8/L_9.jpg'; 
     
-%     imgPath1 = './figures/set8_1/frame-0001.jpg'; 
-%     imgPath2 = './figures/set8_1/frame-0002.jpg'; 
-%     imgPath3 = './figures/set8_1/frame-0003.jpg'; 
-%     imgPath4 = './figures/set8_1/frame-0004.jpg'; 
-%     imgPath5 = './figures/set8_1/frame-0005.jpg'; 
-%     imgPath6 = './figures/set8_1/frame-0006.jpg'; 
-%     imgPath7 = './figures/set8_1/frame-0007.jpg'; 
-%     imgPath8 = './figures/set8_1/frame-0008.jpg'; 
-%     imgPath9 = './figures/set8_1/frame-0009.jpg'; 
+    imgPath1 = './figures/set8_1/frame-0001.jpg'; 
+    imgPath2 = './figures/set8_1/frame-0002.jpg'; 
+    imgPath3 = './figures/set8_1/frame-0003.jpg'; 
+    imgPath4 = './figures/set8_1/frame-0004.jpg'; 
+    imgPath5 = './figures/set8_1/frame-0005.jpg'; 
+    imgPath6 = './figures/set8_1/frame-0006.jpg'; 
+    imgPath7 = './figures/set8_1/frame-0007.jpg'; 
+    imgPath8 = './figures/set8_1/frame-0008.jpg'; 
+    imgPath9 = './figures/set8_1/frame-0009.jpg'; 
  
-    imgPath1 = './figures/set8_2/frame-0011.jpg'; 
-    imgPath2 = './figures/set8_2/frame-0012.jpg'; 
-    imgPath3 = './figures/set8_2/frame-0013.jpg'; 
-    imgPath4 = './figures/set8_2/frame-0014.jpg'; 
-    imgPath5 = './figures/set8_2/frame-0015.jpg'; 
-    imgPath6 = './figures/set8_2/frame-0016.jpg'; 
-    imgPath7 = './figures/set8_2/frame-0017.jpg'; 
-    imgPath8 = './figures/set8_2/frame-0018.jpg'; 
-    imgPath9 = './figures/set8_2/frame-0019.jpg'; 
+%     imgPath1 = './figures/set8_2/frame-0011.jpg'; 
+%     imgPath2 = './figures/set8_2/frame-0012.jpg'; 
+%     imgPath3 = './figures/set8_2/frame-0013.jpg'; 
+%     imgPath4 = './figures/set8_2/frame-0014.jpg'; 
+%     imgPath5 = './figures/set8_2/frame-0015.jpg'; 
+%     imgPath6 = './figures/set8_2/frame-0016.jpg'; 
+%     imgPath7 = './figures/set8_2/frame-0017.jpg'; 
+%     imgPath8 = './figures/set8_2/frame-0018.jpg'; 
+%     imgPath9 = './figures/set8_2/frame-0019.jpg'; 
     
     % All images are resized by 1/2
     scaleValue = 1;
@@ -93,10 +93,31 @@ function demo()
     end
     
     tic;
-    [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches);
+    [~,~,ism] = infoSaliencyMap(imgs,szPatches);
+    ism(ism < 0) = 0;
 %     ism = temporalSaliencyMap(imgs,szPatches);
     toc;    
-    th = sort(unique(ism),'descend');
-    ism(ism < th(1000)) = 0;
-    imshow(ism);
+    
+%% Temporarily threshold the saliency map
+%     th = sort(unique(ism),'descend');
+%     ism(ism < th(1000)) = 0;
+%     imshow(ism);
+
+%% Normalized entropy-based saliency map
+    ism_norm = mat2gray(ism);
+%     gaussian_filter = fspecial('gaussian',16,1);
+%     ism_filtered = imfilter(ism_norm,gaussian_filter);       
+    ism_smoothed = smooth2a(ism_norm,8);
+    figure(1);
+    h = imshow(img4);
+    set(h,'AlphaData',ism_smoothed);
+    title('Normalized Entropy-based Saliency Map 1');
+    
+% %% Interpolate the ism_norm
+%     [iX,iY] = meshgrid(1:size(ism_norm,2),1:size(ism_norm,3));
+%     ism_interpn = interpn(ism_norm*255,iY,iX);
+%     figure(2);
+%     h = imshow(img4);
+%     set(h,'AlphaData',ism_interpn);
+%     title('Normalized Entropy-based Saliency Map 2');    
 end
