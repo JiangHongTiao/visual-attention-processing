@@ -5,26 +5,31 @@ function meanCAS = CAS_Mean(savFlg,demoFlg,params)
         disp('The mean values of CAS according to 6 different methods');
     end    
      
-    load('./results/autosplit/chanceAdjustedSaliency_date-20100814T172724/samples.mat');
+%     load('./results/autosplit/chanceAdjustedSaliency_date-20100814T172724/samples.mat');
+    load('./results/autosplit/chanceAdjustedSaliency_date-20100912T094933/samples.mat');
     tmpCAS = double(CASs);
     tmpCASs = double(CASs);
-    load('./results/autosplit/chanceAdjustedSaliency_date-20100814T224139/samples.mat');
+%     load('./results/autosplit/chanceAdjustedSaliency_date-20100814T224139/samples.mat');
+    load('./results/autosplit/chanceAdjustedSaliency_date-20100912T095038/samples.mat');    
     tmpCAS = [tmpCAS;double(CASs)];
     tmpCASs = tmpCASs + double(CASs);
-    load('./results/autosplit/chanceAdjustedSaliency_date-20100815T101143/samples.mat');
+%     load('./results/autosplit/chanceAdjustedSaliency_date-20100815T101143/samples.mat');
+    load('./results/autosplit/chanceAdjustedSaliency_date-20100912T095136/samples.mat');    
     tmpCAS = [tmpCAS;double(CASs)];
     tmpCASs = tmpCASs + double(CASs);
-    load('./results/autosplit/chanceAdjustedSaliency_date-20100815T110655/samples.mat');
+%     load('./results/autosplit/chanceAdjustedSaliency_date-20100815T110655/samples.mat');
+    load('./results/autosplit/chanceAdjustedSaliency_date-20100912T095200/samples.mat');    
     tmpCAS = [tmpCAS;double(CASs)];
     tmpCASs = tmpCASs + double(CASs);
-    load('./results/autosplit/chanceAdjustedSaliency_date-20100815T181918/samples.mat');
+%     load('./results/autosplit/chanceAdjustedSaliency_date-20100815T181918/samples.mat');
+    load('./results/autosplit/chanceAdjustedSaliency_date-20100912T095221/samples.mat');    
     tmpCAS = [tmpCAS;double(CASs)];
     tmpCASs = tmpCASs + double(CASs);
     
-    tmpCAS = round(mean(tmpCAS,1) / 255 * 100);    
+    tmpCAS = mean(tmpCAS,1) / 255;    
     meanCAS = dataset({tmpCAS,'ITTI','GBVS','PFT','PQFT','INFO','ENTRO'},'ObsNames','Samples'); 
     
-    tmpCASs = round(tmpCASs /(5*255) *100);
+    tmpCASs = tmpCASs /(5*255);
     meanCASs = CASs;
     
     for iMethod = 1:1:6
