@@ -1,0 +1,4 @@
+#!/bin/bash
+
+svn export . kdpee
+zip -r kdpee-`date +%Y-%m-%d` kdpee

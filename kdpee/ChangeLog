@@ -1,0 +1,10 @@
+
+Changelog for KDPEE:
+
+
+2010-04-14 - C code altered for strict C90 compliance, now compiles on Windows Matlab R2007b.
+
+2008-12-05 - First release to accompany IEEE SPL Paper
+
+
+
