@@ -14,7 +14,7 @@ function CAS = CAS_Calculation(inVid,savFlg,demoFlg,params)
     end
     if demoFlg == 1
         disp(['CAS_Calculation for ' inVid]);
-        disp(CAS);
+%         disp(CAS);
     end
     if (savFlg == 1)
         if (exist(params.savePath,'dir') ~= 7) 
