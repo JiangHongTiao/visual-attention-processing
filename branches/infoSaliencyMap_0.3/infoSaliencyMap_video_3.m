@@ -114,8 +114,7 @@ while ~isDone(hmfr)
         toc;
         
         smnorm = mat2gray(smraw);
-        avg_filter = fspecial('average',szPatches);
-        smraw = imfilter(smraw,avg_filter);        
+        smnorm = smooth2a(smnorm,szPatches);    
         %% Result Presentation in Grayscale or Color    
         imggray = queue(:,:,M);
         smgray = imggray .* smnorm;
