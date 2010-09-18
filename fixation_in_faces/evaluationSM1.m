@@ -2,6 +2,9 @@ function evaluationSM1()
 %%Function is written to evaluate the frequency saliency on fixations in
 %%faces database. 
 
+% clear screen
+clc;
+
 % load the data
 addpath('./faces-tif');
 addpath('../comMLFuncs/');
@@ -12,7 +15,7 @@ load imgList.mat;
 load annotations.mat;
 
 % plot the image (image 16 - chosen arbitrarily)
-imgNum = 15;
+imgNum = 19;
 img = imread(imgList{imgNum});
 
 %% produce saliency map of Phase Frequency Method 
@@ -40,61 +43,65 @@ sm_esm = round(mat2gray(sm_esm)*255);
 
 %% produce the saliency map by Dr Guoping Qiu method
 % include paths
-addpath('../infoSaliencyMap/');
-sm_ssm = spatialSaliencyMap(rgb2gray(img),8,'hadamard',30);
-ssm = sm_ssm;
-    % Replace -Inf and NaN value by minimum value * 2;
-    % Replace +Inf by maximum * 2;
-    maxVal = max(ssm(~isinf(ssm) & ~isnan(ssm)));
-    if (isempty(maxVal)) maxVal = 1; end
-    minVal = min(ssm(~isinf(ssm) & ~isnan(ssm)));    
-    if (isempty(minVal)) minVal = 0; end
-    for iy = 1:1:size(ssm,1) 
-        for ix = 1:1:size(ssm,2)
-            if logical(isnan(ssm(iy,ix))) || (logical(isinf(ssm(iy,ix))) && ssm(iy,ix) < 0)
-                ssm(iy,ix) = 2*minVal;
-            elseif logical(isinf(ssm(iy,ix))) && ssm(iy,ix) > 0
-                ssm(iy,ix) = 2*maxVal;
-            end
-        end
-    end
-sm_ssm = round(mat2gray(ssm)*255);
+% addpath('../infoSaliencyMap/');
+% sm_ssm = spatialSaliencyMap(rgb2gray(img),8,'hadamard',30);
+% ssm = sm_ssm;
+%     % Replace -Inf and NaN value by minimum value * 2;
+%     % Replace +Inf by maximum * 2;
+%     maxVal = max(ssm(~isinf(ssm) & ~isnan(ssm)));
+%     if (isempty(maxVal)) maxVal = 1; end
+%     minVal = min(ssm(~isinf(ssm) & ~isnan(ssm)));    
+%     if (isempty(minVal)) minVal = 0; end
+%     for iy = 1:1:size(ssm,1) 
+%         for ix = 1:1:size(ssm,2)
+%             if logical(isnan(ssm(iy,ix))) || (logical(isinf(ssm(iy,ix))) && ssm(iy,ix) < 0)
+%                 ssm(iy,ix) = 2*minVal;
+%             elseif logical(isinf(ssm(iy,ix))) && ssm(iy,ix) > 0
+%                 ssm(iy,ix) = 2*maxVal;
+%             end
+%         end
+%     end
+% sm_ssm = round(mat2gray(ssm)*255);
+
+addpath('../../vap_svn_ghost_branches/infoSaliencyMap_0.4/');
+sm_ism = spatialSaliencyMap(rgb2gray(img),8);
+sm_ism = round(mat2gray(sm_ism)*255);
 
 figure(1);
 roc_pft = computeROC(sm_pft,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
 title('ROC of PFT');
-sprintf('ROC of PFT Saliency Map = %f',roc_pft)
-sprintf('Percentage = %f',sum(sum(sm_pft > 128))/numel(rgb2gray(img)))
+fprintf('ROC of PFT Saliency Map = %f\n',roc_pft)
+fprintf('Percentage = %f\n',sum(sum(sm_pft > 128))/numel(rgb2gray(img)))
 
 
 figure(2);
 roc_pqft = computeROC(sm_pqft,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
 title('ROC of PQFT');
-sprintf('ROC of PQFT Saliency Map = %f',roc_pqft)
-sprintf('Percentage = %f',sum(sum(sm_pqft > 128))/numel(rgb2gray(img)))
+fprintf('ROC of PQFT Saliency Map = %f\n',roc_pqft)
+fprintf('Percentage = %f\n',sum(sum(sm_pqft > 128))/numel(rgb2gray(img)))
 
 figure(3);
 roc_gbvs = computeROC(sm_gbvs,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
 title('ROC of GBVS');
-sprintf('ROC of GBVS Saliency Map = %f',roc_gbvs)
-sprintf('Percentage = %f',sum(sum(sm_gbvs > 128))/numel(rgb2gray(img)))
+fprintf('ROC of GBVS Saliency Map = %f\n',roc_gbvs)
+fprintf('Percentage = %f\n',sum(sum(sm_gbvs > 128))/numel(rgb2gray(img)))
 
 figure(4);
 roc_itti = computeROC(sm_itti,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
 title('ROC of ITTI');
-sprintf('ROC of Itti Saliency Map = %f',roc_itti)
-sprintf('Percentage = %f',sum(sum(sm_itti > 128))/numel(rgb2gray(img)))
+fprintf('ROC of Itti Saliency Map = %f\n',roc_itti)
+fprintf('Percentage = %f\n',sum(sum(sm_itti > 128))/numel(rgb2gray(img)))
 
 figure(5);
 roc_esm = computeROC(sm_esm,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
 title('ROC of ESM');
-sprintf('ROC of Entropy Saliency Map = %f',roc_esm)
-sprintf('Percentage = %f',sum(sum(sm_esm > 128))/numel(rgb2gray(img)))
+fprintf('ROC of Entropy Saliency Map = %f\n',roc_esm)
+fprintf('Percentage = %f\n',sum(sum(sm_esm > 128))/numel(rgb2gray(img)))
 
 figure(6);
-roc_ssm = computeROC(sm_ssm,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
-title('ROC of SSM');
-sprintf('ROC of Spatial Saliency Map = %f',roc_ssm)
-sprintf('Percentage = %f',sum(sum(sm_ssm > 128))/numel(rgb2gray(img)))
+roc_ism = computeROC(sm_ism,sbj{1}.scan{imgNum}.fix_x,sbj{1}.scan{imgNum}.fix_y,1);
+title('ROC of ISM');
+fprintf('ROC of Spatial Saliency Map = %f\n',roc_ism)
+fprintf('Percentage = %f\n',sum(sum(sm_ism > 128))/numel(rgb2gray(img)))
 
 end
