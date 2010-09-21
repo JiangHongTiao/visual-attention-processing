@@ -5,6 +5,16 @@ function pftSaliencyMap_video(inVid,outVid,savFlg,demoFlg,inDat)
 
 %   Copyright 2010, The University of Nottingham
 
+%% Arguments process
+if (nargin >=6 )
+    error('Only five arguments are required as follows: inVid,outVide,savvFlg,demoFlg,inDat(optional)');
+elseif(nargin == 5)
+    inDatFlg = 1;
+elseif(nargin == 4)
+    warning('No eyemarks data are supplied');
+    inDatFlg = 0;
+else
+end
 %% 
 % Create a System object to read video from a video.
 hmfr = video.MultimediaFileReader( ...
@@ -96,8 +106,6 @@ end
 % detected by the BinaryFileReader System object.
 while ~isDone(hmfr)    
     iFrame = iFrame + 1;
-    yLoc = inDat(:,1,iFrame);
-    xLoc = inDat(:,2,iFrame);
     imrgb_org = step(hmfr);     % Read input video frame                
     imgray_org = step(hcsc1, imrgb_org);        % Convert color image to intensity    
     imgray = imresize(imgray_org, [w w], 'bilinear');
@@ -112,9 +120,13 @@ while ~isDone(hmfr)
     smgray = smnorm .* imgray_org;
     smnorm = round(smnorm*255);
     imblended = step(halphablend,double(smgray),double(imgray_org));
-    if (yLoc - 2 > 0 && yLoc + 2 <= frame_size(1) && xLoc - 2 > 0 && xLoc + 2 < frame_size(2)) 
-        imblended(yLoc-2:yLoc+2,xLoc-2:xLoc+2)=1;
-    end    
+    if inDatFlg
+        yLoc = inDat(:,1,iFrame);
+        xLoc = inDat(:,2,iFrame);                
+        if (yLoc - 2 > 0 && yLoc + 2 <= frame_size(1) && xLoc - 2 > 0 && xLoc + 2 < frame_size(2) ) 
+            imblended(yLoc-2:yLoc+2,xLoc-2:xLoc+2)=1;
+        end    
+    end
     if (demoFlg == 1)
         step(hvideo1, imrgb_org);        % Display Original Video
         step(hvideo2, imblended);
