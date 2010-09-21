@@ -53,5 +53,22 @@ function [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches,transEng,noCoff)
     end
     
     ism = tsm + ssm;
+
+%     % Replace -Inf and NaN value by minimum value * 2;
+%     % Replace +Inf by maximum * 2;
+%     maxVal = max(ism(~isinf(ism) & ~isnan(ism)));
+%     if (isempty(maxVal)) maxVal = 1; end
+%     minVal = min(ism(~isinf(ism) & ~isnan(ism)));    
+%     if (isempty(minVal)) minVal = 0; end
+%     for iy = 1:1:size(ism,1) 
+%         for ix = 1:1:size(ism,2)
+%             if logical(isnan(ism(iy,ix))) || (logical(isinf(ism(iy,ix))) && ism(iy,ix) < 0)
+%                 ism(iy,ix) = 2*minVal;
+%             elseif logical(isinf(ism(iy,ix))) && ism(iy,ix) > 0
+%                 ism(iy,ix) = 2*maxVal;
+%             end
+%         end
+%     end
+    
     ism(ism < 0) = min(min(ism(ism > 0)));
 end

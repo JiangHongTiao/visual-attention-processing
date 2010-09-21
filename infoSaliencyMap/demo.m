@@ -13,9 +13,9 @@ function demo()
 
     %% Predefined parameters 
     transEng = 'hadamard';% What type of transform engine: hadamard,dct
-    noCoff = 30; % Number of reserved components        
-    noImgs = 6;
-    szPatches = 8;
+    noCoff = 20; % Number of reservedomponents        
+    noImgs = 2;
+    szPatches = 4;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
 %     imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
@@ -42,15 +42,25 @@ function demo()
 %     imgPath8 = './figures/set8/L_8.jpg'; 
 %     imgPath9 = './figures/set8/L_9.jpg'; 
     
-    imgPath1 = './figures/set8_1/frame-0001.jpg'; 
-    imgPath2 = './figures/set8_1/frame-0002.jpg'; 
-    imgPath3 = './figures/set8_1/frame-0003.jpg'; 
-    imgPath4 = './figures/set8_1/frame-0004.jpg'; 
-    imgPath5 = './figures/set8_1/frame-0005.jpg'; 
-    imgPath6 = './figures/set8_1/frame-0006.jpg'; 
-    imgPath7 = './figures/set8_1/frame-0007.jpg'; 
-    imgPath8 = './figures/set8_1/frame-0008.jpg'; 
-    imgPath9 = './figures/set8_1/frame-0009.jpg'; 
+%     imgPath1 = './figures/set8_1/frame-0001.jpg'; 
+%     imgPath2 = './figures/set8_1/frame-0002.jpg'; 
+%     imgPath3 = './figures/set8_1/frame-0003.jpg'; 
+%     imgPath4 = './figures/set8_1/frame-0004.jpg'; 
+%     imgPath5 = './figures/set8_1/frame-0005.jpg'; 
+%     imgPath6 = './figures/set8_1/frame-0006.jpg'; 
+%     imgPath7 = './figures/set8_1/frame-0007.jpg'; 
+%     imgPath8 = './figures/set8_1/frame-0008.jpg'; 
+%     imgPath9 = './figures/set8_1/frame-0009.jpg';
+
+    imgPath1 = './figures/football/fb-45.jpg';
+    imgPath2 = './figures/football/fb-46.jpg';
+    imgPath3 = './figures/football/fb-47.jpg';
+    imgPath4 = './figures/football/fb-48.jpg';
+    imgPath5 = './figures/football/fb-49.jpg';
+    imgPath6 = './figures/football/fb-50.jpg';
+    imgPath7 = './figures/football/fb-51.jpg';
+    imgPath8 = './figures/football/fb-52.jpg';
+    imgPath9 = './figures/football/fb-53.jpg';
     
     % All images are resized by 1/2
     scaleValue = 1;
@@ -78,52 +88,62 @@ function demo()
     [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches,transEng,noCoff);
     toc;
     
-    % Define filter used for smooth the saliency map
-    avg_filter = fspecial('average',szPatches);
-    
-    % Apply low-pass filter and normalization function on information saliency map a   
-    ism_avgfilted = normalization(imfilter(ism,avg_filter));         
-    
-    % Represent temporal saliency map
-    figure(1), colormap('gray'), imagesc(tsm);
-    title('Temporal Saliency Map - 2D');    
-
-    % Represent spatial saliency map
-    figure(2), colormap('gray'), imagesc(ssm);
-    title('Spatial Saliency Map - 2D');    
-    
-    % Represent the information saliency map
-    figure(3), colormap('gray'), imagesc(ism);
-    title('Information Saliency Map - 2D');    
-    
-    % Showing results     
-    figure(4);    
-    imshow(ism_avgfilted);
-    title(['Information Saliency Map Filted by Average Filter ' num2str(szPatches) 'x' num2str(szPatches) ' - 2D']);    
-    
-    figure(5);    
-    gridx1 = 1:1:size(img1,1);
-    gridx2 = 1:1:size(img1,2);
-    [gridx2,gridx1] = meshgrid(gridx2,gridx1);
-    surf(gridx1,gridx2,ism);   
-    title('Information Saliency Map - 3D');    
-    
-    orgImg = imgs(:,:,noImgs);
-    gridx1 = 1:1:size(orgImg,1);
-    gridx2 = 1:1:size(orgImg,2);
-    [gridx2,gridx1] = meshgrid(gridx2,gridx1);    
-    figure(6),imshow(orgImg),title('Processed Image - 2D');
-    figure(7),surf(gridx1,gridx2,double(orgImg)),title('Processed Image - 3D');
+%     % Define filter used for smooth the saliency map
+%     avg_filter = fspecial('average',szPatches);
+%     
+%     % Apply low-pass filter and normalization function on information saliency map a   
+%     ism_avgfilted = normalization(imfilter(ism,avg_filter));         
+%     
+%     % Represent temporal saliency map
+%     figure(1), colormap('gray'), imagesc(tsm);
+%     title('Temporal Saliency Map - 2D');    
+% 
+%     % Represent spatial saliency map
+%     figure(2), colormap('gray'), imagesc(ssm);
+%     title('Spatial Saliency Map - 2D');    
+%     
+%     % Represent the information saliency map
+%     figure(3), colormap('gray'), imagesc(ism);
+%     title('Information Saliency Map - 2D');    
+%     
+%     % Showing results     
+%     figure(4);    
+%     imshow(ism_avgfilted);
+%     title(['Information Saliency Map Filted by Average Filter ' num2str(szPatches) 'x' num2str(szPatches) ' - 2D']);    
+%     
+%     figure(5);    
+%     gridx1 = 1:1:size(img1,1);
+%     gridx2 = 1:1:size(img1,2);
+%     [gridx2,gridx1] = meshgrid(gridx2,gridx1);
+%     surf(gridx1,gridx2,ism);   
+%     title('Information Saliency Map - 3D');    
+%     
+%     orgImg = imgs(:,:,noImgs);
+%     gridx1 = 1:1:size(orgImg,1);
+%     gridx2 = 1:1:size(orgImg,2);
+%     [gridx2,gridx1] = meshgrid(gridx2,gridx1);    
+%     figure(6),imshow(orgImg),title('Processed Image - 2D');
+%     figure(7),surf(gridx1,gridx2,double(orgImg)),title('Processed Image - 3D');
 
     % Show top n salient regions of the image
-    n = 30;    
-    saliency_values = sort(unique(ism),'descend');
-    saliency_threshold = saliency_values(n);
-    ism_mask = ism > saliency_threshold;
-    img_threshold = imgs(:,:,noImgs).*uint8(ism_mask);
+    n = 20;
+    [ismHeight,ismWidth] = size(ism);
+    [xGrid,yGrid] = meshgrid(1:ismWidth,1:ismHeight);
+    ism = cat(3,ism,yGrid,xGrid);    
+    saliencyPoints = fliplr(sortrows(reshape(permute(ism,[3 2 1]),[size(ism,3) numel(ism(:,:,1))])')');   
+    saliencyPoints = saliencyPoints(:,1:16:n*16) ;
+    iYs = saliencyPoints(2,:); iXs = saliencyPoints(3,:);
+    ism_mask = zeros(ismHeight,ismWidth);
+%     ism_mask(iYs,iXs) = ism_mask(iYs,iXs).*(1-eye(length(iYs))) + 1*eye(length(iYs));
+    for iCor = 1:1:n
+        ism_mask(iYs(iCor),iXs(iCor)) = 1;
+    end
+    se = strel('disk',34,0);
+    ism_mask_dilated = imdilate(ism_mask,se);
+    img_thresholded = imgs(:,:,noImgs).*uint8(ism_mask_dilated);
     figure(8);
-    imshow(img_threshold);
-    title(['Top ' num2str(n) 'regions in the image']);    
+    imshow(img_thresholded);
+    title(['Top ' num2str(n) ' regions in the image']);    
     
     saveFiguresFlag = 0;
     if (saveFiguresFlag == 1)
@@ -136,6 +156,6 @@ function demo()
         saveas(4,[resFld 'ims-avgfilted-2d.fig']);
         saveas(5,[resFld 'ims-3d.fig']);
         saveas(6,[resFld 'org-2d.fig']);
-        saveas(7,[resFld 'org-3d.fig']);
+        saveas(7,[resFld 'org-3d.fig']);        
     end
 end
