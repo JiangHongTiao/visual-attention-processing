@@ -16,7 +16,7 @@ function demo()
     szPatches = 8;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
-    imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
+%     imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
 %     imgPath3 = './figures/set4/L_3.jpg'; % Image at t = -1;
 %     imgPath4 = './figures/set4/L_4.jpg'; % Image at t = 0; 
 %     imgPath5 = './figures/set4/L_5.jpg'; % Image at t = 1; current image
@@ -81,7 +81,7 @@ function demo()
     img7 = imresize(rgb2gray(imread(imgPath7)),scaleValue);        
     img8 = imresize(rgb2gray(imread(imgPath8)),scaleValue);
     img9 = imresize(rgb2gray(imread(imgPath9)),scaleValue);        
-% 
+
 %     img1 = imresize(imread(imgPath1),scaleValue);
 %     img2 = imresize(imread(imgPath2),scaleValue);
 %     img3 = imresize(imread(imgPath3),scaleValue);
