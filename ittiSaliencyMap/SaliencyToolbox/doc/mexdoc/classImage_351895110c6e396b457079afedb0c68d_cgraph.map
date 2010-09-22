@@ -1,4 +1,0 @@
-<area shape="rect" href="$classImage.html#45dd31ebd02682c5963858f62aa53dd9" title="Returns the height of the Image." alt="" coords="176,56,296,83">
-<area shape="rect" href="$classImage.html#02d05b5c1bbd2c600adc76e5123bdaf9" title="Returns whether the Image is initialized." alt="" coords="355,56,483,83">
-<area shape="rect" href="$classImage.html#dbe5f8b9f79338c7eb6a66bdc69ca0b7" title="Returns the width of the Image." alt="" coords="179,5,293,32">
-<area shape="rect" href="$classImage.html#2b7a8efd57ba635958dfe126e59d8c70" title="Returns a constant pointer to the underlying Matlab array." alt="" coords="345,5,492,32">
