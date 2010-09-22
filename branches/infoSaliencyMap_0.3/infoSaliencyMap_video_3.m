@@ -4,7 +4,16 @@ function infoSaliencyMap_video_3(inVid,outVid,savFlg,demoFlg,inDat)
 % detection and extraction in a video sequence
 
 %   Copyright 2010, The University of Nottingham
-%% 
+%% Arguments process
+if (nargin >=6 )
+    error('Only five arguments are required as follows: inVid,outVide,savvFlg,demoFlg,inDat(optional)');
+elseif(nargin == 5)
+    inDatFlg = 1;
+elseif(nargin == 4)
+    warning('No eyemarks data are supplied');
+    inDatFlg = 0;
+else
+end 
 % Create a System object to read video from a video.
 hmfr = video.MultimediaFileReader( ...
         'Filename',inVid ... 
@@ -65,6 +74,15 @@ iFrame = 0;
 hbfi = info(hmfr);
 frame_scale_ratio = 1;
 frame_size = fliplr(hbfi.VideoSize)*frame_scale_ratio;
+
+% Resize input images
+if (rem(frame_size,8) == 0)
+    resizeFlg = 0;
+else
+    resizeFlg = 1;
+    frame_size = round(frame_size/8)*8;
+end
+
 %% Put M-1 frames into FIFO sequences in the order from 2 to M
 M = noFrames;
 queue = zeros([frame_size M]);
@@ -103,9 +121,11 @@ while ~isDone(hmfr)
     iFrame = iFrame + 1;
     queue = circshift(queue,[0 0 -1]); % Rotate the queue to get new input value
 %     queue(:,:,M) = step(hcsc1,step(hmfr)); % Convert color image to intensity    
-    queue(:,:,M) = step(hmfr);
-    yLoc = inDat(:,1,iFrame);
-    xLoc = inDat(:,2,iFrame);
+    if resizeFlg == 0
+        queue(:,:,M) = step(hmfr);
+    else
+        queue(:,:,M) = imresize(step(hmfr),frame_size);
+    end
     if ( sum(sum(queue(:,:,1))) ~= 0 )             
         % Detecting Lane-mark by saliency method
         tic;
@@ -120,8 +140,12 @@ while ~isDone(hmfr)
         smgray = imggray .* smnorm;
         smnorm = round(smnorm * 255);
         imblended = step(halphablend,double(smgray),double(imggray));
-        if (yLoc - 2 > 0 && yLoc + 2 <= frame_size(1) && xLoc - 2 > 0 && xLoc + 2 < frame_size(2)) 
-            imblended(yLoc-2:yLoc+2,xLoc-2:xLoc+2)=1;
+        if inDatFlg
+            yLoc = inDat(:,1,iFrame);
+            xLoc = inDat(:,2,iFrame);
+            if (yLoc - 2 > 0 && yLoc + 2 <= frame_size(1) && xLoc - 2 > 0 && xLoc + 2 < frame_size(2)) 
+                imblended(yLoc-2:yLoc+2,xLoc-2:xLoc+2)=1;
+            end
         end
         if (demoFlg == 1)
             step(hvideo1, queue(:,:,M));        % Display Original Video
