@@ -12,8 +12,8 @@ function demo()
     clc; close all;
 
     %% Predefined parameters      
-    noImgs = 4;
-    szPatches = 8;
+    noImgs = 2;
+    szPatches = 4;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
 %     imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
@@ -103,12 +103,14 @@ function demo()
     end
     
     tic;
-    [~,~,ism] = infoSaliencyMap(imgs,szPatches);
+    [tsm,ssm,ism] = infoSaliencyMap(imgs,szPatches,'info');
 %     ism = temporalSaliencyMap(imgs,szPatches);
     toc;    
-    
+
+%% Common parameters for three maps    
+    n = 20;
 %% Show top n salient regions of the image
-    n = 50;
+    
     [ismHeight,ismWidth] = size(ism);
     [xGrid,yGrid] = meshgrid(1:ismWidth,1:ismHeight);
     ism = cat(3,ism,yGrid,xGrid);    
@@ -123,7 +125,43 @@ function demo()
     se = strel('disk',34,0);
     ism_mask_dilated = imdilate(ism_mask,se);
     img_thresholded = imgs(:,:,noImgs).*uint8(ism_mask_dilated);
+    figure(1);
+    imshow(img_thresholded);
+    title(['Top ' num2str(n) ' ISM regions in the image']);
+%% Show top n salient regions of the image    
+    [tsmHeight,tsmWidth] = size(tsm);
+    [xGrid,yGrid] = meshgrid(1:tsmWidth,1:tsmHeight);
+    tsm = cat(3,tsm,yGrid,xGrid);    
+    saliencyPoints = fliplr(sortrows(reshape(permute(tsm,[3 2 1]),[size(tsm,3) numel(tsm(:,:,1))])')');   
+    saliencyPoints = saliencyPoints(:,1:szPatches*szPatches:n*szPatches*szPatches) ;
+    iYs = saliencyPoints(2,:); iXs = saliencyPoints(3,:);
+    tsm_mask = zeros(tsmHeight,tsmWidth);
+%     tsm_mask(iYs,iXs) = tsm_mask(iYs,iXs).*(1-eye(length(iYs))) + 1*eye(length(iYs));
+    for iCor = 1:1:n
+        tsm_mask(iYs(iCor),iXs(iCor)) = 1;
+    end
+    se = strel('disk',34,0);
+    tsm_mask_dilated = imdilate(tsm_mask,se);
+    img_thresholded = imgs(:,:,noImgs).*uint8(tsm_mask_dilated);
     figure(2);
     imshow(img_thresholded);
-    title(['Top ' num2str(n) ' regions in the image']);      
+    title(['Top ' num2str(n) ' TSM regions in the image']);
+%% Show top n salient regions of the image    
+    [ssmHeight,ssmWidth] = size(ssm);
+    [xGrid,yGrid] = meshgrid(1:ssmWidth,1:ssmHeight);
+    ssm = cat(3,ssm,yGrid,xGrid);    
+    saliencyPoints = fliplr(sortrows(reshape(permute(ssm,[3 2 1]),[size(ssm,3) numel(ssm(:,:,1))])')');   
+    saliencyPoints = saliencyPoints(:,1:szPatches*szPatches:n*szPatches*szPatches) ;
+    iYs = saliencyPoints(2,:); iXs = saliencyPoints(3,:);
+    ssm_mask = zeros(ssmHeight,ssmWidth);
+%     ssm_mask(iYs,iXs) = ssm_mask(iYs,iXs).*(1-eye(length(iYs))) + 1*eye(length(iYs));
+    for iCor = 1:1:n
+        ssm_mask(iYs(iCor),iXs(iCor)) = 1;
+    end
+    se = strel('disk',34,0);
+    ssm_mask_dilated = imdilate(ssm_mask,se);
+    img_thresholded = imgs(:,:,noImgs).*uint8(ssm_mask_dilated);
+    figure(3);
+    imshow(img_thresholded);
+    title(['Top ' num2str(n) ' SSM regions in the image']);          
 end
