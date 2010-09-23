@@ -1,4 +1,4 @@
-function tsm = temporalSaliencyMap(imgs,M)
+function tsm = temporalSaliencyMap(imgs,szPatches,saliencyMethod)
 %% Build the spatiotemporal saliency method 
 % The method is described in the paper: An information theoretic model of
 % spatiotemporal visual saliency
@@ -8,6 +8,7 @@ function tsm = temporalSaliencyMap(imgs,M)
 % M: size of square patch method
 % 
 % M = 4; % size of pathces
+M = szPatches;
 V1 = []; V2 = [];
 noImgs = size(imgs,3);
 [V1,nrP,ncP] = cutImages(imgs(:,:,1:end-1),M);
@@ -19,13 +20,42 @@ nP = nrP*ncP;
 S = zeros(1,nP);
 for iP = 1:1:nP
         % Commented lines of codes is for converting entropy-based saliency
-        % map to information saliency map    
-%     aP1 = double(V1(:,:,:,iP));
-    aP2 = double(V2(:,:,:,iP));
-%     HV1 = kdpee(reshape(aP1,[size(aP1,1)*size(aP1,2), size(aP1,3)]));
-    HV2 = kdpee(reshape(aP2,[size(aP2,1)*size(aP2,2), size(aP2,3)]));
-%     S(iP) = HV2 - HV1;
-    S(iP) = HV2;
+        % map to information saliency map
+    if (M == 8)
+        if isequal(saliencyMethod,'entro')
+            aP1 = double(V1(:,:,:,iP));
+            aP2 = double(V2(:,:,:,iP));
+            HV1 = kdpee(reshape(aP1,[size(aP1,1)*size(aP1,2), size(aP1,3)]));
+            HV2 = kdpee(reshape(aP2,[size(aP2,1)*size(aP2,2), size(aP2,3)]));
+            S(iP) = HV2 - HV1;            
+        elseif isequal(saliencyMethod,'info')        
+            aP2 = double(V2(:,:,:,iP));        
+            HV2 = kdpee(reshape(aP2,[size(aP2,1)*size(aP2,2), size(aP2,3)]));        
+            S(iP) = HV2;            
+        end
+    elseif (M == 4)
+        if (iP >= ncP + 1 && rem(iP,ncP) ~= 1 )
+            if isequal(saliencyMethod,'entro')            
+                patchB = V2(:,:,end-1,iP);
+                patchW = V2(:,:,end,iP-1);
+                patchC = V2(:,:,end,iP);
+                patchN = V2(:,:,end,iP-ncP);
+                aP1 = [patchB(:),patchW(:),patchN(:)]; %% The aP1 is formed by back, west, north patch
+                aP2 = [patchB(:),patchW(:),patchC(:),patchN(:)]; %% The aP2 is formed by back, west, north and central patch
+                HV1 = kdpee(aP1);
+                HV2 = kdpee(aP2);
+                S(iP) = HV2 - HV1;
+            elseif isequal(saliencyMethod,'info')
+                patchB = V2(:,:,end-1,iP);
+                patchW = V2(:,:,end,iP-1);
+                patchC = V2(:,:,end,iP);
+                patchN = V2(:,:,end,iP-ncP);            
+                aP2 = [patchB(:),patchW(:),patchC(:),patchN(:)]; %% The aP2 is formed by back, west, north and central patch          
+                HV2 = kdpee(aP2);
+                S(iP) = HV2;            
+            end
+        end
+    end
 end
 
 %% Representing spatiotemporal probability on images
