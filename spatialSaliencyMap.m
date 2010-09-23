@@ -1,7 +1,6 @@
-function ssm = spatialSaliencyMap(imgB,szPatches)
-%% Build the spatiotemporal saliency method 
-% The method is described in the paper: An information theoretic model of
-% spatiotemporal visual saliency
+function ssm = spatialSaliencyMap(imgB,szPatches,saliencyMethod)
+%% Build the spatial saliency method 
+% The saliency method is recommended by Dr. Kenneth Ang
 
 %% Resize image ( if necessary )
 % imgB = imresize(imgB,size(imgB)/4);
@@ -19,17 +18,40 @@ for iP = 1:1:nP
 %     else (iP - 1 > 0) aP1 = concat(aP1,Ps(:,:,iP-1));
 %     else (iP + 1 < ) aP1 = concat(aP1,Ps(:,:,iP+1)
 % The following approach did not take bordering pixels into account
-    if (iP >= ncP + 1 && iP <= nP - (ncP + 1) && rem(iP,ncP) ~= 1 && rem(iP,ncP) ~= 0)
+    
         % Commented lines of codes is for converting entropy-based saliency
         % map to information saliency map
-%         aP1 = Ps(:,:,[iP - ncP, iP - 1, iP + 1, iP + ncP]); % Using only N,W,S,E blocks for calculating the HF1
-        aP2 = Ps(:,:,[iP - ncP, iP - 1, iP, iP + 1, iP + ncP]); % Using only N,W,C,S,E blocks for calculating the HF2
-%         HE = kdpee(reshape(Ps(:,:,iP),[numel(Ps(:,:,iP)) 1]));
-%         HF1 = kdpee(reshape(aP1(:,:,:),[size(aP1,1)*size(aP1,2), size(aP1,3)]));
-        HF2 = kdpee(reshape(aP2(:,:,:),[size(aP2,1)*size(aP2,2), size(aP2,3)]));
-%         S(iP) = HF2 - (HF1 + HE);
-        S(iP) = HF2;
-    end
+        if (M == 8)
+            if (iP >= ncP + 1 && iP <= nP - (ncP + 1) && rem(iP,ncP) ~= 1 && rem(iP,ncP) ~= 0)
+                if isequal(saliencyMethod,'entro')
+                    aP1 = Ps(:,:,[iP - ncP, iP - 1, iP + 1, iP + ncP]); % Using only N,W,S,E blocks for calculating the HF1
+                    aP2 = Ps(:,:,[iP - ncP, iP - 1, iP, iP + 1, iP + ncP]); % Using only N,W,C,S,E blocks for calculating the HF2
+                    HE = kdpee(reshape(Ps(:,:,iP),[numel(Ps(:,:,iP)) 1]));
+                    HF1 = kdpee(reshape(aP1(:,:,:),[size(aP1,1)*size(aP1,2), size(aP1,3)]));
+                    HF2 = kdpee(reshape(aP2(:,:,:),[size(aP2,1)*size(aP2,2), size(aP2,3)]));
+                    S(iP) = HF2 - (HF1 + HE);                
+                elseif isequal(saliencyMethod,'info')
+                    aP2 = Ps(:,:,[iP - ncP, iP - 1, iP, iP + 1, iP + ncP]); % Using only N,W,C,S,E blocks for calculating the HF2
+                    HF2 = kdpee(reshape(aP2(:,:,:),[size(aP2,1)*size(aP2,2), size(aP2,3)]));                
+                    S(iP) = HF2;                
+                end
+            end
+        elseif (M == 4) % The patches combination is for szPatches = 4
+            if (iP >= ncP + 1 && rem(iP,ncP) ~= 1)
+                if isequal(saliencyMethod,'entro')
+                    aP1 = Ps(:,:,[iP - ncP, iP - 1, iP - ncP - 1]); % Using only N,W,NW blocks for calculating the HF1
+                    aP2 = Ps(:,:,[iP - ncP, iP - 1, iP - ncP - 1, iP ]); % Using only N,W,NW,C blocks for calculating the HF2
+                    HE = kdpee(reshape(Ps(:,:,iP),[numel(Ps(:,:,iP)) 1]));
+                    HF1 = kdpee(reshape(aP1(:,:,:),[size(aP1,1)*size(aP1,2), size(aP1,3)]));
+                    HF2 = kdpee(reshape(aP2(:,:,:),[size(aP2,1)*size(aP2,2), size(aP2,3)]));
+                    S(iP) = HF2 - (HF1 + HE);
+                elseif (saliencyMethod == 'info')                
+                    aP2 = Ps(:,:,[iP - ncP, iP - 1, iP - ncP - 1, iP ]); % Using only N,W,NW,C blocks for calculating the HF2
+                    HF2 = kdpee(reshape(aP2(:,:,:),[size(aP2,1)*size(aP2,2), size(aP2,3)]));
+                    S(iP) = HF2;
+                end
+            end    
+        end    
 end
 
 %% Representing spatiotemporal probability on images
