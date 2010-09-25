@@ -49,7 +49,7 @@ end
 pC(:,noCoff:1:npoints) = [];
 
 %% Calculate the probabilities for each patch
-pB = prod(pC,2);
+pB = prod(pC(find(pC)),2);
 
 
 %% Calculate spatiotemporal event probability
