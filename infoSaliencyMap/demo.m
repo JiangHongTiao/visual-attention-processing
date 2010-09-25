@@ -13,9 +13,9 @@ function demo()
 
     %% Predefined parameters 
     transEng = 'hadamard';% What type of transform engine: hadamard,dct
-    noCoff = 20; % Number of reservedomponents        
+    noCoff = 30; % Number of reservedomponents        
     noImgs = 2;
-    szPatches = 4;
+    szPatches = 8;
     %% Sample images for testing with M = 4
 %     imgPath1 = './figures/set4/L_1.jpg'; % Image at t = -3;
 %     imgPath2 = './figures/set4/L_2.jpg'; % Image at t = -2;
@@ -52,15 +52,82 @@ function demo()
 %     imgPath8 = './figures/set8_1/frame-0008.jpg'; 
 %     imgPath9 = './figures/set8_1/frame-0009.jpg';
 
-    imgPath1 = './figures/football/fb-45.jpg';
-    imgPath2 = './figures/football/fb-46.jpg';
-    imgPath3 = './figures/football/fb-47.jpg';
-    imgPath4 = './figures/football/fb-48.jpg';
-    imgPath5 = './figures/football/fb-49.jpg';
-    imgPath6 = './figures/football/fb-50.jpg';
-    imgPath7 = './figures/football/fb-51.jpg';
-    imgPath8 = './figures/football/fb-52.jpg';
-    imgPath9 = './figures/football/fb-53.jpg';
+%     % Football
+%     imgPath1 = '../imageTestSequence/football/fb-45.jpg';
+%     imgPath2 = '../imageTestSequence/football/fb-46.jpg';
+%     imgPath3 = '../imageTestSequence/football/fb-47.jpg';
+%     imgPath4 = '../imageTestSequence/football/fb-48.jpg';
+%     imgPath5 = '../imageTestSequence/football/fb-49.jpg';
+%     imgPath6 = '../imageTestSequence/football/fb-50.jpg';
+%     imgPath7 = '../imageTestSequence/football/fb-51.jpg';
+%     imgPath8 = '../imageTestSequence/football/fb-52.jpg';
+%     imgPath9 = '../imageTestSequence/football/fb-53.jpg';
+    
+%     % News
+%     imgPath1 = '../imageTestSequence/news_cif/news_0000.jpg';
+%     imgPath2 = '../imageTestSequence/news_cif/news_0001.jpg';
+%     imgPath3 = '../imageTestSequence/news_cif/news_0002.jpg';
+%     imgPath4 = '../imageTestSequence/news_cif/news_0003.jpg';
+%     imgPath5 = '../imageTestSequence/news_cif/news_0004.jpg';
+%     imgPath6 = '../imageTestSequence/news_cif/news_0005.jpg';
+%     imgPath7 = '../imageTestSequence/news_cif/news_0006.jpg';
+%     imgPath8 = '../imageTestSequence/news_cif/news_0007.jpg';
+%     imgPath9 = '../imageTestSequence/news_cif/news_0008.jpg';
+
+%     % Flower Garden NTSC
+%     imgPath1 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0000.jpg';
+%     imgPath2 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0001.jpg';
+%     imgPath3 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0002.jpg';
+%     imgPath4 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0003.jpg';
+%     imgPath5 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0004.jpg';
+%     imgPath6 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0005.jpg';
+%     imgPath7 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0006.jpg';
+%     imgPath8 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0007.jpg';
+%     imgPath9 = '../imageTestSequence/flower_garden_422_ntsc/flower_garden_0008.jpg';   
+    
+%     % ICE QCIF
+%     imgPath1 = '../imageTestSequence/ice_4cif/ice_0000.jpg';
+%     imgPath2 = '../imageTestSequence/ice_4cif/ice_0001.jpg';
+%     imgPath3 = '../imageTestSequence/ice_4cif/ice_0002.jpg';
+%     imgPath4 = '../imageTestSequence/ice_4cif/ice_0003.jpg';
+%     imgPath5 = '../imageTestSequence/ice_4cif/ice_0004.jpg';
+%     imgPath6 = '../imageTestSequence/ice_4cif/ice_0005.jpg';
+%     imgPath7 = '../imageTestSequence/ice_4cif/ice_0006.jpg';
+%     imgPath8 = '../imageTestSequence/ice_4cif/ice_0007.jpg';
+%     imgPath9 = '../imageTestSequence/ice_4cif/ice_0008.jpg';    
+
+%     % Soccer QCIF
+%     imgPath1 = '../imageTestSequence/soccer_4cif/soccer_0000.jpg';
+%     imgPath2 = '../imageTestSequence/soccer_4cif/soccer_0001.jpg';
+%     imgPath3 = '../imageTestSequence/soccer_4cif/soccer_0002.jpg';
+%     imgPath4 = '../imageTestSequence/soccer_4cif/soccer_0003.jpg';
+%     imgPath5 = '../imageTestSequence/soccer_4cif/soccer_0004.jpg';
+%     imgPath6 = '../imageTestSequence/soccer_4cif/soccer_0005.jpg';
+%     imgPath7 = '../imageTestSequence/soccer_4cif/soccer_0006.jpg';
+%     imgPath8 = '../imageTestSequence/soccer_4cif/soccer_0007.jpg';
+%     imgPath9 = '../imageTestSequence/soccer_4cif/soccer_0008.jpg';
+
+%     % Tennis SIF
+%     imgPath1 = '../imageTestSequence/tennis_sif/tennis_0000.jpg';
+%     imgPath2 = '../imageTestSequence/tennis_sif/tennis_0001.jpg';
+%     imgPath3 = '../imageTestSequence/tennis_sif/tennis_0002.jpg';
+%     imgPath4 = '../imageTestSequence/tennis_sif/tennis_0003.jpg';
+%     imgPath5 = '../imageTestSequence/tennis_sif/tennis_0004.jpg';
+%     imgPath6 = '../imageTestSequence/tennis_sif/tennis_0005.jpg';
+%     imgPath7 = '../imageTestSequence/tennis_sif/tennis_0006.jpg';
+%     imgPath8 = '../imageTestSequence/tennis_sif/tennis_0007.jpg';
+%     imgPath9 = '../imageTestSequence/tennis_sif/tennis_0008.jpg';    
+
+    % Stefan SIF
+    imgPath1 = '../imageTestSequence/stefan_sif/stefan_0000.jpg';
+    imgPath2 = '../imageTestSequence/stefan_sif/stefan_0001.jpg';
+    imgPath3 = '../imageTestSequence/stefan_sif/stefan_0002.jpg';
+    imgPath4 = '../imageTestSequence/stefan_sif/stefan_0003.jpg';
+    imgPath5 = '../imageTestSequence/stefan_sif/stefan_0004.jpg';
+    imgPath6 = '../imageTestSequence/stefan_sif/stefan_0005.jpg';
+    imgPath7 = '../imageTestSequence/stefan_sif/stefan_0006.jpg';
+    imgPath8 = '../imageTestSequence/stefan_sif/stefan_0007.jpg';
+    imgPath9 = '../imageTestSequence/stefan_sif/stefan_0008.jpg';    
     
     % All images are resized by 1/2
     scaleValue = 1;
