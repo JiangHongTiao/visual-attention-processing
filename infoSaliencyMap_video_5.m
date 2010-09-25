@@ -1,4 +1,4 @@
-function infoSaliencyMap_video_3(inVid,outVid,savFlg,demoFlg,inDat)
+function infoSaliencyMap_video_5(inVid,outVid,savFlg,demoFlg,inDat)
 %% Developing Phase Shifting Transform in System Object
 % This simulation is done to show the effectiveness of PFT on lane-mark
 % detection and extraction in a video sequence
@@ -67,8 +67,9 @@ hcsc1 = video.ColorSpaceConverter('Conversion', 'RGB to intensity');
 halphablend = video.AlphaBlender('Operation','Blend','Opacity',0.25);
 
 % Hardcoded parameters
-szPatches = 8;
-noFrames = 4;
+szPatches = 4;
+noFrames = 2;
+dispMode = 'bubbled';
 
 % Initalize variables
 iFrame = 0;
@@ -129,32 +130,56 @@ while ~isDone(hmfr)
     if ( sum(sum(queue(:,:,1))) ~= 0 )             
         % Detecting Lane-mark by saliency method
         tic;
-        [~,~,smraw] = infoSaliencyMap(queue*255,szPatches); 
-        smraw(smraw < 0) = 0;        
+        [~,~,smraw] = infoSaliencyMap(queue*255,szPatches);         
         toc;
         
+        %% Preprocess the saliency map
+        smraw(smraw < 0) = 0;         
         smnorm = mat2gray(smraw);
         avg_filter = fspecial('average',szPatches);
-        smraw = imfilter(smraw,avg_filter);        
-        %% Result Presentation in Grayscale or Color    
-        imggray = queue(:,:,M);
-        smgray = imggray .* smnorm;
-        smnorm = round(smnorm * 255);
-        imblended = step(halphablend,double(smgray),double(imggray));
+        smraw = imfilter(smraw,avg_filter);                
+        
+        if isequal(dispmode,'blended')
+            %% Result Presentation in Grayscale or Color    
+            imggray = queue(:,:,M);
+            smgray = imggray .* smnorm;
+            smnorm = round(smnorm * 255);        
+            imblended = step(halphablend,double(smgray),double(imggray));
+            imout = imblended;
+        elseif isequal(dispmode,'bubbled')
+            %% Show top n salient regions of the image
+            n = 20;
+            [smrawHeight,smrawWidth] = size(smraw);
+            [xGrid,yGrid] = meshgrid(1:smrawWidth,1:smrawHeight);
+            smraw = cat(3,smraw,yGrid,xGrid);    
+            saliencyPoints = fliplr(sortrows(reshape(permute(smraw,[3 2 1]),[size(smraw,3) numel(smraw(:,:,1))])')');   
+            saliencyPoints = saliencyPoints(:,1:szPatches*szPatches:n*szPatches*szPatches) ;
+            iYs = saliencyPoints(2,:); iXs = saliencyPoints(3,:);
+            smraw_mask = zeros(smrawHeight,smrawWidth);
+        %     smraw_mask(iYs,iXs) = smraw_mask(iYs,iXs).*(1-eye(length(iYs))) + 1*eye(length(iYs));
+            for iCor = 1:1:n
+                smraw_mask(iYs(iCor),iXs(iCor)) = 1;
+            end
+            se = strel('disk',34,0);
+            smraw_mask_dilated = imdilate(smraw_mask,se);
+            imthresholded = imgs(:,:,noImgs).*uint8(smraw_mask_dilated);
+            imout = imthresholded;
+        end
+               
         if inDatFlg
             yLoc = inDat(:,1,iFrame);
             xLoc = inDat(:,2,iFrame);
             if (yLoc - 2 > 0 && yLoc + 2 <= frame_size(1) && xLoc - 2 > 0 && xLoc + 2 < frame_size(2)) 
-                imblended(yLoc-2:yLoc+2,xLoc-2:xLoc+2)=1;
+                imout(yLoc-2:yLoc+2,xLoc-2:xLoc+2)=1;
             end
         end
         if (demoFlg == 1)
             step(hvideo1, queue(:,:,M));        % Display Original Video
-            step(hvideo2, imblended);
+            step(hvideo2, imout);
         end
     %     saveFlag is used for controlling saving result video
         if (savFlg == 1)
-            step(hmfw,imblended);        
+            step(hmfw,imout);        
             step(hbfw1,uint8(smnorm));
         end
         if (demoFlg == 1)
