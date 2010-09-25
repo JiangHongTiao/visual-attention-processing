@@ -80,8 +80,8 @@ pC1(:,noCoff:end) = [];
 pC2(:,noCoff:end) = [];
 
 %% Calculate the probabilities for each patch
-pV1 = prod(pC1,2);
-pV2 = prod(pC2,2);
+pV1 = prod(pC1(find(pC1)),2);
+pV2 = prod(pC2(find(pC2)),2);
 
 %% Calculate spatiotemporal event probability
 S = zeros(size(pV1));
