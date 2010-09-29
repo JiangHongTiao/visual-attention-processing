@@ -23,7 +23,7 @@ threshold = 0.9;
 numOfTopPoints = 20;
 
 % Image Paths
-inFld = 'hall_objects_qcif';
+inFld = 'akiyo_cif';
 imgPath = ['../imageTestSequence/' inFld '/'];
 if repOpt == 1
     resFld = ['./results/KenSpatioTemporal3d-' inFld '-' num2str(threshold) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
@@ -37,7 +37,7 @@ end
 % Read in video frames
 FrameArray = zeros(RowFrames,ColFrames,NumFrames);
 for frame_index = 1:NumFrames
-    im_name                     = [imgPath 'hall_objects_',num2str(frame_index-1,'%04d'),'.jpg'];
+    im_name                     = [imgPath 'akiyo_',num2str(frame_index-1,'%04d'),'.jpg'];
     im                          = double(rgb2gray(imread(im_name)));
     FrameArray(:,:,frame_index) = im;
 end;
