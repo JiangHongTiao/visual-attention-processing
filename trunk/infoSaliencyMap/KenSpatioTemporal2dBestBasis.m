@@ -54,16 +54,14 @@ for frame_index = 1:NumFrames
             patch     = FrameArray(row_index:(row_index+PatchSize-1),col_index:(col_index+PatchSize-1),frame_index);       
             
             if dwtSpaceFlg == 1 
-                BestBasisFlg = 0;
+                BestBasisFlg = 1;
         
                 %% Best Basis Search 
                 % Input: CostValues,numLevels
                 % Output: basis and score
                 if BestBasisFlg == 1
-                    %% Cost Value Calculation function            
-                    [dwt_patch,CostValues] = CostValueCalculation(patch,numLevels);                             
-                    [Basis,DwtScore] = BestBasisSearch(CostValues,numLevels);
-                    SpatialDwtScoreArray((row_index+PatchSize-1)/PatchSize,(col_index+PatchSize-1)/PatchSize,frame_index) = DwtScore;
+                    %% Cost Value Calculation function             
+                    SpatialDwtScoreArray((row_index+PatchSize-1)/PatchSize,(col_index+PatchSize-1)/PatchSize,frame_index) = BestBasis2d(patch,numLevels);
                 else 
                     dwt_patch = dwt532d(patch);
                     a        = dwt_patch./norm(dwt_patch);
