@@ -25,7 +25,7 @@ switch transEng
     case 'dct'
         %% Transforms patches into independent space by 3-DCT
         for i = 1:1:nP
-            c(:,:,i) = mirt_dctn(B(:,:,i));    
+            c(:,:,i) = mirt_dctn(B(:,:,i));
         end
     otherwise
         error('Invalid choide of transform engine');
