@@ -6,7 +6,6 @@ ColFrames = 640;
 NumFrames = 21; 
 PatchSize = 8;
 numLevels = 3;
-threshold = 0.9;
 
 % Flag definition
 % Transformation method NO,DCT,DWT
@@ -16,10 +15,19 @@ dwtSpaceFlg = 1;
 % Save the results
 savFlg = 1;
 
+% Options definition
+repOpt = 2; % 1: thresholded; 2: top N points
+threshold = 0.9;
+numOfTopPoints = 20;
+
 % Image Paths
 inFld = 'hall_objects_qcif';
 imgPath = ['../imageTestSequence/' inFld '/'];
-resFld = ['./results/KenSpatioTemporal3dBestBasis-' inFld '-' num2str(threshold) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
+if repOpt == 1
+    resFld = ['./results/KenSpatioTemporal3dBestBasis-' inFld '-' num2str(threshold) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
+else repOpt == 2
+    resFld = ['./results/KenSpatioTemporal3dBestBasis-' inFld '-top' num2str(numOfTopPoints) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
+end
 if (savFlg == 1)
     mkdir(resFld);
 end
@@ -108,7 +116,13 @@ for frame_index = 1:NumFrames-PatchSize+1
     if normSpaceFlg == 1
         % apply threshold
         SpatialImageScoreArray(:,:,frame_index) = mat2gray(SpatialImageScoreArray(:,:,frame_index));
-        SpatialImageScoreArray(abs(SpatialImageScoreArray)<threshold)=0;
+        if repOpt == 1
+            SpatialImageScoreArray(abs(SpatialImageScoreArray)<threshold)=0;
+        elseif repOpt == 2
+            SpatialImageScoreArray(:,:,frame_index) = topNRegions(SpatialImageScoreArray(:,:,frame_index),numOfTopPoints);
+        else 
+            Warning('WARNING! No such kind of representation');
+        end
         % display image
         subplot(2,3,4);
         imagesc(SpatialImageScoreArray(:,:,frame_index));
@@ -118,8 +132,13 @@ for frame_index = 1:NumFrames-PatchSize+1
     if dctSpaceFlg == 1
         % apply threshold
         SpatialDctScoreArray(:,:,frame_index) = mat2gray(SpatialDctScoreArray(:,:,frame_index));
-        SpatialDctScoreArray(abs(SpatialDctScoreArray)<threshold)=0;        
-        % display image
+        if repOpt == 1
+            SpatialDctScoreArray(abs(SpatialDctScoreArray)<threshold)=0;        
+        elseif repOpt == 2
+            SpatialDctScoreArray(:,:,frame_index) = topNRegions(SpatialDctScoreArray(:,:,frame_index),numOfTopPoints);
+        else 
+            Warning('WARNING! No such kind of representation');            
+        end
         subplot(2,3,5);
         imagesc(SpatialDctScoreArray(:,:,frame_index));
         colormap(gray);
@@ -128,12 +147,18 @@ for frame_index = 1:NumFrames-PatchSize+1
     if dwtSpaceFlg == 1
         % apply threshold
         SpatialDwtScoreArray(:,:,frame_index) = mat2gray(SpatialDwtScoreArray(:,:,frame_index));
-        SpatialDwtScoreArray(abs(SpatialDwtScoreArray)<threshold)=0;
+        if repOpt == 1
+            SpatialDwtScoreArray(abs(SpatialDwtScoreArray)<threshold)=0;
+        elseif repOpt == 2
+            SpatialDwtScoreArray(:,:,frame_index) = topNRegions(SpatialDwtScoreArray(:,:,frame_index),numOfTopPoints);
+        else 
+            Warning('WARNING! No such kind of representation');            
+        end
         % display image
         subplot(2,3,6);
         imagesc(SpatialDwtScoreArray(:,:,frame_index));
         colormap(gray);
-        title('Dwt BestBasis Score');
+        title('Dwt Best Basis Score');
     end
 
     if savFlg == 1    
