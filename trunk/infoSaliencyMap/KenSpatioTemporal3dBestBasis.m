@@ -103,7 +103,7 @@ for frame_index = 1:NumFrames-PatchSize+1
                 % im_patch
                 im_patch  = patch(:); 
                 % calculate shannon entropy for image patch 
-                a          = im_patch;
+                a          = im_patch ./ norm(im_patch);
                 ImageScore = -sum(a(find(a)).^2.*log(a(find(a)).^2));
                 SpatialImageScoreArray((row_index+PatchSize-1)/PatchSize,(col_index+PatchSize-1)/PatchSize,frame_index) = ImageScore;                
             end
