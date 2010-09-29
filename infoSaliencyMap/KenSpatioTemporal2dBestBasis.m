@@ -4,23 +4,33 @@ function KenSpatioTemporal2dBestBasis
 RowFrames = 480;
 ColFrames = 640;
 NumFrames = 21; 
-PatchSize = 32;
+PatchSize = 8;
 numLevels = 3;
-threshold = 0.7;
-
-% Image Paths
-inFld = 'akiyo_cif';
-imgPath = ['../imageTestSequence/' inFld '/'];
-resFld = ['./results/KenSpatioTemporal2dBestBasis-' inFld '-' num2str(threshold) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
-mkdir(resFld);
 
 % Flag definition
 % Transformation method NO,DCT,DWT
 normSpaceFlg = 1;
 dctSpaceFlg = 1;
 dwtSpaceFlg = 1;
-
+savFlg = 1;
 debugMode = 0;
+
+% Options definition
+repOpt = 2; % 1: thresholded; 2: top N points
+threshold = 0.9;
+numOfTopPoints = 20;
+
+% Image Paths
+inFld = 'akiyo_cif';
+imgPath = ['../imageTestSequence/' inFld '/'];
+if repOpt == 1
+    resFld = ['./results/KenSpatioTemporal2dBestBasis-' inFld '-' num2str(threshold) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
+elseif repOpt == 2
+    resFld = ['./results/KenSpatioTemporal2dBestBasis-' inFld '-top' num2str(numOfTopPoints) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
+end
+if (savFlg == 1)
+    mkdir(resFld);
+end
 
 % Read in video frames
 
@@ -42,13 +52,11 @@ for frame_index = 1:NumFrames
         for col_index = 1:PatchSize:ColFrames            
             %col_index                
             patch     = FrameArray(row_index:(row_index+PatchSize-1),col_index:(col_index+PatchSize-1),frame_index);       
-            patch     = patch./(norm(patch));
             
             if dwtSpaceFlg == 1 
-                BestBasisFlg = 1;
+                BestBasisFlg = 0;
                 %% Cost Value Calculation function            
-                [dwt_patch,CostValues] = CostValueCalculation(patch,numLevels); 
-                dwt_patch = dwt_patch(:);
+                [dwt_patch,CostValues] = CostValueCalculation(patch,numLevels);                 
                 %% Best Basis Search 
                 % Input: CostValues,numLevels
                 % Output: basis and score
@@ -56,7 +64,8 @@ for frame_index = 1:NumFrames
                     [Basis,DwtScore] = BestBasisSearch(CostValues,numLevels);
                     SpatialDwtScoreArray((row_index+PatchSize-1)/PatchSize,(col_index+PatchSize-1)/PatchSize,frame_index) = DwtScore;
                 else 
-                    a        = dwt_patch;
+                    dwt_patch = dwt532d(patch);
+                    a        = dwt_patch./norm(dwt_patch);
                     DwtScore = -sum(a(find(a)).^2.*log(a(find(a)).^2));
                     SpatialDwtScoreArray((row_index+PatchSize-1)/PatchSize,(col_index+PatchSize-1)/PatchSize,frame_index) = DwtScore;                    
                 end
@@ -72,7 +81,7 @@ for frame_index = 1:NumFrames
                 dct_patch = dct_patch(:);  % now can convert to one-dimensional vector    
 
                 %% Calculate shannon entropy for dct patch 
-                a        = dct_patch;
+                a        = dct_patch./norm(dct_patch);
                 DctScore = -sum(a(find(a)).^2.*log(a(find(a)).^2));
                 SpatialDctScoreArray((row_index+PatchSize-1)/PatchSize,(col_index+PatchSize-1)/PatchSize,frame_index) = DctScore;
                 if debugMode == 1
@@ -85,7 +94,7 @@ for frame_index = 1:NumFrames
                 %% Keeping data in normal space
                 im_patch   = patch(:); 
                 %% Calculate shannon entropy for image patch 
-                a          = im_patch;
+                a          = im_patch./norm(im_patch);
                 ImageScore = -sum(a(find(a)).^2.*log(a(find(a)).^2));
                 SpatialImageScoreArray((row_index+PatchSize-1)/PatchSize,(col_index+PatchSize-1)/PatchSize,frame_index) = ImageScore;            
                 if debugMode == 1
@@ -96,39 +105,58 @@ for frame_index = 1:NumFrames
         end
     end
     
-    % apply thresholds
-    SpatialImageScoreArray(:,:,frame_index) = mat2gray(SpatialImageScoreArray(:,:,frame_index));
-    SpatialDctScoreArray(:,:,frame_index) = mat2gray(SpatialDctScoreArray(:,:,frame_index));
-    SpatialDwtScoreArray(:,:,frame_index) = mat2gray(SpatialDwtScoreArray(:,:,frame_index));
-    
-    SpatialImageScoreArray(abs(SpatialImageScoreArray)<threshold)=0;
-    SpatialDctScoreArray(abs(SpatialDctScoreArray)<threshold)=0;
-    SpatialDwtScoreArray(abs(SpatialDwtScoreArray)<threshold)=0;
-    
     figure;
     subplot(2,3,1);
     imagesc(FrameArray(:,:,frame_index));colormap(gray);
     if normSpaceFlg == 1
+        % apply threshold
+        SpatialImageScoreArray(:,:,frame_index) = mat2gray(SpatialImageScoreArray(:,:,frame_index));
+        if repOpt == 1
+            SpatialImageScoreArray(abs(SpatialImageScoreArray)<threshold)=0;
+        elseif repOpt == 2
+            SpatialImageScoreArray(:,:,frame_index) = topNRegions(SpatialImageScoreArray(:,:,frame_index),numOfTopPoints);
+        else 
+            Warning('WARNING! No such kind of representation');
+        end
+        % display image
         subplot(2,3,4);
         imagesc(SpatialImageScoreArray(:,:,frame_index));
         colormap(gray);
         title('Image Score');
     end
     if dctSpaceFlg == 1
+        % apply threshold
+        SpatialDctScoreArray(:,:,frame_index) = mat2gray(SpatialDctScoreArray(:,:,frame_index));
+        if repOpt == 1
+            SpatialDctScoreArray(abs(SpatialDctScoreArray)<threshold)=0;        
+        elseif repOpt == 2
+            SpatialDctScoreArray(:,:,frame_index) = topNRegions(SpatialDctScoreArray(:,:,frame_index),numOfTopPoints);
+        else 
+            Warning('WARNING! No such kind of representation');            
+        end
         subplot(2,3,5);
         imagesc(SpatialDctScoreArray(:,:,frame_index));
         colormap(gray);
         title('Dct Score');
     end    
     if dwtSpaceFlg == 1
+        % apply threshold
+        SpatialDwtScoreArray(:,:,frame_index) = mat2gray(SpatialDwtScoreArray(:,:,frame_index));
+        if repOpt == 1
+            SpatialDwtScoreArray(abs(SpatialDwtScoreArray)<threshold)=0;
+        elseif repOpt == 2
+            SpatialDwtScoreArray(:,:,frame_index) = topNRegions(SpatialDwtScoreArray(:,:,frame_index),numOfTopPoints);
+        else 
+            Warning('WARNING! No such kind of representation');            
+        end
+        % display image
         subplot(2,3,6);
         imagesc(SpatialDwtScoreArray(:,:,frame_index));
         colormap(gray);
-        title('Dwt BestBasis Score');
+        title('Dwt Best Basis Score');
     end
     % Save the results
-    saveFlg = 1;
-    if saveFlg == 1    
+    if savFlg == 1    
         current_folder = pwd;  
         cd(resFld);
         saveas(frame_index,['frame_' num2str(frame_index,'%02d') '.jpg']);
@@ -206,19 +234,25 @@ function [DwtPatch,CostValues] = CostValueCalculation(patch,numLevels,costFunc)
         for row_index = 1:subPatchSize:noPatchRows
             for col_index = 1:subPatchSize:noPatchCols
                 subPatch = patch(row_index:(row_index+subPatchSize-1),col_index:(col_index+subPatchSize-1));
-                
+                [~,~,~,~,subPatch] = dwt532d(subPatch);
+                patch(row_index:(row_index+subPatchSize-1),col_index:(col_index+subPatchSize-1)) = subPatch;
                 % calculate shannon entropy for dct patch
                 a        = subPatch(:);
-                DwtScore = -sum(a(find(a)).^2.*log(a(find(a)).^2));
-                costValue_index = costValue_index + 1;
-                CostValues(costValue_index) = DwtScore;
-                
-                if (level_index < numLevels-1) 
-%                     subPatch = subPatch./norm(subPatch);                
-%                     [cA,cH,cV,cD] = dwt2(subPatch,'db1');   % have to do dwt2 on two-dimensional 4x4 block
-                    [cA,cH,cV,cD,~] = dwt532d(subPatch);
-                    patch(row_index:(row_index+subPatchSize-1),col_index:(col_index+subPatchSize-1)) = [cA,cV;cH,cD];                
-                end
+                if sum(a ~= 0) > 0
+                    a        = a ./ norm(a);
+                    DwtScore = -sum(a(find(a)).^2.*log(a(find(a)).^2));
+                    costValue_index = costValue_index + 1;
+                    CostValues(costValue_index) = DwtScore;
+                else
+                    costValue_index = costValue_index + 1;
+                    CostValues(costValue_index) = 0;
+                end                
+%                 if (level_index < numLevels-1) 
+% %                     subPatch = subPatch./norm(subPatch);                
+% %                     [cA,cH,cV,cD] = dwt2(subPatch,'db1');   % have to do dwt2 on two-dimensional 4x4 block
+%                     [cA,cH,cV,cD,~] = dwt532d(subPatch);
+%                     patch(row_index:(row_index+subPatchSize-1),col_index:(col_index+subPatchSize-1)) = [cA,cV;cH,cD];                
+%                 end
             end
         end      
     end
