@@ -21,11 +21,11 @@ threshold = 0.9;
 numOfTopPoints = 20;
 
 % Image Paths
-inFld = 'football_ntsc';
+inFld = 'stefan_sif';
 imgPath = ['../imageTestSequence/' inFld '/'];
 if repOpt == 1
     resFld = ['./results/KenSpatioTemporal3dBestBasis_FrameLocalized-' inFld '-' num2str(threshold) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
-else repOpt == 2
+elseif repOpt == 2
     resFld = ['./results/KenSpatioTemporal3dBestBasis_FrameLocalized-' inFld '-top' num2str(numOfTopPoints) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
 end
 if (savFlg == 1)
@@ -38,7 +38,7 @@ debugMode = 0;
 
 FrameArray = zeros(RowFrames,ColFrames,NumFrames);
 for frame_index = 1:NumFrames
-    im_name                     = [imgPath 'football_',num2str(frame_index-1,'%04d'),'.jpg'];
+    im_name                     = [imgPath 'stefan_',num2str(frame_index-1,'%04d'),'.jpg'];
     im                          = double(rgb2gray(imread(im_name)));
     FrameArray(:,:,frame_index) = im;
 end;
@@ -53,15 +53,15 @@ end
 if dwtSpaceFlg == 1
     SpatialDwtScoreArray   = zeros(RowFrames/PatchSize,ColFrames/PatchSize,NumFrames/PatchSize);
 end
-for frame_index = 2:NumFrames-PatchSize+1
+for frame_index = PatchSize+1:NumFrames
     frame_index
     for row_index = 1:PatchSize:RowFrames
         %row_index
         for col_index = 1:PatchSize:ColFrames            
             %col_index
-            stPatch2     = FrameArray(row_index:(row_index+PatchSize-1),col_index:(col_index+PatchSize-1),frame_index:(frame_index+PatchSize-1)); % stPatch2: current spatial-temporal patch
-            stPatch1     = FrameArray(row_index:(row_index+PatchSize-1),col_index:(col_index+PatchSize-1),frame_index - 1:(frame_index+PatchSize-1) - 1); % stPatch1: previous spatial-temporal patch
-            sPatch1      = FrameArray(row_index:(row_index+PatchSize-1),col_index:(col_index+PatchSize-1),frame_index - 1);
+            stPatch2     = FrameArray(row_index:(row_index+PatchSize-1),col_index:(col_index+PatchSize-1),frame_index-PatchSize+1:frame_index); % stPatch2: current spatial-temporal patch
+            stPatch1     = FrameArray(row_index:(row_index+PatchSize-1),col_index:(col_index+PatchSize-1),frame_index-PatchSize:frame_index-1); % stPatch1: previous spatial-temporal patch
+            sPatch1      = FrameArray(row_index:(row_index+PatchSize-1),col_index:(col_index+PatchSize-1),frame_index-PatchSize);
 %             patch     = patch./norm(patch(:));
             if dwtSpaceFlg == 1 
                 BestBasisFlg = 0;
