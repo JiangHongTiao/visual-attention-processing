@@ -1,6 +1,9 @@
-function [ ism_mask ] = topNRegions( ism, n )
+function [ ism_mask ] = topNRegions( ism, n , mode)
 %UNTITLED Show top n salient regions of the image
 %   Detailed explanation goes here
+    if nargin <=2 
+        mode = 'point';
+    end
     [ismHeight,ismWidth] = size(ism);
     [xGrid,yGrid] = meshgrid(1:ismWidth,1:ismHeight);
     ism = cat(3,ism,yGrid,xGrid);    
@@ -12,8 +15,9 @@ function [ ism_mask ] = topNRegions( ism, n )
     for iCor = 1:1:n
         ism_mask(iYs(iCor),iXs(iCor)) = 1;
     end
-%     se = strel('disk',34,0);
-%     ism_mask_dilated = imdilate(ism_mask,se);
-%     img_thresholded = imgs(:,:,noImgs).*uint8(ism_mask_dilated);
+    if isequal(mode,'circle')
+        se = strel('disk',4,0);
+        ism_mask = imdilate(ism_mask,se);        
+    end
 end
 

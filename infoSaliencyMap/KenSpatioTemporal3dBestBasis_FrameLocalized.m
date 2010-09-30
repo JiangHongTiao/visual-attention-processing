@@ -116,13 +116,13 @@ for frame_index = PatchSize+1:NumFrames
         if repOpt == 1
             SpatialImageScoreArray(abs(SpatialImageScoreArray)<threshold)=0;
         elseif repOpt == 2
-            SpatialImageScoreArray(:,:,frame_index) = topNRegions(SpatialImageScoreArray(:,:,frame_index),numOfTopPoints);
+            SpatialImageScoreArray(:,:,frame_index) = topNRegions(SpatialImageScoreArray(:,:,frame_index),numOfTopPoints,'circle');
         else 
             Warning('WARNING! No such kind of representation');
         end
         % display image
-        subplot(2,3,4);
-        imagesc(SpatialImageScoreArray(:,:,frame_index));
+        subplot(2,3,4);        
+        imagesc(imresize(SpatialImageScoreArray(:,:,frame_index),[480 640],'nearest').*FrameArray(:,:,frame_index));
         colormap(gray);
         title('Image Score');
     end
@@ -132,12 +132,12 @@ for frame_index = PatchSize+1:NumFrames
         if repOpt == 1
             SpatialDctScoreArray(abs(SpatialDctScoreArray)<threshold)=0;        
         elseif repOpt == 2
-            SpatialDctScoreArray(:,:,frame_index) = topNRegions(SpatialDctScoreArray(:,:,frame_index),numOfTopPoints);
+            SpatialDctScoreArray(:,:,frame_index) = topNRegions(SpatialDctScoreArray(:,:,frame_index),numOfTopPoints,'circle');
         else 
             Warning('WARNING! No such kind of representation');            
         end
         subplot(2,3,5);
-        imagesc(SpatialDctScoreArray(:,:,frame_index));
+        imagesc(imresize(SpatialDctScoreArray(:,:,frame_index),[480 640],'nearest').*FrameArray(:,:,frame_index));
         colormap(gray);
         title('Dct Score');
     end    
@@ -147,13 +147,13 @@ for frame_index = PatchSize+1:NumFrames
         if repOpt == 1
             SpatialDwtScoreArray(abs(SpatialDwtScoreArray)<threshold)=0;
         elseif repOpt == 2
-            SpatialDwtScoreArray(:,:,frame_index) = topNRegions(SpatialDwtScoreArray(:,:,frame_index),numOfTopPoints);
+            SpatialDwtScoreArray(:,:,frame_index) = topNRegions(SpatialDwtScoreArray(:,:,frame_index),numOfTopPoints,'circle');
         else 
             Warning('WARNING! No such kind of representation');            
         end
         % display image
         subplot(2,3,6);
-        imagesc(SpatialDwtScoreArray(:,:,frame_index));
+        imagesc(imresize(SpatialDwtScoreArray(:,:,frame_index),[480 640],'nearest').*FrameArray(:,:,frame_index));
         colormap(gray);
         title('Dwt Best Basis Score');
     end
