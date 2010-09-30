@@ -13,7 +13,7 @@ normSpaceFlg = 1;
 dctSpaceFlg = 1;
 dwtSpaceFlg = 1;
 % Save the results
-savFlg = 0;
+savFlg = 1;
 
 % Options definition
 repOpt = 2; % 1: thresholded; 2: top N points
@@ -21,12 +21,12 @@ threshold = 0.9;
 numOfTopPoints = 20;
 
 % Image Paths
-inFld = 'akiyo_cif';
+inFld = 'football_ntsc';
 imgPath = ['../imageTestSequence/' inFld '/'];
 if repOpt == 1
-    resFld = ['./results/KenSpatioTemporal3dBestBasis-' inFld '-' num2str(threshold) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
+    resFld = ['./results/KenSpatioTemporal3dBestBasis_FrameLocalized-' inFld '-' num2str(threshold) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
 else repOpt == 2
-    resFld = ['./results/KenSpatioTemporal3dBestBasis-' inFld '-top' num2str(numOfTopPoints) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
+    resFld = ['./results/KenSpatioTemporal3dBestBasis_FrameLocalized-' inFld '-top' num2str(numOfTopPoints) '-' datestr(now,'yyyymmddTHHMMSS') '/']; % Linux result folder  
 end
 if (savFlg == 1)
     mkdir(resFld);
@@ -38,7 +38,7 @@ debugMode = 0;
 
 FrameArray = zeros(RowFrames,ColFrames,NumFrames);
 for frame_index = 1:NumFrames
-    im_name                     = [imgPath 'akiyo_',num2str(frame_index-1,'%04d'),'.jpg'];
+    im_name                     = [imgPath 'football_',num2str(frame_index-1,'%04d'),'.jpg'];
     im                          = double(rgb2gray(imread(im_name)));
     FrameArray(:,:,frame_index) = im;
 end;
@@ -107,7 +107,7 @@ for frame_index = 2:NumFrames-PatchSize+1
         end
     end
     
-    figure;
+    figure(frame_index);
     subplot(2,3,1);
     imagesc(FrameArray(:,:,frame_index));colormap(gray);
     if normSpaceFlg == 1
