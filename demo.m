@@ -60,15 +60,15 @@ function demo()
 %     imgPath8 = './figures/set8_2/frame-0018.jpg'; 
 %     imgPath9 = './figures/set8_2/frame-0019.jpg'; 
 
-    imgPath1 = './figures/football/fb-43.jpg';
-    imgPath2 = './figures/football/fb-44.jpg';
-    imgPath3 = './figures/football/fb-45.jpg';
-    imgPath4 = './figures/football/fb-46.jpg';
-    imgPath5 = './figures/football/fb-47.jpg';
-    imgPath6 = './figures/football/fb-48.jpg';
-    imgPath7 = './figures/football/fb-49.jpg';
-    imgPath8 = './figures/football/fb-50.jpg';
-    imgPath9 = './figures/football/fb-51.jpg';
+    imgPath1 = '../../vap_svn_ghost/imageTestSequence/football/fb-43.jpg';
+    imgPath2 = '../../vap_svn_ghost/imageTestSequence/football/fb-44.jpg';
+    imgPath3 = '../../vap_svn_ghost/imageTestSequence/football/fb-45.jpg';
+    imgPath4 = '../../vap_svn_ghost/imageTestSequence/football/fb-46.jpg';
+    imgPath5 = '../../vap_svn_ghost/imageTestSequence/football/fb-47.jpg';
+    imgPath6 = '../../vap_svn_ghost/imageTestSequence/football/fb-48.jpg';
+    imgPath7 = '../../vap_svn_ghost/imageTestSequence/football/fb-49.jpg';
+    imgPath8 = '../../vap_svn_ghost/imageTestSequence/football/fb-50.jpg';
+    imgPath9 = '../../vap_svn_ghost/imageTestSequence/football/fb-51.jpg';
     
     % All images are resized by 1/2
     scaleValue = 1;
@@ -127,8 +127,8 @@ function demo()
     n = 20;
     [ismHeight,ismWidth] = size(ism);
     [xGrid,yGrid] = meshgrid(1:ismWidth,1:ismHeight);
-    ism = cat(3,ism,yGrid,xGrid);    
-    saliencyPoints = fliplr(sortrows(reshape(permute(ism,[3 2 1]),[size(ism,3) numel(ism(:,:,1))])')');   
+    ismValuesCoors = cat(3,ism,yGrid,xGrid);    
+    saliencyPoints = fliplr(sortrows(reshape(permute(ismValuesCoors,[3 2 1]),[size(ismValuesCoors,3) numel(ismValuesCoors(:,:,1))])')');   
     saliencyPoints = saliencyPoints(:,1:szPatches*szPatches:n*szPatches*szPatches) ;
     iYs = saliencyPoints(2,:); iXs = saliencyPoints(3,:);
     ism_mask = zeros(ismHeight,ismWidth);
@@ -136,12 +136,21 @@ function demo()
     for iCor = 1:1:n
         ism_mask(iYs(iCor),iXs(iCor)) = 1;
     end
-    se = strel('disk',34,0);
+    se = strel('disk',szPatches,0);
+%     se = strel('square',szPatches);
     ism_mask_dilated = imdilate(ism_mask,se);
     img_thresholded = imgs(:,:,noImgs).*uint8(ism_mask_dilated);
     figure(2);
     imshow(img_thresholded);
-    title(['Top ' num2str(n) ' regions in the image']);        
+    title(['Top ' num2str(n) ' regions in the image']);
+ 
+% %% Applying threshold     
+%     threshold = 0.8;
+%     ism_thresholded = mat2gray(ism);
+%     ism_thresholded(ism_thresholded < threshold) = 0;
+%     
+%     figure(3);
+%     colormap('gray'), imagesc(ism_thresholded);
     
 % %% Interpolate the ism_norm
 %     [iX,iY] = meshgrid(1:size(ism_norm,2),1:size(ism_norm,3));
