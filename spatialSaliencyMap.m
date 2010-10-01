@@ -11,6 +11,25 @@ M = szPatches;
 [Ps,nrP,ncP] = cutImages(imgB,M);
 nP = nrP*ncP;
 
+%% Transform patches by different transform engine
+transEng = 'hadamard';
+switch transEng
+    case 'hadamard'
+        %% Transform patches into Hadamar Space
+        for i = 1:1:nP
+%             Ps(:,:,i) = Ps(:,:,i)./(norm(Ps(:,:,i)));
+            Ps(:,:,i) = WAT(Ps(:,:,i),'hadamard');    
+        end
+    case 'dct'
+        %% Transforms patches into independent space by 3-DCT
+        for i = 1:1:nP
+%             Ps(:,:,i) = Ps(:,:,i)./(norm(Ps(:,:,i)));
+            Ps(:,:,i) = mirt_dctn(Ps(:,:,i));
+        end
+    otherwise
+        error('Invalid choide of transform engine');
+end
+
 %% Calculate the dimensional probabilities for each patch
 % pB = [];
 S = zeros(1,nP);
