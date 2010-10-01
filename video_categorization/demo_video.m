@@ -1,4 +1,14 @@
+% This material was created by The University of Nottingham faculty membere
+% Le Ngo Anh Cat, 2009. Copyright c 2009 The University of Nottingham
+
 function demo_video()
+%% Include path
+    addpath('../comMLFuncs/');
+
+%% Flag
+    saveFlag = 1;
+    demoFlag = 0;
+    
     % includepath
     addpath('../freqSaliencyMap/pft');
     addpath('../freqSaliencyMap/pqft');
@@ -6,9 +16,6 @@ function demo_video()
     addpath('../gbvsSaliencyMap/');
 %     addpath('../infoSaliencyMap/');
 
-    % Flag
-    saveFlag = 1;
-    demoFlag = 0;
 
     % I/O Part
     dbname = 'digikam4.db';
@@ -21,7 +28,9 @@ function demo_video()
         inputVideos =  cVideos(dbname,albname);
     end
     pftSaliencyMap = 0; pqftSaliencyMap = 0; ittiSaliencyMap = 0; gbvsSaliencyMap = 0; infoSaliencyMap = 0; infoSaliencyMap_3 = 1;
-    
+
+%% PFT Saliency Map Generator
+    addpath('../freqSaliencyMap/pft');
     if (pftSaliencyMap == 1)
         outputFolder = ['./results' '/' albname '/pftSaliencyMaps_date-' datestr(now,'yyyymmddTHHMMSS')];    
         if (saveFlag == 1)
@@ -48,7 +57,9 @@ function demo_video()
             pftSaliencyMap_video(inputVideo,outputVideo,saveFlag,demoFlag,inputData);
         end
     end
-    
+
+%% PQFT Saliency Map Generator    
+    addpath('../freqSaliencyMap/pqft');   
     if (pqftSaliencyMap == 1)
         outputFolder = ['./results' '/' albname '/pqftSaliencyMaps_date-' datestr(now,'yyyymmddTHHMMSS')];    
         if (saveFlag == 1)
@@ -75,7 +86,9 @@ function demo_video()
             pqftSaliencyMap_video(inputVideo,outputVideo,saveFlag,demoFlag,inputData);
         end
     end
-    
+
+%% ITTI Sasliency Map Generator    
+    addpath('../ittiSaliencyMap/');    
     if (ittiSaliencyMap == 1)
         outputFolder = ['./results' '/' albname '/ittiSaliencyMaps_date-' datestr(now,'yyyymmddTHHMMSS')];    
         if (saveFlag == 1)
@@ -102,7 +115,9 @@ function demo_video()
             ittiSaliencyMap_video(inputVideo,outputVideo,saveFlag,demoFlag,inputData);
         end
     end 
-    
+
+%% GBVS Saliency Map Generator
+    addpath('../gbvsSaliencyMap/');       
     if (gbvsSaliencyMap == 1)
         outputFolder = ['./results' '/' albname '/gbvsSaliencyMaps_date-' datestr(now,'yyyymmddTHHMMSS')];    
         if (saveFlag == 1)
@@ -130,6 +145,8 @@ function demo_video()
         end
     end
 
+%% Information Saliency Map Generator
+    addpath('../../vap_svn_ghost_branches/infoSaliencyMap_0.4/');    
     if (infoSaliencyMap == 1)
         outputFolder = ['./results' '/' albname '/infoSaliencyMaps_date-' datestr(now,'yyyymmddTHHMMSS')];
         if (saveFlag == 1)
@@ -156,9 +173,10 @@ function demo_video()
             infoSaliencyMap_video_1(inputVideo,outputVideo,saveFlag,demoFlag,inputData);
         end
     end       
-
-    addpath('../../vap_svn_ghost_branches/infoSaliencyMap_0.3/');    
-    if (infoSaliencyMap_3 == 1)
+    
+%% Entropy Saliency Map Generator    
+    addpath('../../vap_svn_ghost_branches/infoSaliencyMap_0.3/');
+    if (entroSaliencyMap == 1)
         outputFolder = ['./results' '/' albname '/infoSaliencyMaps_3_date-' datestr(now,'yyyymmddTHHMMSS')];
         if (saveFlag == 1)
             if (exist(outputFolder,'dir') ~= 7) 
