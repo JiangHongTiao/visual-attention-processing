@@ -14,6 +14,25 @@ noImgs = size(imgs,3);
 [V2,~,~] = cutImages(imgs,M);
 nP = nrP*ncP;
 
+%% Try transform with different transform techniques
+transEng = 'hadamard';
+switch transEng
+    case 'hadamard'
+        %% Transform patches into idependent space by 3D-Hadamard  
+        for i = 1:1:nP        
+            V1(:,:,:,i) = WAT(squeeze(V1(:,:,:,i)),'hadamard');    
+            V2(:,:,:,i) = WAT(squeeze(V2(:,:,:,i)),'hadamard');    
+        end
+    case 'dct'
+        %% Transforms patches into independent space by 3D-DCT
+        for i = 1:1:nP        
+            V1(:,:,:,i) = mirt_dctn(squeeze(V1(:,:,:,i)));    
+            V2(:,:,:,i) = mirt_dctn(squeeze(V2(:,:,:,i)));    
+        end
+    otherwise
+        error('Invalid choide of transform engine');
+end
+
 %% Calculate the dimensional probabilities for each patch
 % pB = [];
 S = zeros(1,nP);
