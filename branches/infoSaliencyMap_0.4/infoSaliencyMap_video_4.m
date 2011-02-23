@@ -1,4 +1,4 @@
-function infoSaliencyMap_video_3(inVid,outVid,savFlg,demoFlg,inDat)
+function infoSaliencyMap_video_4(inVid,outVid,savFlg,demoFlg,inDat)
 %% Developing Phase Shifting Transform in System Object
 % This simulation is done to show the effectiveness of PFT on lane-mark
 % detection and extraction in a video sequence
